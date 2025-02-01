@@ -1,0 +1,31 @@
+.footer-top {
+  padding: 1rem 0;
+}
+
+.social-links div {
+  display: flex;
+  align-items: center;
+  margin-left: 1.5rem;
+}
+
+.footer-info {
+  padding: 2rem 0;
+}
+
+.text-reset {
+  color: inherit;
+  text-decoration: none;
+}
+
+.text-reset:hover {
+  text-decoration: underline;
+}
+nz-footer {
+  box-shadow: 0 1px 4px #013c49;
+  color: #fff;
+  background-color: #013c49;
+}
+
+nz-footer {
+  line-height: 1.5;
+}

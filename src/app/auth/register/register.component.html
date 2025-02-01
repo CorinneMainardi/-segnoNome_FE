@@ -1,0 +1,100 @@
+<h1>Registrati per poter imparare la LIS</h1>
+
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email"
+      >E-mail</nz-form-label
+    >
+    <nz-form-control
+      [nzSm]="14"
+      [nzXs]="24"
+      nzErrorTip="The input is not valid E-mail!"
+    >
+      <input nz-input formControlName="email" id="email" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired
+      >Password</nz-form-label
+    >
+    <nz-form-control
+      [nzSm]="14"
+      [nzXs]="24"
+      nzErrorTip="Please input your password!"
+    >
+      <input
+        nz-input
+        type="password"
+        id="password"
+        formControlName="password"
+      />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label
+      [nzSm]="6"
+      [nzXs]="24"
+      nzFor="username"
+      nzRequired
+      nzTooltipTitle="What do you want other to call you"
+    >
+      <span>Username</span>
+    </nz-form-label>
+    <nz-form-control
+      [nzSm]="14"
+      [nzXs]="24"
+      nzErrorTip="Please input your username!"
+    >
+      <input nz-input id="username" formControlName="username" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <
+  <nz-form-item>
+    <nz-form-label
+      [nzSm]="6"
+      [nzXs]="24"
+      nzFor="captcha"
+      nzRequired
+      nzTooltipTitle="Please click 'Get captcha'"
+      [nzTooltipIcon]="captchaTooltipIcon"
+    >
+      Captcha
+    </nz-form-label>
+    <nz-form-control
+      [nzSm]="14"
+      [nzXs]="24"
+      nzErrorTip="Please input the captcha you got!"
+      nzExtra="We must make sure that your are a human."
+    >
+      <div nz-row [nzGutter]="8">
+        <div nz-col [nzSpan]="12">
+          <input nz-input formControlName="captcha" id="captcha" />
+        </div>
+        <div nz-col [nzSpan]="12">
+          <button nz-button (click)="getCaptcha($event)">Get captcha</button>
+        </div>
+      </div>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-row class="register-area">
+    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+      <label nz-checkbox formControlName="agree">
+        <span>
+          I have read the
+          <a [routerLink]="['/']" fragment="regolamento">agreement</a>
+        </span>
+        <p class="regolamento">
+          Se non accetti il regolamento, non potrai leggere le storie, ma solo
+          scriverle
+        </p>
+      </label>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-row class="register-area">
+    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+      <button nz-button nzType="primary" (click)="register()">Register</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>
