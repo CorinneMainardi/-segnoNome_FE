@@ -11,12 +11,12 @@
       @if(isLogged){
       <a routerLink="/home">
         <img src="logo.png" alt="logo" />
-        <h1>FableHaven</h1>
+        <h1>#SEGNONOME</h1>
       </a>
       }@else{
       <a routerLink="">
         <img src="logo.png" alt="logo" />
-        <h1>FableHaven</h1> </a
+        <h1>#SEGNONOME</h1> </a
       >}
     </div>
     <ul
@@ -85,7 +85,24 @@
           </li>
         </ul>
       </li>
+
       }
+      <li nz-submenu nzOpen nzTitle="Info" nzIcon="info-circle">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/about-us"
+              ><span nz-icon nzType="profile" nzTheme="outline"></span> About
+              Us</a
+            >
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/contacts"
+              ><span nz-icon nzType="phone" nzTheme="outline"></span>
+              Contacts</a
+            >
+          </li>
+        </ul>
+      </li>
     </ul>
   </nz-sider>
   <nz-layout>

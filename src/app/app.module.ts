@@ -19,6 +19,7 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { TokenInterceptor } from './auth/token.interceptor';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { StaticPagesModule } from './static-pages/static-pages.module';
 
 registerLocaleData(en);
 
@@ -34,6 +35,7 @@ registerLocaleData(en);
     NzGridModule,
     NzCarouselModule,
     NzIconModule,
+    StaticPagesModule,
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },
