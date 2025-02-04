@@ -18,6 +18,8 @@ import { Router } from '@angular/router';
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
+  passwordVisible = false;
+
   validateForm: FormGroup<{
     email: FormControl<string>;
     password: FormControl<string>;

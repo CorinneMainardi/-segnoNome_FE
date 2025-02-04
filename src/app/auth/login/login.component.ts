@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
+  passwordVisible = false;
   validateForm: FormGroup<{
     username: FormControl<string>;
     password: FormControl<string>;

@@ -7,3 +7,11 @@ h1 {
 .regolamento {
   color: red;
 }
+form {
+  max-width: 500px; /* Riduce la larghezza del form */
+  margin: 50px auto; /* Lo centra orizzontalmente e aggiunge spazio sopra */
+  padding: 20px;
+  background: #fff; /* Sfondo bianco per un look pulito */
+  border-radius: 8px; /* Angoli arrotondati */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}

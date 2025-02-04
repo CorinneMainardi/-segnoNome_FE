@@ -25,7 +25,7 @@
       nzMode="inline"
       [nzInlineCollapsed]="isCollapsed"
     >
-      @if(isLogged){
+      @if(isLogged && userRole === 'ROLE_USER'){
       <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
         <ul>
           <li nz-menu-item nzMatchRouter>
@@ -34,23 +34,56 @@
             >
           </li>
           <li nz-menu-item nzMatchRouter>
-            <a routerLink="/favorites"
+            <a routerLink="/dictionary"
               ><span nz-icon nzType="star" nzTheme="outline"></span>
-              Favorites</a
+              Dictionary</a
             >
           </li>
           <li nz-submenu nzOpen nzTitle="Profile" nzIcon="user">
             <ul>
               <li nz-menu-item nzMatchRouter>
-                <a routerLink="/user-detail"
-                  ><span nz-icon nzType="user" nzTheme="outline"></span> My
-                  account</a
+                <a routerLink="/videoclasses"
+                  ><span nz-icon nzType="user" nzTheme="outline"></span>
+                  Videoclasses</a
                 >
               </li>
               <li nz-menu-item nzMatchRouter>
                 <a routerLink="/writeStory"
                   ><span nz-icon nzType="signature" nzTheme="outline"></span>
-                  Write a story</a
+                  Lessons</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <li nz-menu-item nzMatchRouter>
+            <a (click)="logout()"
+              ><span nz-icon nzType="poweroff" nzTheme="outline"></span>
+              Logout</a
+            >
+          </li>
+        </ul>
+      </li>
+      } @if(isLogged && userRole === 'ROLE_CREATOR'){
+      <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/home"
+              ><span nz-icon nzType="home" nzTheme="outline"></span> Home</a
+            >
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/dictionary-manage"
+              ><span nz-icon nzType="star" nzTheme="outline"></span> Manage
+              Dictionary</a
+            >
+          </li>
+          <li nz-submenu nzOpen nzTitle="Profile" nzIcon="user">
+            <ul>
+              <li nz-menu-item nzMatchRouter>
+                <a routerLink="/videoclasses-manage"
+                  ><span nz-icon nzType="user" nzTheme="outline"></span> Manage
+                  Videoclasses</a
                 >
               </li>
             </ul>
@@ -90,7 +123,7 @@
       <li nz-submenu nzOpen nzTitle="Info" nzIcon="info-circle">
         <ul>
           <li nz-menu-item nzMatchRouter>
-            <a routerLink="/about-us"
+            <a routerLink="/static-pages/about-us"
               ><span nz-icon nzType="profile" nzTheme="outline"></span> About
               Us</a
             >

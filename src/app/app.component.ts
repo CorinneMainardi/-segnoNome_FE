@@ -10,11 +10,21 @@ import { Component } from '@angular/core';
 export class AppComponent {
   isCollapsed = false;
   isLogged?: boolean;
+  userRole: string = '';
 
   constructor(private authSvc: AuthService, private router: Router) {
-    this.authSvc.isLoggedIn$.subscribe((logged) => (this.isLogged = logged));
+    this.authSvc.isLoggedIn$.subscribe((logged) => {
+      this.isLogged = logged;
+      if (this.isLogged) {
+        this.userRole = this.authSvc.getUserRole();
+        console.log('ruolo assegnato:', this.userRole);
+      }
+    });
   }
-  ngOnInit() {}
+  ngOnInit() {
+    this.userRole = this.authSvc.getUserRole();
+    console.log('ruolo ngoninit, ruolo:', this.userRole);
+  }
   logout() {
     this.authSvc.logout();
     this.router.navigate(['/']);

@@ -5,34 +5,66 @@
   (ngSubmit)="submitForm()"
 >
   <nz-form-item>
-    <nz-form-control nzErrorTip="Please input your email!">
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="username" nzRequired>
+      Username
+    </nz-form-label>
+    <nz-form-control
+      [nzSm]="14"
+      [nzXs]="24"
+      nzErrorTip="Please input your username!"
+    >
       <nz-input-group nzPrefixIcon="user">
         <input
           type="text"
           nz-input
+          id="username"
           formControlName="username"
-          placeholder="username"
+          placeholder="Username"
         />
       </nz-input-group>
     </nz-form-control>
   </nz-form-item>
+
   <nz-form-item>
-    <nz-form-control nzErrorTip="Please input your Password!">
-      <nz-input-group nzPrefixIcon="lock">
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired>
+      Password
+    </nz-form-label>
+    <nz-form-control
+      [nzSm]="14"
+      [nzXs]="24"
+      nzErrorTip="Please input your password!"
+    >
+      <div style="position: relative; display: flex; align-items: center">
         <input
-          type="password"
           nz-input
+          [type]="passwordVisible ? 'text' : 'password'"
+          id="password"
           formControlName="password"
-          placeholder="Password"
+          style="width: 100%; padding-right: 2rem"
         />
-      </nz-input-group>
+        <button
+          type="button"
+          (click)="passwordVisible = !passwordVisible"
+          style="
+            position: absolute;
+            right: 8px;
+            background: none;
+            border: none;
+            cursor: pointer;
+          "
+        >
+          {{ passwordVisible ? "👁️" : "👁️‍🗨️" }}
+        </button>
+      </div>
     </nz-form-control>
   </nz-form-item>
+
   <div nz-row class="login-form-margin">
     <div nz-col [nzSpan]="12">
       <a class="login-form-forgot">Forgot password</a>
     </div>
   </div>
+
   <button
     nz-button
     class="login-form-button login-form-margin"

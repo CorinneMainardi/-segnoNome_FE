@@ -7,12 +7,17 @@ import { BehaviorSubject, map, tap } from 'rxjs';
 import { iUser } from '../interfaces/iuser';
 import { iLoginRequest } from '../interfaces/iloginrequest';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
 
+export interface JwtPayload {
+  // miseve per prendermi i ruoli
+  sub: string;
+  roles: string[];
+}
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  [x: string]: any;
   constructor(private http: HttpClient, private router: Router) {
     this.restoreUser();
   }
@@ -34,27 +39,78 @@ export class AuthService {
     );
   isLoggedIn$ = this.authSubject$.pipe(map((accessData) => !!accessData));
 
+  // ottengo il token
+  getToken(): string | null {
+    const accessData = localStorage.getItem('accessData');
+    return accessData ? JSON.parse(accessData).token : null;
+  }
+
+  getUserRole(): string {
+    const token = this.getToken();
+    if (!token) return '';
+
+    try {
+      const decodedToken: JwtPayload = jwtDecode(token);
+      return decodedToken.roles && decodedToken.roles.length > 0
+        ? decodedToken.roles[0]
+        : '';
+    } catch (error) {
+      console.error('Errore nella decodifica del token:', error);
+      return '';
+    }
+  }
+
   register(newUser: Partial<iUser>) {
     return this.http.post<iAccessData>(this.registerUrl, newUser);
   }
+  // login(authData: Partial<iLoginRequest>) {
+  //   return this.http.post<iAccessData>(this.loginUrl, authData).pipe(
+  //     tap((accessData) => {
+  //       this.authSubject$.next(accessData);
+  //       console.log('AuthService isLoggedIn$: ', this.isLoggedIn$);
+  //       localStorage.setItem('accessData', JSON.stringify(accessData));
+
+  //       const expDate: Date | null = this.jwtHelper.getTokenExpirationDate(
+  //         accessData.accessToken
+  //       );
+
+  //       if (!expDate) return;
+
+  //       // logout automatico.
+  //       this.autoLogout(expDate);
+  //     })
+  //   );
+  // }
+
   login(authData: Partial<iLoginRequest>) {
-    return this.http.post<iAccessData>(this.loginUrl, authData).pipe(
-      tap((accessData) => {
-        this.authSubject$.next(accessData);
-        console.log('AuthService isLoggedIn$: ', this.isLoggedIn$);
+    return this.http.post<{ token: string }>(this.loginUrl, authData).pipe(
+      tap((response) => {
+        console.log(' Login Success:', response); // DEBUG
+
+        const accessData: iAccessData = {
+          token: response.token, // ✅ Salva il token
+          user: {
+            username: '',
+            email: '',
+            password: '',
+            captcha: '',
+            agree: false,
+          },
+        };
+
         localStorage.setItem('accessData', JSON.stringify(accessData));
+        this.authSubject$.next(accessData);
 
         const expDate: Date | null = this.jwtHelper.getTokenExpirationDate(
-          accessData.accessToken
+          response.token
         );
-
         if (!expDate) return;
 
-        // logout automatico.
         this.autoLogout(expDate);
       })
     );
   }
+
   logout() {
     this.authSubject$.next(null);
     localStorage.removeItem('accessData');
@@ -73,7 +129,7 @@ export class AuthService {
     if (!userJson) return;
 
     const accessData: iAccessData = JSON.parse(userJson);
-    if (this.jwtHelper.isTokenExpired(accessData.accessToken)) {
+    if (this.jwtHelper.isTokenExpired(accessData.token)) {
       localStorage.removeItem('accessData');
       return;
     }
