@@ -55,8 +55,8 @@ const routes: Routes = [
       import('./pages/videoclasses-manage/videoclasses-manage.module').then(
         (m) => m.VideoclassesManageModule
       ),
-    canActivate: [RoleGuard],
-    data: { roles: ['ROLE_CREATOR'] },
+    // canActivate: [RoleGuard],
+    // data: { roles: ['ROLE_CREATOR'] },
   },
   {
     path: 'dictionary-manage',
@@ -75,8 +75,16 @@ const routes: Routes = [
         (m) => m.UnauthorizedModule
       ),
   },
-  { path: 'lessons', loadChildren: () => import('./pages/lessons/lessons.module').then(m => m.LessonsModule) },
-  { path: 'home', loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule) },
+  {
+    path: 'lessons',
+    loadChildren: () =>
+      import('./pages/lessons/lessons.module').then((m) => m.LessonsModule),
+  },
+  {
+    path: 'home',
+    loadChildren: () =>
+      import('./pages/home/home.module').then((m) => m.HomeModule),
+  },
   {
     path: '**',
     loadChildren: () =>

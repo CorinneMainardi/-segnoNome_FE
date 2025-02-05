@@ -42,7 +42,7 @@ export class AuthService {
   // ottengo il token
   getToken(): string | null {
     const accessData = localStorage.getItem('accessData');
-    return accessData ? JSON.parse(accessData).token : null;
+    return accessData ? JSON.parse(accessData) : null;
   }
 
   getUserRole(): string {
@@ -98,7 +98,7 @@ export class AuthService {
           },
         };
 
-        localStorage.setItem('accessData', JSON.stringify(accessData));
+        localStorage.setItem('accessData', JSON.stringify(accessData.token));
         this.authSubject$.next(accessData);
 
         const expDate: Date | null = this.jwtHelper.getTokenExpirationDate(

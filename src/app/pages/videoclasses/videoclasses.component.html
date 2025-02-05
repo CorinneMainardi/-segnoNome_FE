@@ -1,1 +1,70 @@
-<p>videoclasses works!</p>
+<div class="carouse-container">
+  <nz-carousel [nzEffect]="strategy" *ngIf="videoClasses.length > 0">
+    @for (index of array; track index) {
+    <div nz-carousel-content *ngFor="let videoClass of videoClasses">
+      <table border="1">
+        <tr>
+          <th>
+            <video
+              [src]="videoClass.videoClassUrl"
+              controls
+              width="320"
+              height="180"
+            >
+              Il tuo browser non supporta il tag video.
+            </video>
+          </th>
+          <th>
+            <h3>
+              <span class="input">Titolo: <br /></span>
+              <span class="value">{{ videoClass.title }}</span>
+            </h3>
+            <p>
+              <span class="input"> Descrizione: </span> <br />
+              <span class="value">{{ videoClass.description }} </span>
+            </p>
+          </th>
+        </tr>
+      </table>
+      <p>
+        <a
+          [routerLink]="['/videoClasses', videoClass.id]"
+          nz-button
+          nzType="default"
+          nzSize="'small'"
+          nzShape="round"
+        >
+          <span
+            ><button
+              type="button"
+              (click)="isPlaying = !isPlaying"
+              style="
+                position: absolute;
+                right: 8px;
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-size: 24px;
+              "
+            >
+              {{ isPlaying ? "⏸️" : "▶️" }}
+            </button></span
+          >
+          Guarda</a
+        >
+      </p>
+
+      <a
+        [routerLink]="['/videoClasses', videoClass.id]"
+        nz-button
+        nzType="default"
+        nzSize="'small'"
+        nzShape="round"
+        (click)="addFavorites()"
+        ><span nz-icon nzType="star" nzTheme="outline"></span> Aggiungi ai
+        preferiti</a
+      >
+    </div>
+    }
+  </nz-carousel>
+</div>

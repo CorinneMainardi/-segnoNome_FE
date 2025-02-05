@@ -1,1 +1,70 @@
-<p>videoclasses-manage works!</p>
+<h1>Riempi il form per poter aggiungere un video</h1>
+
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>Titolo storia: </nz-form-label>
+    <nz-form-control
+      [nzSpan]="12"
+      nzHasFeedback
+      nzValidatingTip="Validating..."
+      [nzErrorTip]="titleErrorTpl"
+    >
+      <input
+        nz-input
+        formControlName="title"
+        placeholder="Inserisci il titolo della storia"
+      />
+      <ng-template #titleErrorTpl let-control>
+        <div *ngIf="control.errors?.['required']">
+          Please input your story title!
+        </div>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>Description:</nz-form-label>
+    <nz-form-control
+      [nzSpan]="12"
+      nzHasFeedback
+      nzErrorTip="Please write video description!"
+    >
+      <nz-textarea-count [nzMaxCharacterCount]="2000">
+        <textarea
+          formControlName="description"
+          nz-input
+          rows="2"
+          placeholder="Scrivi una descrizione"
+        ></textarea>
+      </nz-textarea-count>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>videoClassUrl: </nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="genereErrorTpl">
+      <input
+        nz-input
+        formControlName="videoClassUrl"
+        placeholder="videoClassUrl"
+      />
+      <ng-template #genereErrorTpl let-control>
+        <div *ngIf="control.errors?.['required']">
+          Please input videoClassUrl!
+        </div>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzOffset]="7" [nzSpan]="12">
+      <button
+        nz-button
+        nzType="primary"
+        [disabled]="!validateForm.valid"
+        type="submit"
+      >
+        Submit
+      </button>
+      <button nz-button (click)="resetForm($event)">Reset</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>

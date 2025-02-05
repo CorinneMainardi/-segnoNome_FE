@@ -1,8 +1,12 @@
+import { iVideoClass } from './i-video-class';
+
 export interface iUser {
-  email: string;
-  password: string;
-  username: string;
-  captcha: string;
-  agree: boolean;
   id?: number;
+  username: string;
+  password: string;
+  email?: string; // opzionale perché nel be non mi serve
+  roles?: string[];
+  captcha?: string;
+  agree?: boolean;
+  favorites?: iVideoClass[];
 }

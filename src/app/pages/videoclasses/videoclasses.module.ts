@@ -3,15 +3,28 @@ import { CommonModule } from '@angular/common';
 
 import { VideoclassesRoutingModule } from './videoclasses-routing.module';
 import { VideoclassesComponent } from './videoclasses.component';
-
+import {
+  NZ_CAROUSEL_CUSTOM_STRATEGIES,
+  NzCarouselFlipStrategy,
+  NzCarouselModule,
+} from 'ng-zorro-antd/carousel';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzCardModule } from 'ng-zorro-antd/card';
 
 @NgModule({
-  declarations: [
-    VideoclassesComponent
-  ],
+  declarations: [VideoclassesComponent],
   imports: [
     CommonModule,
-    VideoclassesRoutingModule
-  ]
+    VideoclassesRoutingModule,
+    NzCarouselModule,
+    NzIconModule,
+    NzCardModule,
+  ],
+  providers: [
+    {
+      provide: NZ_CAROUSEL_CUSTOM_STRATEGIES,
+      useValue: [{ name: 'flip', strategy: NzCarouselFlipStrategy }],
+    },
+  ],
 })
-export class VideoclassesModule { }
+export class VideoclassesModule {}
