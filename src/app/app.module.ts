@@ -28,7 +28,6 @@ registerLocaleData(en);
 @NgModule({
   declarations: [AppComponent, HeaderComponent, FooterComponent],
   imports: [
-    VideoclassesManageModule,
     BrowserModule,
     AppRoutingModule,
     IconsProviderModule,
