@@ -16,18 +16,14 @@ export class AppComponent {
     this.authSvc.isLoggedIn$.subscribe((logged) => {
       this.isLogged = logged;
       if (this.isLogged) {
-        console.log('🔄 Utente loggato, ricarico ruolo...');
         this.userRole = this.authSvc.getUserRole();
         console.log('ruolo assegnato:', this.userRole);
-      } else {
-        console.log('⚠️ Nessun utente loggato');
       }
     });
   }
-
   ngOnInit() {
     this.userRole = this.authSvc.getUserRole();
-    console.log('ruolo ngoninit, ruolo:', this.userRole);
+    console.log('ruolo assegnato:', this.userRole);
   }
   logout() {
     this.authSvc.logout();
