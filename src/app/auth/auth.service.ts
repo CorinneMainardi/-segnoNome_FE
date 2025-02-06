@@ -58,7 +58,7 @@ export class AuthService {
   // }
 
   getUserRole(): string {
-    const token = localStorage.getItem('accessToken'); // 🔥 Legge solo il token
+    const token = localStorage.getItem('accessData'); // 🔥 Legge solo il token
     if (!token) {
       console.warn('⚠️ Nessun token trovato in localStorage');
       return '';

@@ -8,7 +8,7 @@ const routes: Routes = [
     path: '',
     loadChildren: () =>
       import('./welcome/welcome.module').then((m) => m.WelcomeModule),
-    // canActivate: [GuestGuard],
+    canActivate: [GuestGuard],
   },
 
   {
@@ -55,8 +55,8 @@ const routes: Routes = [
       import('./pages/videoclasses-manage/videoclasses-manage.module').then(
         (m) => m.VideoclassesManageModule
       ),
-    // canActivate: [RoleGuard],
-    // data: { roles: ['ROLE_CREATOR'] },
+    canActivate: [RoleGuard],
+    data: { roles: ['ROLE_CREATOR'] },
   },
   {
     path: 'dictionary-manage',
