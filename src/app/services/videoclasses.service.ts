@@ -47,14 +47,18 @@ export class VideoclassesService {
   // Aggiunge una nuova storia e aggiorna il BehaviorSubject
   createVideoClass(newVideoClass: iVideoClass) {
     return this.http
-      .post<iVideoClass>(this.videoclassesUrl, newVideoClass)
+      .post<iVideoClass>(this.videoclassesUrl, JSON.stringify(newVideoClass), {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .pipe(
         tap((addedVideoClass) => {
           const currentVideoClasses = this.videoClassesSubject.getValue();
           this.videoClassesSubject.next([
             ...currentVideoClasses,
             addedVideoClass,
-          ]); // Aggiunge la nuova storia alla lista
+          ]);
         })
       );
   }

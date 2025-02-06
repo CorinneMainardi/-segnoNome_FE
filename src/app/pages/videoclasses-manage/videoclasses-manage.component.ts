@@ -41,18 +41,19 @@ export class VideoclassesManageComponent {
         videoClassUrl: this.validateForm.value.videoClassUrl,
       };
 
-      // Chiamata al servizio per aggiungere la storia
+      console.log('📤 Payload inviato:', JSON.stringify(newVideoClass)); // 🔍 DEBUG
+
       this.videoClassSvc.createVideoClass(newVideoClass).subscribe({
         next: (response) => {
-          console.log('Video aggiunto con successo', response);
+          console.log('✅ Video aggiunto con successo', response);
           this.validateForm.reset();
         },
         error: (error) => {
-          console.error("Errore durante l'aggiunta del video", error);
+          console.error("❌ Errore durante l'aggiunta del video", error);
         },
       });
     } else {
-      console.log('Il form non è valido');
+      console.log('❌ Il form non è valido');
     }
   }
 

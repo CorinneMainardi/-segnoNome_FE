@@ -10,10 +10,9 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
-import { provideHttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
-import { TokenInterceptor } from '../../auth/token.interceptor';
 
 @NgModule({
   declarations: [VideoclassesManageComponent],
@@ -28,15 +27,6 @@ import { TokenInterceptor } from '../../auth/token.interceptor';
     NzCheckboxModule,
     NzSelectModule,
   ],
-  providers: [
-    { provide: NZ_I18N, useValue: en_US },
-    provideAnimationsAsync(),
-    provideHttpClient(),
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true,
-    },
-  ],
+  providers: [{ provide: NZ_I18N, useValue: en_US }, provideAnimationsAsync()],
 })
 export class VideoclassesManageModule {}

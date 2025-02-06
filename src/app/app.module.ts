@@ -12,20 +12,16 @@ import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import {
-  HTTP_INTERCEPTORS,
-  HttpClientModule,
-  provideHttpClient,
-} from '@angular/common/http';
+
 import { HeaderComponent } from './main-components/header/header.component';
 import { FooterComponent } from './main-components/footer/footer.component';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
-import { TokenInterceptor } from './auth/token.interceptor';
+import { tokenInterceptor } from './auth/token.interceptor';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { StaticPagesModule } from './static-pages/static-pages.module';
-import { VideoclassesManageComponent } from './pages/videoclasses-manage/videoclasses-manage.component';
 import { VideoclassesManageModule } from './pages/videoclasses-manage/videoclasses-manage.module';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 registerLocaleData(en);
 
@@ -47,12 +43,7 @@ registerLocaleData(en);
   providers: [
     { provide: NZ_I18N, useValue: en_US },
     provideAnimationsAsync(),
-    provideHttpClient(),
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true,
-    },
+    provideHttpClient(withInterceptors([tokenInterceptor])),
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
