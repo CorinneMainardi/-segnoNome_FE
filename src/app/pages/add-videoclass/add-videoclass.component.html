@@ -1,36 +1,5 @@
-<div class="text">
-  <h1>Modifica o cancella la videolezioni</h1>
-  <p>
-    Questo pannelo ti permette di modificare o eliminare i video già presenti.
-  </p>
-  <p>
-    Se invece vuoi aggiungere un video puoi cliccare
-    <a [routerLink]="['/add-videoclass']">👉🏻 aggiungi video</a>
-  </p>
-</div>
-@if(videoClasses.length>0){
-<div class="container">
-  <div *ngFor="let video of videoClasses; let i = index">
-    <video width="320" height="240" controls>
-      <source [src]="video.videoClassUrl" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
-    <p class="title">{{ video.title }}</p>
-    <p class="title">{{ video.description }}</p>
-    <button nz-button (click)="editVideo(video)">Edit</button>
-    <button
-      *ngIf="video.id"
-      nz-button
-      nzType="default"
-      nzShape="round"
-      (click)="deleteVideo(video.id)"
-    >
-      <span nz-icon nzType="delete" nzTheme="outline"></span>
-      Delete
-    </button>
-  </div>
-</div>
-@if(editingVideo){
+<h1>Riempi il form per poter aggiungere un video alle videolezioni</h1>
+
 <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
   <nz-form-item>
     <nz-form-label [nzSpan]="7" nzRequired> Title of Video </nz-form-label>
@@ -108,5 +77,3 @@
     </nz-form-control>
   </nz-form-item>
 </form>
-
-} }

@@ -84,7 +84,29 @@ const routes: Routes = [
     path: 'home',
     loadChildren: () =>
       import('./pages/home/home.module').then((m) => m.HomeModule),
+    canActivate: [RoleGuard],
+    data: { roles: ['ROLE_CREATOR'] },
   },
+
+  {
+    path: 'add-dictionary',
+    loadChildren: () =>
+      import('./pages/add-dictionary/add-dictionary.module').then(
+        (m) => m.AddDictionaryModule
+      ),
+    canActivate: [RoleGuard],
+    data: { roles: ['ROLE_CREATOR'] },
+  },
+  {
+    path: 'add-videoclass',
+    loadChildren: () =>
+      import('./pages/add-videoclass/add-videoclass.module').then(
+        (m) => m.AddVideoclassModule
+      ),
+    canActivate: [RoleGuard],
+    data: { roles: ['ROLE_CREATOR'] },
+  },
+
   {
     path: '**',
     loadChildren: () =>

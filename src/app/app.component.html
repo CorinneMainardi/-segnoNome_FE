@@ -65,28 +65,59 @@
         </ul>
       </li>
       } @if(isLogged && userRole === 'ROLE_CREATOR'){
+      <li nz-menu-item nzMatchRouter>
+        <a routerLink="/home"
+          ><span nz-icon nzType="home" nzTheme="outline"></span> Home</a
+        >
+      </li>
       <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
         <ul>
-          <li nz-menu-item nzMatchRouter>
-            <a routerLink="/home"
-              ><span nz-icon nzType="home" nzTheme="outline"></span> Home</a
-            >
-          </li>
           <li nz-menu-item nzMatchRouter>
             <a routerLink="/dictionary-manage"
               ><span nz-icon nzType="star" nzTheme="outline"></span> Manage
               Dictionary</a
             >
           </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/videoclasses-manage"
+              ><span nz-icon nzType="star" nzTheme="outline"></span> Manage
+              Video Classes</a
+            >
+          </li>
           <li nz-submenu nzOpen nzTitle="Profile" nzIcon="user">
-            <ul>
-              <li nz-menu-item nzMatchRouter>
-                <a routerLink="/videoclasses-manage"
-                  ><span nz-icon nzType="user" nzTheme="outline"></span> Manage
-                  Videoclasses</a
-                >
-              </li>
-            </ul>
+            <ul></ul>
+          </li>
+
+          <li nz-menu-item nzMatchRouter>
+            <a (click)="logout()"
+              ><span nz-icon nzType="poweroff" nzTheme="outline"></span>
+              Logout</a
+            >
+          </li>
+        </ul>
+      </li>
+      <li nz-submenu nzOpen nzTitle="Add Content" nzIcon="video-camera-add">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/add-dictionary"
+              ><span nz-icon nzType="star" nzTheme="outline"></span>Add Video to
+              Dictionary</a
+            >
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/add-videoclass"
+              ><span nz-icon nzType="star" nzTheme="outline"></span> Add Video
+              Class</a
+            >
+          </li>
+        </ul>
+      </li>
+      <li nz-submenu nzOpen nzTitle="Setting" nzIcon="setting">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/profile"
+              ><span nz-icon nzType="user" nzTheme="outline"></span> Profile</a
+            >
           </li>
 
           <li nz-menu-item nzMatchRouter>
@@ -98,13 +129,15 @@
         </ul>
       </li>
       } @if(!isLogged){
+      <ul>
+        <li nz-menu-item nzMatchRouter>
+          <a routerLink=""
+            ><span nz-icon nzType="bank" nzTheme="outline"></span> Welcome</a
+          >
+        </li>
+      </ul>
       <li nz-submenu nzOpen nzTitle="Authentication" nzIcon="usergroup-add">
         <ul>
-          <li nz-menu-item nzMatchRouter>
-            <a routerLink=""
-              ><span nz-icon nzType="bank" nzTheme="outline"></span> Welcome</a
-            >
-          </li>
           <li nz-menu-item nzMatchRouter>
             <a routerLink="/register"
               ><span nz-icon nzType="user-add" nzTheme="outline"></span>
