@@ -26,34 +26,39 @@
       [nzInlineCollapsed]="isCollapsed"
     >
       @if(isLogged && userRole === 'ROLE_USER'){
+      <li nz-menu-item nzMatchRouter>
+        <a routerLink="/home"
+          ><span nz-icon nzType="home" nzTheme="outline"></span> Home</a
+        >
+      </li>
       <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
         <ul>
           <li nz-menu-item nzMatchRouter>
-            <a routerLink="/home"
-              ><span nz-icon nzType="home" nzTheme="outline"></span> Home</a
+            <a routerLink="/dictionary"
+              ><span nz-icon nzType="star" nzTheme="outline"></span
+              >Dictionary</a
             >
           </li>
           <li nz-menu-item nzMatchRouter>
-            <a routerLink="/dictionary"
-              ><span nz-icon nzType="star" nzTheme="outline"></span>
-              Dictionary</a
+            <a routerLink="/videoclasses"
+              ><span nz-icon nzType="star" nzTheme="outline"></span>Video
+              Classes</a
             >
           </li>
-          <li nz-submenu nzOpen nzTitle="Profile" nzIcon="user">
-            <ul>
-              <li nz-menu-item nzMatchRouter>
-                <a routerLink="/videoclasses"
-                  ><span nz-icon nzType="user" nzTheme="outline"></span>
-                  Videoclasses</a
-                >
-              </li>
-              <li nz-menu-item nzMatchRouter>
-                <a routerLink="/Lessons"
-                  ><span nz-icon nzType="signature" nzTheme="outline"></span>
-                  Lessons</a
-                >
-              </li>
-            </ul>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/lessons"
+              ><span nz-icon nzType="star" nzTheme="outline"></span>Lessons</a
+            >
+          </li>
+        </ul>
+      </li>
+
+      <li nz-submenu nzOpen nzTitle="Setting" nzIcon="setting">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/profile"
+              ><span nz-icon nzType="user" nzTheme="outline"></span> Profile</a
+            >
           </li>
 
           <li nz-menu-item nzMatchRouter>
@@ -82,16 +87,6 @@
             <a routerLink="/videoclasses-manage"
               ><span nz-icon nzType="star" nzTheme="outline"></span> Manage
               Video Classes</a
-            >
-          </li>
-          <li nz-submenu nzOpen nzTitle="Profile" nzIcon="user">
-            <ul></ul>
-          </li>
-
-          <li nz-menu-item nzMatchRouter>
-            <a (click)="logout()"
-              ><span nz-icon nzType="poweroff" nzTheme="outline"></span>
-              Logout</a
             >
           </li>
         </ul>

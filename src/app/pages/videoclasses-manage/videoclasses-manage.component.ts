@@ -90,6 +90,11 @@ export class VideoclassesManageComponent {
       console.log('❌ Il form non è valido');
     }
   }
+  confirmDelete(video: iVideoClass) {
+    if (confirm(`Sei sicuro di voler eliminare il video "${video.title}"?`)) {
+      this.deleteVideo(video.id);
+    }
+  }
   // Metodo per resettare il form
   resetForm(e: MouseEvent): void {
     e.preventDefault();

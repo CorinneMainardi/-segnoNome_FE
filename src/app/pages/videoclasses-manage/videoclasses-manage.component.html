@@ -1,112 +1,113 @@
 <div class="text">
-  <h1>Modifica o cancella la videolezioni</h1>
+  <h1>Modifica o cancella le videolezioni</h1>
   <p>
-    Questo pannelo ti permette di modificare o eliminare i video già presenti.
+    Questo pannello ti permette di modificare o eliminare i video già presenti.
   </p>
   <p>
     Se invece vuoi aggiungere un video puoi cliccare
     <a [routerLink]="['/add-videoclass']">👉🏻 aggiungi video</a>
   </p>
 </div>
-@if(videoClasses.length>0){
+
+@if(videoClasses.length > 0) {
 <div class="container">
-  <div *ngFor="let video of videoClasses; let i = index">
+  <div *ngFor="let video of videoClasses">
     <video width="320" height="240" controls>
       <source [src]="video.videoClassUrl" type="video/mp4" />
       Your browser does not support the video tag.
     </video>
     <p class="title">{{ video.title }}</p>
     <p class="title">{{ video.description }}</p>
+
     <button nz-button (click)="editVideo(video)">Edit</button>
     <button
-      *ngIf="video.id"
       nz-button
       nzType="default"
       nzShape="round"
-      (click)="deleteVideo(video.id)"
+      (click)="confirmDelete(video)"
     >
-      <span nz-icon nzType="delete" nzTheme="outline"></span>
-      Delete
+      <span nz-icon nzType="delete" nzTheme="outline"></span> Delete
     </button>
+
+    <!-- Il form si apre solo sotto il video che stai modificando -->
+    <div *ngIf="editingVideo?.id === video.id">
+      <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="7" nzRequired>Title of Video</nz-form-label>
+          <nz-form-control
+            [nzSpan]="12"
+            nzHasFeedback
+            [nzErrorTip]="titleErrorTpl"
+          >
+            <input
+              nz-input
+              formControlName="title"
+              placeholder="Inserisci il titolo del video"
+            />
+            <ng-template #titleErrorTpl>
+              <div>Per favore inserisci il titolo!</div>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSpan]="7" nzRequired>Description</nz-form-label>
+          <nz-form-control
+            [nzSpan]="12"
+            nzHasFeedback
+            nzErrorTip="Please write video description!"
+          >
+            <nz-textarea-count [nzMaxCharacterCount]="2000">
+              <textarea
+                formControlName="description"
+                nz-input
+                rows="2"
+                placeholder="Scrivi una descrizione per il video"
+              ></textarea>
+            </nz-textarea-count>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSpan]="7" nzRequired>videoClassUrl</nz-form-label>
+          <nz-form-control
+            [nzSpan]="12"
+            nzHasFeedback
+            [nzErrorTip]="genereErrorTpl"
+          >
+            <input
+              nz-input
+              formControlName="videoClassUrl"
+              placeholder="videoClassUrl"
+            />
+            <ng-template #genereErrorTpl>
+              <div>Per favore inserisci il videoClassUrl!</div>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control [nzOffset]="7" [nzSpan]="12">
+            <div *ngIf="successMessage" class="success-message">
+              {{ successMessage }}
+            </div>
+            <div *ngIf="errorMessage" class="error-message">
+              {{ errorMessage }}
+            </div>
+
+            <button
+              nz-button
+              nzType="primary"
+              [disabled]="!validateForm.valid"
+              type="submit"
+            >
+              Submit
+            </button>
+            <button nz-button (click)="resetForm($event)">Reset</button>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </div>
   </div>
 </div>
-@if(editingVideo){
-<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired> Title of Video </nz-form-label>
-    <nz-form-control
-      [nzSpan]="12"
-      nzHasFeedback
-      nzValidatingTip="Validating..."
-      [nzErrorTip]="titleErrorTpl"
-    >
-      <input
-        nz-input
-        formControlName="title"
-        placeholder="Inserisci il titolo del video"
-      />
-      <ng-template #titleErrorTpl let-control>
-        <div *ngIf="control.errors?.['required']">
-          Please input your story title!
-        </div>
-      </ng-template>
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>Description</nz-form-label>
-    <nz-form-control
-      [nzSpan]="12"
-      nzHasFeedback
-      nzErrorTip="Please write video description!"
-    >
-      <nz-textarea-count [nzMaxCharacterCount]="2000">
-        <textarea
-          formControlName="description"
-          nz-input
-          rows="2"
-          placeholder="Scrivi una descrizione per il video "
-        ></textarea>
-      </nz-textarea-count>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>videoClassUrl </nz-form-label>
-    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="genereErrorTpl">
-      <input
-        nz-input
-        formControlName="videoClassUrl"
-        placeholder="videoClassUrl"
-      />
-      <ng-template #genereErrorTpl let-control>
-        <div *ngIf="control.errors?.['required']">
-          Please input videoClassUrl!
-        </div>
-      </ng-template>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-control [nzOffset]="7" [nzSpan]="12">
-      <!-- Messaggi di successo ed errore sopra i bottoni -->
-      <div *ngIf="successMessage" class="success-message">
-        {{ successMessage }}
-      </div>
-      <div *ngIf="errorMessage" class="error-message">
-        {{ errorMessage }}
-      </div>
-
-      <!-- Bottoni -->
-      <button
-        nz-button
-        nzType="primary"
-        [disabled]="!validateForm.valid"
-        type="submit"
-      >
-        Submit
-      </button>
-      <button nz-button (click)="resetForm($event)">Reset</button>
-    </nz-form-control>
-  </nz-form-item>
-</form>
-
-} }
+}
