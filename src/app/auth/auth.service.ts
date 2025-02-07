@@ -42,21 +42,6 @@ export class AuthService {
     return accessData ? JSON.parse(accessData) : null;
   }
 
-  // getUserRole(): string {
-  //   const token = this.getToken();
-  //   if (!token) return '';
-
-  //   try {
-  //     const decodedToken: JwtPayload = jwtDecode(token);
-  //     return decodedToken.roles && decodedToken.roles.length > 0
-  //       ? decodedToken.roles[0]
-  //       : '';
-  //   } catch (error) {
-  //     console.error('Errore nella decodifica del token:', error);
-  //     return '';
-  //   }
-  // }
-
   getUserRole(): string {
     const token = localStorage.getItem('accessData'); // 🔥 Legge solo il token
     if (!token) {
@@ -77,55 +62,6 @@ export class AuthService {
   register(newUser: Partial<iUser>) {
     return this.http.post<iAccessData>(this.registerUrl, newUser);
   }
-
-  // login(authData: Partial<iLoginRequest>) {
-  //   return this.http.post<iAccessData>(this.loginUrl, authData).pipe(
-  //     tap((accessData) => {
-  //       this.authSubject$.next(accessData);
-  //       console.log('AuthService isLoggedIn$: ', this.isLoggedIn$);
-  //       localStorage.setItem('accessData', JSON.stringify(accessData));
-
-  //       const expDate: Date | null = this.jwtHelper.getTokenExpirationDate(
-  //         accessData.accessToken
-  //       );
-
-  //       if (!expDate) return;
-
-  //       // logout automatico.
-  //       this.autoLogout(expDate);
-  //     })
-  //   );
-  // }
-
-  // login(authData: Partial<iLoginRequest>) {
-  //   return this.http.post<{ token: string }>(this.loginUrl, authData).pipe(
-  //     tap((response) => {
-  //       console.log(' Login Success:', response); // DEBUG
-
-  //       const accessData: iAccessData = {
-  //         token: response.token,
-  //         user: {
-  //           username: '',
-  //           email: '',
-  //           password: '',
-  //           captcha: '',
-  //           agree: false,
-  //         },
-  //       };
-
-  //       // localStorage.setItem('accessData', JSON.stringify(accessData.token));
-  //       localStorage.setItem('accessData', accessData.token);
-  //       this.authSubject$.next(accessData);
-
-  //       const expDate: Date | null = this.jwtHelper.getTokenExpirationDate(
-  //         response.token
-  //       );
-  //       if (!expDate) return;
-
-  //       this.autoLogout(expDate);
-  //     })
-  //   );
-  // }
 
   login(authData: Partial<iLoginRequest>) {
     return this.http.post<{ token: string }>(this.loginUrl, authData).pipe(
@@ -178,16 +114,28 @@ export class AuthService {
     }, expMs);
   }
 
-  restoreUser() {
-    const userJson: string | null = localStorage.getItem('accessData');
-    if (!userJson) return;
+  // restoreUser() {
+  //   const userJson: string | null = localStorage.getItem('accessData');
+  //   if (!userJson) return;
 
-    const accessData: iAccessData = JSON.parse(userJson);
-    if (this.jwtHelper.isTokenExpired(accessData.token)) {
+  //   const accessData: iAccessData = JSON.parse(userJson);
+  //   if (this.jwtHelper.isTokenExpired(accessData.token)) {
+  //     localStorage.removeItem('accessData');
+  //     return;
+  //   }
+
+  //   this.authSubject$.next(accessData);
+  // }
+
+  restoreUser() {
+    const token: string | null = localStorage.getItem('accessData');
+    if (!token) return;
+
+    if (this.jwtHelper.isTokenExpired(token)) {
       localStorage.removeItem('accessData');
       return;
     }
 
-    this.authSubject$.next(accessData);
+    this.authSubject$.next({ token, user: {} as iUser }); // Usa un oggetto vuoto per evitare errori
   }
 }
