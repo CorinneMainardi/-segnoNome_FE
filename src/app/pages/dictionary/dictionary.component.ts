@@ -6,7 +6,6 @@ import { AuthService } from '../../auth/auth.service';
 
 import { iUser } from '../../interfaces/iuser';
 import { UserService } from '../../services/user.service';
-import { VideoclassesService } from '../../services/videoclasses.service';
 import { DictionaryService } from '../../services/dictionary.service';
 
 @Component({

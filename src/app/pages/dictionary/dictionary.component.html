@@ -1,56 +1,57 @@
-<div class="carousel-container">
-  <nz-carousel [nzEffect]="strategy" *ngIf="dictionaryVideos.length > 0">
-    @for (index of array; track index) {
-    <div nz-carousel-content *ngFor="let video of dictionaryVideos">
-      <div class="video-card">
-        <!-- Video con pulsante Play/Pausa -->
-        <div class="video-container">
-          <video
-            #videoPlayer
-            [src]="video.dictionaryUrl"
-            width="320"
-            height="180"
-            controls
-          >
-            Il tuo browser non supporta il tag video.
-          </video>
-        </div>
+@if(dictionaryVideos.length > 0) {
+<div class="container">
+  @for (index of array; track index) {
+  <div *ngFor="let video of dictionaryVideos">
+    <div class="video-card">
+      <!-- Video con pulsante Play/Pausa -->
+      <div class="video-container">
+        <video
+          #videoPlayer
+          [src]="video.dictionaryUrl"
+          width="320"
+          height="180"
+          controls
+        >
+          Il tuo browser non supporta il tag video.
+        </video>
+      </div>
 
-        <!-- Titolo e descrizione -->
-        <div class="video-info">
-          <h3>
-            <span class="input">Titolo: </span>
-            <span class="value">{{ video.title }}</span>
-          </h3>
-          <p>
-            <span class="input"> Descrizione: </span>
-            <span class="value">{{ video.description }} </span>
-          </p>
-        </div>
+      <!-- Titolo e descrizione -->
+      <div class="video-info">
+        <h3>
+          <span class="input">Titolo: </span>
+          <span class="value">{{ video.title }}</span>
+        </h3>
+        <p>
+          <span class="input"> Descrizione: </span>
+          <span class="value">{{ video.description }} </span>
+        </p>
+      </div>
 
-        <!-- Pulsanti -->
-        <div class="buttons">
-          <button
-            type="button"
-            (click)="togglePlay(videoPlayer)"
-            class="play-button"
-          >
-            {{ isPlaying ? "⏸️" : "▶️" }}
-          </button>
+      <!-- Pulsanti -->
+      <div class="buttons">
+        <button
+          type="button"
+          (click)="togglePlay(videoPlayer)"
+          class="play-button"
+        >
+          {{ isPlaying ? "⏸️" : "▶️" }}
+        </button>
 
-          <a
-            [routerLink]="['/dictionary', video.id]"
-            nz-button
-            nzType="default"
-            nzSize="'small'"
-            nzShape="round"
-            (click)="addFavoritesD()"
-          >
-            <span nz-icon nzType="star" nzTheme="outline"></span> Salva video
-          </a>
-        </div>
+        <a
+          [routerLink]="['/dictionary', video.id]"
+          nz-button
+          nzType="default"
+          nzSize="'small'"
+          nzShape="round"
+          (click)="addFavoritesD()"
+        >
+          <span nz-icon nzType="star" nzTheme="outline"></span> Salva video
+        </a>
       </div>
     </div>
-    }
-  </nz-carousel>
+  </div>
+  }
 </div>
+
+}
