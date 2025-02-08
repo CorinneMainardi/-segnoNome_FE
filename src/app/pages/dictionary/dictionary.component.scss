@@ -4,7 +4,12 @@
   gap: 20px; /* Spaziatura tra le card */
   justify-content: center; /* Centra le card */
 }
-
+.error-message {
+  color: red;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 20px;
+}
 .container > div {
   width: 30%; /* Ogni card occuperà circa 1/3 della riga */
   min-width: 250px; /* Per evitare che diventino troppo piccole */

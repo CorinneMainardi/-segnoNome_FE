@@ -15,7 +15,6 @@ import { DictionaryService } from '../../services/dictionary.service';
 })
 export class DictionaryComponent {
   isPlaying = false;
-
   dictionary!: iDictionary;
   id!: number;
   user!: iUser;
@@ -26,6 +25,9 @@ export class DictionaryComponent {
   size: NzButtonSize = 'small';
   dictionaryVideos: iDictionary[] = [];
   users: iUser[] = [];
+  filteredVideos: iDictionary[] = []; // Nuovo array filtrato
+  searchTerm: string = '';
+  showSearchResults: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,6 +38,7 @@ export class DictionaryComponent {
   ngOnInit(): void {
     this.dictionarySvc.dictionary$.subscribe((dictionaryVideos) => {
       this.dictionaryVideos = dictionaryVideos;
+      this.filteredVideos = dictionaryVideos; // mostra tutti i video inizialmente
     });
     this.dictionarySvc.getAllDictionaryVideos().subscribe();
     this.userSvc.getAllUser().subscribe((user) => (this.users = user));
@@ -52,6 +55,19 @@ export class DictionaryComponent {
       }
     });
   }
+
+  // Funzione per cercare i video
+  searchVideos() {
+    this.showSearchResults = true; // Mostra i risultati della ricerca
+    if (this.searchTerm.trim()) {
+      this.filteredVideos = this.dictionaryVideos.filter((video) =>
+        video.title.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    } else {
+      this.filteredVideos = this.dictionaryVideos; // Se la ricerca è vuota, mostra tutti i video
+    }
+  }
+
   togglePlay(video: HTMLVideoElement) {
     if (video.paused) {
       video.play();

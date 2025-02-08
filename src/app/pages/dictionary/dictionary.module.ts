@@ -10,6 +10,7 @@ import {
   NzCarouselFlipStrategy,
 } from 'ng-zorro-antd/carousel';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [DictionaryComponent],
@@ -19,6 +20,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     NzCarouselModule,
     NzIconModule,
     NzCardModule,
+    FormsModule,
   ],
   providers: [
     {
