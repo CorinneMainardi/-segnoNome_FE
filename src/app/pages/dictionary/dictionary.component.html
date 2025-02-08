@@ -40,6 +40,17 @@
             <p>
               <span class="input">Descrizione: </span> {{ video.description }}
             </p>
+            <a
+              [routerLink]="['/dictionary', video.id]"
+              nz-button
+              nzType="default"
+              nzSize="'small'"
+              nzShape="round"
+              (click)="addFavoritesD()"
+            >
+              <span nz-icon nzType="star" nzTheme="outline"></span> Salva il
+              video
+            </a>
           </div>
         </div>
       </div>
@@ -73,6 +84,16 @@
           <p>
             <span class="input">Descrizione: </span> {{ video.description }}
           </p>
+          <a
+            [routerLink]="['/dictionary', video.id]"
+            nz-button
+            nzType="default"
+            nzSize="'small'"
+            nzShape="round"
+            (click)="addFavoritesD()"
+          >
+            <span nz-icon nzType="star" nzTheme="outline"></span> Salva il video
+          </a>
         </div>
       </div>
     </div>

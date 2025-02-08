@@ -9,6 +9,5 @@ export interface iUser {
   roles?: string[];
   captcha?: string;
   agree?: boolean;
-  favorites?: iVideoClass[];
   favoritesD?: iDictionary[];
 }

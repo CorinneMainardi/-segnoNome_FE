@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { GuestGuard } from './auth/guest.guard';
 import { RoleGuard } from './auth/role.guard';
+import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
   {
@@ -22,6 +23,14 @@ const routes: Routes = [
     loadChildren: () =>
       import('./auth/login/login.module').then((m) => m.LoginModule),
     canActivate: [GuestGuard],
+  },
+  {
+    path: 'user-detail',
+    loadChildren: () =>
+      import('./pages/user-detail/user-detail.module').then(
+        (m) => m.UserDetailModule
+      ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'static-pages',
@@ -105,6 +114,13 @@ const routes: Routes = [
       ),
     canActivate: [RoleGuard],
     data: { roles: ['ROLE_CREATOR'] },
+  },
+  {
+    path: 'user-detail',
+    loadChildren: () =>
+      import('./pages/user-detail/user-detail.module').then(
+        (m) => m.UserDetailModule
+      ),
   },
 
   {

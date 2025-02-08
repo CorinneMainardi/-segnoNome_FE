@@ -1,0 +1,43 @@
+<div class="text">
+  <h1>Benvenuto! <br /></h1>
+  <p>Questi sono i dati che hai inserito in fase di registrazione</p>
+</div>
+
+@if(user){
+<div class="card-container">
+  <nz-card nzTitle="I tuoi dati">
+    <p>Username: {{ user.username }}</p>
+    <p>Email: {{ user.email }}</p>
+  </nz-card>
+</div>
+
+}
+
+<div class="text">
+  <h1>Segni dizionario</h1>
+  <p>Qui troverai i segni che hai salvato</p>
+</div>
+@if(favorites.length>0){
+<div class="container">
+  <div *ngFor="let fav of favorites" [routerLink]="['/dictionary', fav.id]">
+    <div class="video-card">
+      <!-- Video -->
+      <div class="video-container">
+        <video
+          #videoPlayer
+          [src]="fav.dictionaryUrl"
+          width="320"
+          height="180"
+          controls
+        ></video>
+      </div>
+      <!-- Info -->
+      <div class="video-info">
+        <h3><span class="input">Titolo: </span> {{ fav.title }}</h3>
+        <p><span class="input">Descrizione: </span> {{ fav.description }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+}

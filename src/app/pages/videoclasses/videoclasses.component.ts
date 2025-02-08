@@ -84,14 +84,6 @@ export class VideoclassesComponent implements OnInit {
     }
   }
 
-  addFavorites() {
-    if (this.user.id) {
-      this.userSvc.addFavorite(this.user.id, this.favorite).subscribe(() => {
-        console.log('Video class aggiunta ai preferiti!');
-      });
-    }
-  }
-
   saveLastViewedVideo(video: iVideoClass) {
     localStorage.setItem(
       `lastViewedVideo_${this.user.username}`,

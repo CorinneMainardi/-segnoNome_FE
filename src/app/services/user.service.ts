@@ -22,20 +22,6 @@ export class UserService {
     return this.http.get<iUser>(this.userUrl);
   }
 
-  addFavorite(userId: number, newFavorite: iVideoClass) {
-    return this.getCurrentUser().pipe(
-      switchMap((user) => {
-        const favorites = user.favorites || [];
-
-        if (!favorites.some((element) => element.id === newFavorite.id)) {
-          favorites.push(newFavorite);
-        }
-
-        return this.http.patch<iUser>(this.userUrl, { favorites });
-      })
-    );
-  }
-
   addFavoriteD(userId: number, newFavoriteD: iDictionary) {
     return this.getCurrentUser().pipe(
       switchMap((user) => {
@@ -49,7 +35,7 @@ export class UserService {
       })
     );
   }
-  getAllFavorites() {
-    return this.getCurrentUser().pipe(map((user) => user.favorites || []));
+  getAllFavorites(user: iUser) {
+    return this.getCurrentUser().pipe(map((user) => user.favoritesD || []));
   }
 }
