@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, switchMap } from 'rxjs';
 import { iUser } from '../interfaces/iuser';
 import { iVideoClass } from '../interfaces/i-video-class';
+import { iDictionary } from '../interfaces/i-dictionary';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +32,20 @@ export class UserService {
         }
 
         return this.http.patch<iUser>(this.userUrl, { favorites });
+      })
+    );
+  }
+
+  addFavoriteD(userId: number, newFavoriteD: iDictionary) {
+    return this.getCurrentUser().pipe(
+      switchMap((user) => {
+        const favoritesD = user.favoritesD || [];
+
+        if (!favoritesD.some((element) => element.id === newFavoriteD.id)) {
+          favoritesD.push(newFavoriteD);
+        }
+
+        return this.http.patch<iUser>(this.userUrl, { favoritesD });
       })
     );
   }

@@ -7,7 +7,6 @@
 }
 .text h1 {
   margin-left: 100px;
-
   color: #c38e7d;
 }
 .text p {
@@ -15,10 +14,8 @@
   font-size: 20px;
   color: #c38e7d;
 }
-
 .input {
   text-align: center;
-
   color: rgb(186, 250, 114);
 }
 .value {
@@ -36,7 +33,6 @@ nz-carousel {
   text-align: center;
   height: 423px;
   width: 700px;
-
   background-image: linear-gradient(
     to right top,
     #caa9cf,
@@ -52,11 +48,46 @@ nz-carousel {
     #024554,
     #013c49
   );
-
   overflow: hidden;
 }
 .table {
   height: 350px;
+}
+
+/* Modifica: il video è sopra titolo e descrizione */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  text-align: center;
+  padding: 10px;
+}
+
+video {
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
+}
+
+/* Modifica: allineamento corretto del tasto play */
+.play-button {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: white;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 h3 {
@@ -64,23 +95,32 @@ h3 {
   margin-bottom: 0;
   user-select: none;
 }
+
 img {
   height: 200px;
 }
+
 [nz-button] {
   margin-right: 8px;
   margin-bottom: 12px;
 }
+
 a,
 span {
   color: rgb(186, 250, 114);
   font-size: 16px;
 }
+
 nz-card {
   width: 300px;
   background-color: #013c49;
   color: #fff;
 }
+
 [nzTitle] {
   color: #fff;
+}
+.video-container {
+  margin-top: 20px; /* Aggiunge spazio sopra il video */
+  position: relative;
 }

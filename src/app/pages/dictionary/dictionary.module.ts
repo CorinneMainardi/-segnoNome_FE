@@ -3,15 +3,28 @@ import { CommonModule } from '@angular/common';
 
 import { DictionaryRoutingModule } from './dictionary-routing.module';
 import { DictionaryComponent } from './dictionary.component';
-
+import { NzCardModule } from 'ng-zorro-antd/card';
+import {
+  NzCarouselModule,
+  NZ_CAROUSEL_CUSTOM_STRATEGIES,
+  NzCarouselFlipStrategy,
+} from 'ng-zorro-antd/carousel';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @NgModule({
-  declarations: [
-    DictionaryComponent
-  ],
+  declarations: [DictionaryComponent],
   imports: [
     CommonModule,
-    DictionaryRoutingModule
-  ]
+    DictionaryRoutingModule,
+    NzCarouselModule,
+    NzIconModule,
+    NzCardModule,
+  ],
+  providers: [
+    {
+      provide: NZ_CAROUSEL_CUSTOM_STRATEGIES,
+      useValue: [{ name: 'flip', strategy: NzCarouselFlipStrategy }],
+    },
+  ],
 })
-export class DictionaryModule { }
+export class DictionaryModule {}

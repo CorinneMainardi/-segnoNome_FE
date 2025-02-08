@@ -51,6 +51,15 @@ export class VideoclassesComponent implements OnInit {
       }
     });
   }
+  togglePlay(video: HTMLVideoElement) {
+    if (video.paused) {
+      video.play();
+      this.isPlaying = true;
+    } else {
+      video.pause();
+      this.isPlaying = false;
+    }
+  }
 
   loadVideoClass(id: number) {
     this.videoClassSvc.getVideoClassById(id).subscribe((video) => {

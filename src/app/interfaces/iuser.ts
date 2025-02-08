@@ -1,3 +1,4 @@
+import { iDictionary } from './i-dictionary';
 import { iVideoClass } from './i-video-class';
 
 export interface iUser {
@@ -9,4 +10,5 @@ export interface iUser {
   captcha?: string;
   agree?: boolean;
   favorites?: iVideoClass[];
+  favoritesD?: iDictionary[];
 }

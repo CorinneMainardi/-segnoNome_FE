@@ -1,69 +1,55 @@
-<div class="carouse-container">
+<div class="carousel-container">
   <nz-carousel [nzEffect]="strategy" *ngIf="videoClasses.length > 0">
     @for (index of array; track index) {
     <div nz-carousel-content *ngFor="let videoClass of videoClasses">
-      <table border="1">
-        <tr>
-          <th>
-            <video
-              [src]="videoClass.videoClassUrl"
-              controls
-              width="320"
-              height="180"
-            >
-              Il tuo browser non supporta il tag video.
-            </video>
-          </th>
-          <th>
-            <h3>
-              <span class="input">Titolo: <br /></span>
-              <span class="value">{{ videoClass.title }}</span>
-            </h3>
-            <p>
-              <span class="input"> Descrizione: </span> <br />
-              <span class="value">{{ videoClass.description }} </span>
-            </p>
-          </th>
-        </tr>
-      </table>
-      <p>
-        <a
-          [routerLink]="['/videoClasses', videoClass.id]"
-          nz-button
-          nzType="default"
-          nzSize="'small'"
-          nzShape="round"
-        >
-          <span
-            ><button
-              type="button"
-              (click)="isPlaying = !isPlaying"
-              style="
-                position: absolute;
-                right: 8px;
-                background: none;
-                border: none;
-                cursor: pointer;
-                font-size: 24px;
-              "
-            >
-              {{ isPlaying ? "⏸️" : "▶️" }}
-            </button></span
+      <div class="video-card">
+        <!-- Video con pulsante Play/Pausa -->
+        <div class="video-container">
+          <video
+            #videoPlayer
+            [src]="videoClass.videoClassUrl"
+            width="320"
+            height="180"
+            controls
           >
-          Guarda</a
-        >
-      </p>
+            Il tuo browser non supporta il tag video.
+          </video>
+        </div>
 
-      <a
-        [routerLink]="['/videoClasses', videoClass.id]"
-        nz-button
-        nzType="default"
-        nzSize="'small'"
-        nzShape="round"
-        (click)="addFavorites()"
-        ><span nz-icon nzType="star" nzTheme="outline"></span> Aggiungi ai
-        preferiti</a
-      >
+        <!-- Titolo e descrizione -->
+        <div class="video-info">
+          <h3>
+            <span class="input">Titolo: </span>
+            <span class="value">{{ videoClass.title }}</span>
+          </h3>
+          <p>
+            <span class="input"> Descrizione: </span>
+            <span class="value">{{ videoClass.description }} </span>
+          </p>
+        </div>
+
+        <!-- Pulsanti -->
+        <div class="buttons">
+          <button
+            type="button"
+            (click)="togglePlay(videoPlayer)"
+            class="play-button"
+          >
+            {{ isPlaying ? "⏸️" : "▶️" }}
+          </button>
+
+          <a
+            [routerLink]="['/videoClasses', videoClass.id]"
+            nz-button
+            nzType="default"
+            nzSize="'small'"
+            nzShape="round"
+            (click)="addFavorites()"
+          >
+            <span nz-icon nzType="star" nzTheme="outline"></span> Salva video
+          </a>
+        </div>
+      </div>
     </div>
     }
   </nz-carousel>

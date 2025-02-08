@@ -23,7 +23,7 @@ export class DictionaryService {
       );
   }
 
-  getVideoClassById(id: number) {
+  getVideoDictionaryById(id: number) {
     return this.http.get<iDictionary>(`${this.dictionaryUrl}/${id}`);
   }
 
