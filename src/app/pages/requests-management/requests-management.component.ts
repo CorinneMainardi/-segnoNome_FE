@@ -65,11 +65,11 @@ export class RequestsManagementComponent {
   updateRequest(request: iLessonInterest) {
     this.lessonInterestSvc
       .updateRequest(request.id!, {
-        contacted: Boolean(request.contacted),
-        interested: Boolean(request.interested),
-        toBeRecontacted: Boolean(request.toBeRecontacted),
-        handled: Boolean(request.handled),
-        note: request.note || '',
+        contacted: request.contacted || false, // ✅ Evita valori `undefined`
+        interested: request.interested || false,
+        toBeRecontacted: request.toBeRecontacted || false,
+        handled: request.handled || false,
+        note: request.note ? request.note.trim() : '', // ✅ Assicurati che `note` non sia null
       })
       .subscribe({
         next: (response) => {
@@ -77,14 +77,12 @@ export class RequestsManagementComponent {
 
           this.editModes[request.id!] = false;
 
-          // ✅ Rimuove la richiesta da pendingRequests se è stata gestita
           if (updatedRequest.handled) {
             this.pendingRequests = this.pendingRequests.filter(
               (r) => r.id !== request.id
             );
             this.handledRequests.push(updatedRequest);
           } else {
-            // ✅ Se non è gestita, aggiorna l'array delle richieste da gestire
             const index = this.pendingRequests.findIndex(
               (r) => r.id === request.id
             );

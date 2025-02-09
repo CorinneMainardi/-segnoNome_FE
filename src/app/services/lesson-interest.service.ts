@@ -35,23 +35,22 @@ export class LessonInterestService {
     id: number,
     updateData: Partial<iLessonInterest>
   ): Observable<iLessonInterest> {
-    const params = new HttpParams()
-      .set('contacted', updateData.contacted!.toString())
-      .set('interested', updateData.interested!.toString())
-      .set('toBeRecontacted', updateData.toBeRecontacted!.toString())
-      .set('handled', updateData.handled!.toString());
+    let params = new HttpParams()
+      .set('contacted', String(updateData.contacted)) // ✅ Converti i booleani in stringhe
+      .set('interested', String(updateData.interested))
+      .set('toBeRecontacted', String(updateData.toBeRecontacted))
+      .set('handled', String(updateData.handled));
 
-    if (updateData.note) {
-      params.set('note', updateData.note);
+    if (updateData.note !== undefined && updateData.note !== null) {
+      params = params.set('note', updateData.note); // ✅ Assicurati che il campo `note` venga incluso
     }
 
     return this.http.put<iLessonInterest>(
       `${this.lessonInterestUrl}/${id}/update-status`,
-      {},
+      {}, // ✅ Il body è vuoto perché stiamo usando query parameters
       { params: params }
     );
   }
-
   deleteRequest(id: number): Observable<any> {
     return this.http.delete(`${this.lessonInterestUrl}/${id}`);
   }
