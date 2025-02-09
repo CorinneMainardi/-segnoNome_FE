@@ -39,15 +39,20 @@
           <td>{{ request.email }}</td>
           <td>{{ request.phoneNumber }}</td>
 
-          <!-- Dropdown per i campi booleani -->
           <td>
-            <nz-select [(ngModel)]="request.contacted" name="contacted">
+            <nz-select
+              [(ngModel)]="request.contacted"
+              [disabled]="!editModes[request.id!]"
+            >
               <nz-option [nzValue]="true" nzLabel="Sì"></nz-option>
               <nz-option [nzValue]="false" nzLabel="No"></nz-option>
             </nz-select>
           </td>
           <td>
-            <nz-select [(ngModel)]="request.interested" name="interested">
+            <nz-select
+              [(ngModel)]="request.interested"
+              [disabled]="!editModes[request.id!]"
+            >
               <nz-option [nzValue]="true" nzLabel="Sì"></nz-option>
               <nz-option [nzValue]="false" nzLabel="No"></nz-option>
             </nz-select>
@@ -55,25 +60,28 @@
           <td>
             <nz-select
               [(ngModel)]="request.toBeRecontacted"
-              name="toBeRecontacted"
+              [disabled]="!editModes[request.id!]"
             >
               <nz-option [nzValue]="true" nzLabel="Sì"></nz-option>
               <nz-option [nzValue]="false" nzLabel="No"></nz-option>
             </nz-select>
           </td>
           <td>
-            <nz-select [(ngModel)]="request.handled" name="handled">
+            <nz-select
+              [(ngModel)]="request.handled"
+              [disabled]="!editModes[request.id!]"
+            >
               <nz-option [nzValue]="true" nzLabel="Sì"></nz-option>
               <nz-option [nzValue]="false" nzLabel="No"></nz-option>
             </nz-select>
           </td>
 
-          <!-- Textarea per le note -->
           <td>
             <textarea
               nz-input
               [(ngModel)]="request.note"
               rows="2"
+              [disabled]="!editModes[request.id!]"
               placeholder="Aggiungi una nota"
             ></textarea>
           </td>
@@ -81,6 +89,16 @@
           <td>
             <nz-row [nzGutter]="8">
               <nz-col>
+                <button
+                  nz-button
+                  nzType="default"
+                  nzSize="small"
+                  (click)="toggleEditMode(request.id!)"
+                >
+                  ✏️ {{ editModes[request.id!] ? "Annulla" : "Modifica" }}
+                </button>
+              </nz-col>
+              <nz-col *ngIf="editModes[request.id!]">
                 <button
                   nz-button
                   nzType="primary"

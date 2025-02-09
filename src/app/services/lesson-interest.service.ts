@@ -31,21 +31,23 @@ export class LessonInterestService {
     );
   }
 
-  updateRequest(id: number, updateData: Partial<iLessonInterest>) {
+  updateRequest(
+    id: number,
+    updateData: Partial<iLessonInterest>
+  ): Observable<iLessonInterest> {
     const params = new HttpParams()
       .set('contacted', updateData.contacted!.toString())
       .set('interested', updateData.interested!.toString())
       .set('toBeRecontacted', updateData.toBeRecontacted!.toString())
       .set('handled', updateData.handled!.toString());
 
-    // Aggiungi la nota solo se esiste
     if (updateData.note) {
       params.set('note', updateData.note);
     }
 
-    return this.http.put(
+    return this.http.put<iLessonInterest>(
       `${this.lessonInterestUrl}/${id}/update-status`,
-      {}, // ❌ Il body è vuoto perché stiamo usando query parameters!
+      {},
       { params: params }
     );
   }

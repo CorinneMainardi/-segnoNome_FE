@@ -8,66 +8,66 @@ nz-card {
 nz-table {
   width: 100%;
   overflow-x: auto; /* Scorrimento orizzontale su schermi piccoli */
+  border-collapse: collapse;
 }
 
-/* Responsività per schermi piccoli */
-@media (max-width: 768px) {
-  nz-table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-
-  thead {
-    display: none; /* Nasconde l'intestazione della tabella per dispositivi piccoli */
-  }
-
-  tbody tr {
-    display: block;
-    border: 1px solid #ddd;
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 8px;
-    background: #f9f9f9;
-  }
-
-  tbody td {
-    display: flex;
-    justify-content: space-between;
-    padding: 5px 10px;
-    font-size: 14px;
-  }
-
-  /* Pulsanti allineati al centro */
-  .nz-row {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .nz-col {
-    flex: 1 1 45%;
-    min-width: 100px;
-  }
+/* Miglioramenti generali */
+thead th {
+  text-align: center;
+  background: #f5f5f5;
+  padding: 10px;
 }
 
-/* Migliora la visualizzazione dei pulsanti su schermi piccoli */
-button[nz-button] {
+tbody tr {
+  border-bottom: 1px solid #ddd;
+}
+
+tbody td {
+  padding: 10px;
+  text-align: center;
+}
+
+/* Migliora la visibilità della textarea */
+textarea[nz-input] {
   width: 100%;
+  min-height: 60px;
+  resize: vertical;
+  padding: 8px;
   font-size: 14px;
 }
 
-/* Stile per il selettore dropdown */
+/* Stile per i dropdown */
 nz-select {
   width: 100%;
+  min-width: 100px;
 }
 
-/* Stile per la textarea */
-textarea[nz-input] {
-  width: 100%;
-  min-height: 50px;
-  resize: vertical;
+/* Chiude automaticamente il menu dropdown dopo la selezione */
+nz-option {
+  cursor: pointer;
+}
+
+nz-select nz-option:hover {
+  background-color: #e6f7ff;
+}
+
+/* Stile per i pulsanti */
+button[nz-button] {
+  font-size: 14px;
+  min-width: 100px;
+}
+
+/* Miglior layout dei pulsanti */
+.nz-row {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.nz-col {
+  flex: 1 1 45%;
+  min-width: 100px;
 }
 
 /* Stile delle notifiche personalizzate */
@@ -106,4 +106,51 @@ textarea[nz-input] {
 
 .confirm-box button {
   margin: 5px;
+}
+
+/* 🔹 RESPONSIVITÀ PER SCHERMI PICCOLI */
+@media (max-width: 768px) {
+  nz-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  thead {
+    display: none; /* Nasconde l'intestazione della tabella su schermi piccoli */
+  }
+
+  tbody tr {
+    display: block;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    background: #f9f9f9;
+  }
+
+  tbody td {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+    font-size: 14px;
+  }
+
+  /* Migliora il layout delle opzioni di selezione */
+  nz-select {
+    width: 100%;
+  }
+
+  /* Migliora la textarea su schermi piccoli */
+  textarea[nz-input] {
+    width: 100%;
+    font-size: 14px;
+    padding: 5px;
+  }
+
+  /* Migliora la visibilità dei pulsanti */
+  button[nz-button] {
+    width: 100%;
+    font-size: 14px;
+  }
 }
