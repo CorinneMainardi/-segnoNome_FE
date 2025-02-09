@@ -23,7 +23,8 @@ export class RegisterComponent {
   validateForm: FormGroup<{
     email: FormControl<string>;
     password: FormControl<string>;
-
+    firstName: FormControl<string>;
+    lastName: FormControl<string>;
     username: FormControl<string>;
     captcha: FormControl<string>;
     agree: FormControl<boolean>;
@@ -70,6 +71,8 @@ export class RegisterComponent {
       email: ['', [Validators.email, Validators.required]],
       password: ['', [Validators.required]],
       username: ['', [Validators.required]],
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
       captcha: ['', [Validators.required]],
       agree: [false],
     });
@@ -77,14 +80,16 @@ export class RegisterComponent {
 
   register() {
     const userData: iUser = {
-      email: this.validateForm.value.email || '', // Valore di fallback se undefined
-      password: this.validateForm.value.password || '', // Valore di fallback se undefined
-      username: this.validateForm.value.username || '', // Valore di fallback se undefined
-      captcha: this.validateForm.value.captcha || '', // Valore di fallback se undefined
+      firstName: this.validateForm.value.firstName || '',
+      lastName: this.validateForm.value.lastName || '',
+      email: this.validateForm.value.email || '',
+      password: this.validateForm.value.password || '',
+      username: this.validateForm.value.username || '',
+      captcha: this.validateForm.value.captcha || '',
       agree: this.validateForm.value.agree || false,
     };
 
-    this.authSvc.register(userData).subscribe((res) => {
+    this.authSvc.register(userData).subscribe(() => {
       this.router.navigate(['/login']);
     });
   }

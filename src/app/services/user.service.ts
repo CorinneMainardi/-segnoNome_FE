@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
-import { map, switchMap } from 'rxjs';
+import { map, Observable, switchMap } from 'rxjs';
 import { iUser } from '../interfaces/iuser';
 import { iVideoClass } from '../interfaces/i-video-class';
 import { iDictionary } from '../interfaces/i-dictionary';
@@ -14,6 +14,11 @@ export class UserService {
   userUrl = environment.userUrl;
 
   constructor(private http: HttpClient) {}
+  uploadImage(userId: number, imageBase64: string): Observable<iUser> {
+    return this.http.put<iUser>(`${this.userUrl}/${userId}/upload-image`, {
+      img: imageBase64,
+    });
+  }
 
   getAllUser() {
     return this.http.get<iUser[]>(this.usersUrl);

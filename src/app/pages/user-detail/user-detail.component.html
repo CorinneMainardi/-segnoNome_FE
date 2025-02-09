@@ -1,12 +1,21 @@
 <div class="text">
-  <h1>Benvenuto! <br /></h1>
+  <h1>
+    <img *ngIf="user.img" [src]="user.img" alt="Profile Image" />Benvenuto
+    {{ user.username }}
+  </h1>
+
+  <p>Inserisci un immagine del profilo</p>
+
+  <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+
   <p>Questi sono i dati che hai inserito in fase di registrazione</p>
 </div>
 
 @if(user){
 <div class="card-container">
   <nz-card nzTitle="I tuoi dati">
-    <p>Username: {{ user.username }}</p>
+    <p>Nome: {{ user.firstName }}</p>
+    <p>Cognome: {{ user.lastName }}</p>
     <p>Email: {{ user.email }}</p>
   </nz-card>
 </div>

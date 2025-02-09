@@ -81,6 +81,8 @@ export class AuthService {
         const accessData: iAccessData = {
           token: response.token,
           user: {
+            firstName: '',
+            lastName: '',
             username: '',
             email: '',
             password: '',

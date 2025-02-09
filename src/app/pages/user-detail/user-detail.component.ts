@@ -36,4 +36,33 @@ export class UserDetailComponent {
       .getCurrentUser()
       .subscribe((response) => (this.user = response));
   }
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        if (this.user && typeof this.user.id === 'number') {
+          const imageBase64 = reader.result as string;
+
+          if (imageBase64.startsWith('data:image')) {
+            // ✅ Verifica che sia un'immagine valida
+            this.userSvc.uploadImage(this.user.id, imageBase64).subscribe({
+              next: (user) => {
+                console.log('Immagine aggiornata:', user.img);
+                this.user.img = user.img;
+              },
+              error: (err) => console.error('Errore upload immagine:', err),
+            });
+          } else {
+            console.error(
+              "Errore: il file selezionato non è un'immagine valida"
+            );
+          }
+        } else {
+          console.error('Errore: ID utente mancante o non valido');
+        }
+      };
+    }
+  }
 }

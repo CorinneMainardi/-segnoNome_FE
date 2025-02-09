@@ -2,6 +2,31 @@
 
 <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
   <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="firstName" nzRequired>
+      <span>Nome</span>
+    </nz-form-label>
+    <nz-form-control
+      [nzSm]="14"
+      [nzXs]="24"
+      nzErrorTip="Inserisci il tuo nome!"
+    >
+      <input nz-input id="firstName" formControlName="firstName" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="lastName" nzRequired>
+      <span>Cognome</span>
+    </nz-form-label>
+    <nz-form-control
+      [nzSm]="14"
+      [nzXs]="24"
+      nzErrorTip="Inserisci il tuo cognome!"
+    >
+      <input nz-input id="lastName" formControlName="lastName" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email"
       >E-mail</nz-form-label
     >

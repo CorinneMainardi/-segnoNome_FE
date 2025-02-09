@@ -1,8 +1,9 @@
 import { iDictionary } from './i-dictionary';
-import { iVideoClass } from './i-video-class';
 
 export interface iUser {
   id?: number;
+  firstName: string;
+  lastName: string;
   username: string;
   password: string;
   email?: string; // opzionale perché nel be non mi serve
