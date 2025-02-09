@@ -116,19 +116,6 @@ export class AuthService {
     }, expMs);
   }
 
-  // restoreUser() {
-  //   const userJson: string | null = localStorage.getItem('accessData');
-  //   if (!userJson) return;
-
-  //   const accessData: iAccessData = JSON.parse(userJson);
-  //   if (this.jwtHelper.isTokenExpired(accessData.token)) {
-  //     localStorage.removeItem('accessData');
-  //     return;
-  //   }
-
-  //   this.authSubject$.next(accessData);
-  // }
-
   restoreUser() {
     const token: string | null = localStorage.getItem('accessData');
     if (!token) return;

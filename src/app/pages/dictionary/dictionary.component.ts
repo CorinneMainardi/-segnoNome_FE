@@ -91,21 +91,32 @@ export class DictionaryComponent {
       if (user) {
         this.user = user;
         this.id = user.id!;
+        this.getAllFavorites(); // ✅ Aggiorna i preferiti dopo aver caricato l'utente
       }
     });
   }
 
   userWithFav() {
-    if (this.user.id) {
-      this.favorite = this.dictionary;
+    if (this.user && this.user.favoritesD) {
+      const alreadyFavorite = this.user.favoritesD.some(
+        (fav) => fav.id === this.dictionary.id
+      );
+      if (alreadyFavorite) {
+        this.favorite = this.dictionary;
+      }
     }
   }
-
-  addFavoritesD() {
-    if (this.user.id) {
-      this.userSvc.addFavoriteD(this.user.id, this.favorite).subscribe(() => {
-        console.log('Video class aggiunta ai preferiti!');
+  addFavoritesD(favorite: iDictionary) {
+    if (this.user && this.user.id && favorite && favorite.id) {
+      this.userSvc.addFavoriteD(favorite.id).subscribe({
+        next: (user) => {
+          console.log('Segno aggiunto ai preferiti:', user.favoritesD);
+          this.user.favoritesD = user.favoritesD; // ✅ Aggiorna localmente
+        },
+        error: (err) => console.error('Errore:', err),
       });
+    } else {
+      console.error('Errore: utente o preferito non validi');
     }
   }
 
@@ -117,12 +128,22 @@ export class DictionaryComponent {
   }
 
   loadLastViewedVideo() {
-    const storedVideo = localStorage.getItem(
-      `lastViewedVideo_${this.user?.username}`
-    );
-    if (storedVideo) {
-      this.lastViewedVideo = JSON.parse(storedVideo);
+    if (this.user?.username) {
+      const storedVideo = localStorage.getItem(
+        `lastViewedVideo_${this.user.username}`
+      );
+      if (storedVideo) {
+        this.lastViewedVideo = JSON.parse(storedVideo);
+      }
     }
+  }
+  getAllFavorites() {
+    this.userSvc.getAllFavorites().subscribe({
+      next: (favorites) => {
+        this.user.favoritesD = favorites; // ✅ Aggiorna l'elenco dei preferiti
+      },
+      error: (err) => console.error('Errore:', err),
+    });
   }
 
   resumeLastViewedVideo() {

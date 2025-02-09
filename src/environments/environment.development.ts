@@ -6,4 +6,6 @@ export const environment = {
   usersUrl: ' http://localhost:8080/api/auth/users',
   userUrl: ' http://localhost:8080/api/auth/me',
   lessonInterestUrl: 'http://localhost:8080/api/lesson-interest',
+  addFavoriteUrl: 'http://localhost:8080/api/auth/add-favorite',
+  getFavoritesUrl: 'http://localhost:8080/api/auth/favorites',
 };
