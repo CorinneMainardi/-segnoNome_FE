@@ -32,9 +32,10 @@ export class UserDetailComponent {
   }
 
   getCurrentUser() {
-    this.userSvc
-      .getCurrentUser()
-      .subscribe((response) => (this.user = response));
+    this.userSvc.getCurrentUser().subscribe((response) => {
+      this.user = { ...response }; // ✅ Forza il change detection
+      console.log('Dati utente caricati:', this.user);
+    });
   }
   onFileSelected(event: any) {
     const file = event.target.files[0];
@@ -46,11 +47,10 @@ export class UserDetailComponent {
           const imageBase64 = reader.result as string;
 
           if (imageBase64.startsWith('data:image')) {
-            // ✅ Verifica che sia un'immagine valida
             this.userSvc.uploadImage(this.user.id, imageBase64).subscribe({
               next: (user) => {
-                console.log('Immagine aggiornata:', user.img);
-                this.user.img = user.img;
+                console.log('Immagine aggiornata:', user.imgUrl);
+                this.user.imgUrl = user.imgUrl;
               },
               error: (err) => console.error('Errore upload immagine:', err),
             });

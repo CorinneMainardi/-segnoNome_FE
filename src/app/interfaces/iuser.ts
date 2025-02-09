@@ -11,5 +11,5 @@ export interface iUser {
   captcha?: string;
   agree?: boolean;
   favoritesD?: iDictionary[];
-  img?: string;
+  imgUrl?: string;
 }
