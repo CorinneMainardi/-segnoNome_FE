@@ -25,9 +25,10 @@ export class DictionaryComponent {
   size: NzButtonSize = 'small';
   dictionaryVideos: iDictionary[] = [];
   users: iUser[] = [];
-  filteredVideos: iDictionary[] = []; // Nuovo array filtrato
+  filteredVideos: iDictionary[] = [];
   searchTerm: string = '';
   showSearchResults: boolean = false;
+  favorites: iDictionary[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -111,7 +112,7 @@ export class DictionaryComponent {
       this.userSvc.addFavoriteD(favorite.id).subscribe({
         next: (user) => {
           console.log('Segno aggiunto ai preferiti:', user.favoritesD);
-          this.user.favoritesD = user.favoritesD; // ✅ Aggiorna localmente
+          this.favorites = user.favoritesD || [];
         },
         error: (err) => console.error('Errore:', err),
       });

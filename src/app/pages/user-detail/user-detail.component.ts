@@ -24,19 +24,30 @@ export class UserDetailComponent {
     private router: Router,
     private userSvc: UserService
   ) {}
+
   ngOnInit() {
-    // this.autoLogout();
     this.authSvc.restoreUser();
     this.getCurrentUser();
-    if (this.user.favoritesD) this.favorites = this.user.favoritesD;
   }
 
   getCurrentUser() {
     this.userSvc.getCurrentUser().subscribe((response) => {
-      this.user = { ...response }; // ✅ Forza il change detection
+      this.user = { ...response };
       console.log('Dati utente caricati:', this.user);
+      this.getAllFavorites(); // ✅ Carica i preferiti subito dopo aver ottenuto l'utente
     });
   }
+
+  getAllFavorites() {
+    this.userSvc.getAllFavorites().subscribe({
+      next: (favorites) => {
+        this.favorites = favorites; // ✅ Assegna correttamente i preferiti
+        console.log('Preferiti caricati:', this.favorites);
+      },
+      error: (err) => console.error('Errore nel recupero dei preferiti:', err),
+    });
+  }
+
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
