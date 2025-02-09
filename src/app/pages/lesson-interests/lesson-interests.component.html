@@ -1,0 +1,143 @@
+<h1>Impara la LIS grazie alle lezioni one-to-one</h1>
+
+<p>Le videolezioni non fanno al caso tuo?</p>
+<p>
+  Preferisci le lezioni frontali one-to-one o con un piccolo gruppo di tuoi
+  amici?
+</p>
+
+<h3>Compila il form sottostante e verrai ricontattato!</h3>
+
+<nz-card nzTitle="Invia una richiesta">
+  <form (ngSubmit)="submitRequest()">
+    <!-- Nome -->
+    <nz-form-item>
+      <nz-form-control>
+        <nz-input-group nzPrefixIcon="user">
+          <input
+            nz-input
+            placeholder="Nome"
+            [(ngModel)]="request.firstName"
+            name="firstName"
+            required
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Cognome -->
+    <nz-form-item>
+      <nz-form-control>
+        <nz-input-group nzPrefixIcon="user">
+          <input
+            nz-input
+            placeholder="Cognome"
+            [(ngModel)]="request.lastName"
+            name="lastName"
+            required
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Email -->
+    <nz-form-item>
+      <nz-form-control>
+        <nz-input-group nzPrefixIcon="mail">
+          <input
+            nz-input
+            placeholder="Email"
+            [(ngModel)]="request.email"
+            name="email"
+            type="email"
+            required
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Telefono -->
+    <nz-form-item>
+      <nz-form-control>
+        <nz-input-group nzPrefixIcon="phone">
+          <input
+            nz-input
+            placeholder="Telefono"
+            [(ngModel)]="request.phoneNumber"
+            name="phoneNumber"
+            required
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Selezione del tipo di lezione -->
+    <nz-form-item>
+      <nz-form-control>
+        <nz-select
+          [(ngModel)]="request.lessonType"
+          name="lessonType"
+          nzPlaceHolder="Seleziona il tipo di lezione"
+          required
+        >
+          <nz-option nzValue="ONLINE" nzLabel="Online"></nz-option>
+          <nz-option nzValue="IN_PERSON" nzLabel="In presenza"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Città (solo per lezioni in presenza) -->
+    <nz-form-item *ngIf="isInPerson()">
+      <nz-form-control>
+        <nz-input-group nzPrefixIcon="environment">
+          <input
+            nz-input
+            placeholder="Città (Obbligatoria per lezioni in presenza)"
+            [(ngModel)]="request.city"
+            name="city"
+            required
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Giorni preferiti -->
+    <nz-form-item>
+      <nz-form-control>
+        <nz-input-group nzPrefixIcon="calendar">
+          <input
+            nz-input
+            placeholder="Giorni preferiti (es. Lunedì, Mercoledì)"
+            [(ngModel)]="request.preferredDays"
+            name="preferredDays"
+            required
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Orari preferiti -->
+    <nz-form-item>
+      <nz-form-control>
+        <nz-input-group nzPrefixIcon="clock-circle">
+          <input
+            nz-input
+            placeholder="Orari preferiti (es. 10:00 - 12:00)"
+            [(ngModel)]="request.preferredTimes"
+            name="preferredTimes"
+            required
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- Pulsante di invio -->
+    <nz-form-item>
+      <nz-form-control>
+        <button nz-button nzType="primary" [disabled]="!isFormValid()">
+          Invia
+        </button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-card>

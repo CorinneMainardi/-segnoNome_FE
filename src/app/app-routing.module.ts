@@ -84,11 +84,7 @@ const routes: Routes = [
         (m) => m.UnauthorizedModule
       ),
   },
-  {
-    path: 'lessons',
-    loadChildren: () =>
-      import('./pages/lessons/lessons.module').then((m) => m.LessonsModule),
-  },
+
   {
     path: 'home',
     loadChildren: () =>
@@ -121,6 +117,24 @@ const routes: Routes = [
       import('./pages/user-detail/user-detail.module').then(
         (m) => m.UserDetailModule
       ),
+  },
+  {
+    path: 'lesson-interests',
+    loadChildren: () =>
+      import('./pages/lesson-interests/lesson-interests.module').then(
+        (m) => m.LessonInterestsModule
+      ),
+    canActivate: [RoleGuard],
+    data: { roles: ['ROLE_USER'] },
+  },
+  {
+    path: 'requests-management',
+    loadChildren: () =>
+      import('./pages/requests-management/requests-management.module').then(
+        (m) => m.RequestsManagementModule
+      ),
+    canActivate: [RoleGuard],
+    data: { roles: ['ROLE_CREATOR'] },
   },
 
   {

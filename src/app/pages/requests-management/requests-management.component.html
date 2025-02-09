@@ -1,0 +1,160 @@
+<nz-card nzTitle="Gestione Richieste">
+  <!-- NOTIFICHE CUSTOM -->
+  <div
+    *ngIf="showNotificationFlag"
+    [class]="
+      notificationType === 'success'
+        ? 'notification-success'
+        : 'notification-error'
+    "
+  >
+    {{ notificationMessage }}
+  </div>
+
+  <nz-divider></nz-divider>
+
+  <!-- SEZIONE: RICHIESTE DA GESTIRE -->
+  <nz-card nzTitle="🔴 Richieste da Gestire" *ngIf="pendingRequests.length > 0">
+    <nz-table
+      [nzData]="pendingRequests"
+      [nzBordered]="true"
+      [nzSize]="'middle'"
+    >
+      <thead>
+        <tr>
+          <th nzWidth="15%">Nome</th>
+          <th nzWidth="15%">Email</th>
+          <th nzWidth="10%">Telefono</th>
+          <th nzWidth="10%">Contattato</th>
+          <th nzWidth="10%">Interessato</th>
+          <th nzWidth="10%">Da ricontattare</th>
+          <th nzWidth="10%">Gestita</th>
+          <th nzWidth="20%">Note</th>
+          <th nzWidth="15%">Azioni</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let request of pendingRequests">
+          <td>{{ request.firstName }} {{ request.lastName }}</td>
+          <td>{{ request.email }}</td>
+          <td>{{ request.phoneNumber }}</td>
+
+          <!-- Dropdown per i campi booleani -->
+          <td>
+            <nz-select [(ngModel)]="request.contacted" name="contacted">
+              <nz-option [nzValue]="true" nzLabel="Sì"></nz-option>
+              <nz-option [nzValue]="false" nzLabel="No"></nz-option>
+            </nz-select>
+          </td>
+          <td>
+            <nz-select [(ngModel)]="request.interested" name="interested">
+              <nz-option [nzValue]="true" nzLabel="Sì"></nz-option>
+              <nz-option [nzValue]="false" nzLabel="No"></nz-option>
+            </nz-select>
+          </td>
+          <td>
+            <nz-select
+              [(ngModel)]="request.toBeRecontacted"
+              name="toBeRecontacted"
+            >
+              <nz-option [nzValue]="true" nzLabel="Sì"></nz-option>
+              <nz-option [nzValue]="false" nzLabel="No"></nz-option>
+            </nz-select>
+          </td>
+          <td>
+            <nz-select [(ngModel)]="request.handled" name="handled">
+              <nz-option [nzValue]="true" nzLabel="Sì"></nz-option>
+              <nz-option [nzValue]="false" nzLabel="No"></nz-option>
+            </nz-select>
+          </td>
+
+          <!-- Textarea per le note -->
+          <td>
+            <textarea
+              nz-input
+              [(ngModel)]="request.note"
+              rows="2"
+              placeholder="Aggiungi una nota"
+            ></textarea>
+          </td>
+
+          <td>
+            <nz-row [nzGutter]="8">
+              <nz-col>
+                <button
+                  nz-button
+                  nzType="primary"
+                  nzSize="small"
+                  (click)="updateRequest(request)"
+                >
+                  🔄 Aggiorna
+                </button>
+              </nz-col>
+              <nz-col>
+                <button
+                  nz-button
+                  nzType="default"
+                  nzDanger
+                  nzSize="small"
+                  (click)="confirmDeleteRequest(request.id!)"
+                >
+                  🗑️ Elimina
+                </button>
+              </nz-col>
+            </nz-row>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+
+  <nz-divider></nz-divider>
+
+  <!-- SEZIONE: RICHIESTE GESTITE -->
+  <nz-card nzTitle="✅ Richieste Gestite" *ngIf="handledRequests.length > 0">
+    <nz-table
+      [nzData]="handledRequests"
+      [nzBordered]="true"
+      [nzSize]="'middle'"
+    >
+      <thead>
+        <tr>
+          <th nzWidth="15%">Nome</th>
+          <th nzWidth="15%">Email</th>
+          <th nzWidth="10%">Telefono</th>
+          <th nzWidth="10%">Contattato</th>
+          <th nzWidth="10%">Interessato</th>
+          <th nzWidth="10%">Da ricontattare</th>
+          <th nzWidth="20%">Note</th>
+          <th nzWidth="15%">Azioni</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let request of handledRequests">
+          <td>{{ request.firstName }} {{ request.lastName }}</td>
+          <td>{{ request.email }}</td>
+          <td>{{ request.phoneNumber }}</td>
+          <td>{{ request.contacted ? "Sì" : "No" }}</td>
+          <td>{{ request.interested ? "Sì" : "No" }}</td>
+          <td>{{ request.toBeRecontacted ? "Sì" : "No" }}</td>
+          <td>{{ request.note }}</td>
+          <td>
+            <nz-row [nzGutter]="8">
+              <nz-col>
+                <button
+                  nz-button
+                  nzType="default"
+                  nzDanger
+                  nzSize="small"
+                  (click)="confirmDeleteRequest(request.id!)"
+                >
+                  🗑️ Elimina
+                </button>
+              </nz-col>
+            </nz-row>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+</nz-card>

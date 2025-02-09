@@ -1,0 +1,109 @@
+/* Stile base */
+nz-card {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* Stile per la tabella */
+nz-table {
+  width: 100%;
+  overflow-x: auto; /* Scorrimento orizzontale su schermi piccoli */
+}
+
+/* Responsività per schermi piccoli */
+@media (max-width: 768px) {
+  nz-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  thead {
+    display: none; /* Nasconde l'intestazione della tabella per dispositivi piccoli */
+  }
+
+  tbody tr {
+    display: block;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    background: #f9f9f9;
+  }
+
+  tbody td {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+    font-size: 14px;
+  }
+
+  /* Pulsanti allineati al centro */
+  .nz-row {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .nz-col {
+    flex: 1 1 45%;
+    min-width: 100px;
+  }
+}
+
+/* Migliora la visualizzazione dei pulsanti su schermi piccoli */
+button[nz-button] {
+  width: 100%;
+  font-size: 14px;
+}
+
+/* Stile per il selettore dropdown */
+nz-select {
+  width: 100%;
+}
+
+/* Stile per la textarea */
+textarea[nz-input] {
+  width: 100%;
+  min-height: 50px;
+  resize: vertical;
+}
+
+/* Stile delle notifiche personalizzate */
+.notification-success {
+  background-color: #dff0d8;
+  color: #3c763d;
+  padding: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.notification-error {
+  background-color: #f2dede;
+  color: #a94442;
+  padding: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  border-radius: 5px;
+}
+
+/* Stile per la conferma eliminazione */
+.confirm-box {
+  background: #fff3cd;
+  padding: 15px;
+  border: 1px solid #856404;
+  border-radius: 8px;
+  margin-top: 15px;
+  text-align: center;
+}
+
+.confirm-box p {
+  font-weight: bold;
+  color: #856404;
+}
+
+.confirm-box button {
+  margin: 5px;
+}

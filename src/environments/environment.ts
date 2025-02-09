@@ -5,4 +5,5 @@ export const environment = {
   dictionaryUrl: 'http://localhost:8080/api/dictionary',
   usersUrl: ' http://localhost:8080/api/auth/users',
   userUrl: ' http://localhost:8080/api/auth/me',
+  lessonInterestUrl: 'http://localhost:8080/api/lesson-interest',
 };

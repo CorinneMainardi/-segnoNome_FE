@@ -1,0 +1,38 @@
+// Stile per dispositivi mobili
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  p {
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  nz-card {
+    width: 90%;
+    margin: auto;
+  }
+
+  button {
+    width: 100%;
+  }
+}
+
+// Stile per desktop
+@media (min-width: 601px) {
+  nz-card {
+    width: 60%;
+    margin: auto;
+  }
+
+  button {
+    width: auto;
+  }
+}
