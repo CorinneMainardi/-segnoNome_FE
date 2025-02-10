@@ -8,20 +8,18 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class PaymentService {
-  private paympaymentUrl = environment.paymentUrl;
+  private paymentUrl = environment.paymentUrl;
 
   constructor(private http: HttpClient) {}
 
   addPaymentMethod(payment: iPaymentMethod): Observable<iPaymentMethod> {
     return this.http.post<iPaymentMethod>(
-      `${this.paympaymentUrl}/add`,
+      `${this.paymentUrl}/addPayment`,
       payment
     );
   }
 
   getUserPayments(userId: number): Observable<iPaymentMethod[]> {
-    return this.http.get<iPaymentMethod[]>(
-      `${this.paympaymentUrl}/user/${userId}`
-    );
+    return this.http.get<iPaymentMethod[]>(`${this.paymentUrl}/user/${userId}`);
   }
 }

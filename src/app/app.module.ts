@@ -20,7 +20,6 @@ import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { tokenInterceptor } from './auth/token.interceptor';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { StaticPagesModule } from './static-pages/static-pages.module';
-import { VideoclassesManageModule } from './pages/videoclasses-manage/videoclasses-manage.module';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 registerLocaleData(en);

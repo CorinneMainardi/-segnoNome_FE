@@ -85,7 +85,7 @@ export class VideoclassesComponent implements OnInit {
           }
 
           const payment: iPaymentMethod = {
-            userId: user.id,
+            userId: user.id, // ✅ Mantiene userId coerente con il backend
             ...this.paymentForm.value,
           };
 
