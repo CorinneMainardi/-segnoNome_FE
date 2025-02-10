@@ -17,7 +17,7 @@ import { iPaymentMethod } from '../../interfaces/i-payment-method';
 })
 export class VideoclassesComponent implements OnInit {
   isPlaying = false;
-
+  videoPresentation!: iVideoClass | null;
   videoClass!: iVideoClass;
   id!: number;
   user!: iUser;
@@ -32,6 +32,7 @@ export class VideoclassesComponent implements OnInit {
   //Modulo pagamento
   paymentForm: FormGroup;
   paymentSuccess = false;
+  showPaymentForm = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -56,9 +57,13 @@ export class VideoclassesComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    this.videoClassSvc.videoClasses$.subscribe((videoClasses) => {
-      this.videoClasses = videoClasses;
+    this.videoClassSvc.getAllVideoClasses().subscribe((videoClasses) => {
+      // ✅ Separiamo il video con ID 52 e il resto dei video per il carosello
+      this.videoPresentation =
+        videoClasses.find((video) => video.id === 52) || null;
+      this.videoClasses = videoClasses.filter((video) => video.id !== 52);
     });
+
     this.videoClassSvc.getAllVideoClasses().subscribe();
     this.userSvc.getAllUser().subscribe((user) => (this.users = user));
 
@@ -74,7 +79,9 @@ export class VideoclassesComponent implements OnInit {
       }
     });
   }
-
+  togglePaymentForm() {
+    this.showPaymentForm = !this.showPaymentForm; // ✅ Mostra/nasconde il form
+  }
   submitPayment() {
     if (this.paymentForm.valid) {
       this.userSvc.getCurrentUser().subscribe({
@@ -85,7 +92,7 @@ export class VideoclassesComponent implements OnInit {
           }
 
           const payment: iPaymentMethod = {
-            userId: user.id, // ✅ Mantiene userId coerente con il backend
+            userId: user.id,
             ...this.paymentForm.value,
           };
 
@@ -93,6 +100,8 @@ export class VideoclassesComponent implements OnInit {
             next: (res) => {
               console.log('Metodo di pagamento aggiunto:', res);
               this.paymentSuccess = true; // ✅ Segna il pagamento come avvenuto
+              this.showPaymentForm = false; // ✅ Nasconde il form dopo il pagamento
+              this.videoPresentation = null; //nasconde il video di resentazione
             },
             error: (err) => console.error('Errore nel pagamento:', err),
           });

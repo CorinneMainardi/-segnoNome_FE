@@ -1,19 +1,41 @@
 <h1>Videolezioni dove e quando vuoi</h1>
 <p>
   Qui troverai delle videolezioni registrate, che ti forniranno le basi per
-  poter segnare
+  poter segnare.
 </p>
+@if(videoPresentation && !paymentSuccess){
 <p>
   Se desideri, invece, prendere lezioni in presenza, clicca
   <a [routerLink]="['/lessons']">qui</a>
 </p>
 
-<!--INSERISCI IL VIDEO DI PRESENTAZIONE -->
+<nz-card *ngIf="videoPresentation" nzTitle="Introduzione">
+  <div class="video-container">
+    <video
+      #introVideo
+      [src]="videoPresentation.videoClassUrl"
+      width="100%"
+      height="auto"
+      controls
+    >
+      Il tuo browser non supporta il tag video.
+    </video>
+  </div>
 
+  <div class="video-info">
+    <h3>{{ videoPresentation.title }}</h3>
+    <p>{{ videoPresentation.description }}</p>
+  </div>
+</nz-card>
+}
 <h3>Ti abbiamo conquistato?</h3>
-<p>Acquista il nostro corso</p>
-<!--Aggiungi bottone acquista e if se preme bottone allora  si apre metodo di pagamento -->
+<p>Acquista il nostro corso, al costo di 50 euro</p>
 
+<button nz-button nzType="primary" (click)="togglePaymentForm()">
+  {{ showPaymentForm ? "Nascondi Pagamento" : "Acquista" }}
+</button>
+
+@if(showPaymentForm){
 <form [formGroup]="paymentForm" (ngSubmit)="submitPayment()">
   <div>
     <label>Nome intestario Carta</label>
@@ -82,7 +104,7 @@
     Aggiungi Metodo
   </button>
 </form>
-
+}
 <!-- Messaggio di successo -->
 <div *ngIf="paymentSuccess">
   <p style="color: green">✅ Pagamento effettuato con successo!</p>
@@ -128,17 +150,7 @@
           >
             {{ isPlaying ? "⏸️" : "▶️" }}
           </button>
-          <!--
-          <a
-            [routerLink]="['/videoClasses', videoClass.id]"
-            nz-button
-            nzType="default"
-            nzSize="'small'"
-            nzShape="round"
-            (click)="addFavorites()"
-          >
-            <span nz-icon nzType="star" nzTheme="outline"></span> Salva video
-          </a> -->
+          ì
         </div>
       </div>
     </div>
