@@ -8,4 +8,5 @@ export const environment = {
   lessonInterestUrl: 'http://localhost:8080/api/lesson-interest',
   addFavoriteUrl: 'http://localhost:8080/api/auth/add-favorite',
   getFavoritesUrl: 'http://localhost:8080/api/auth/favorites',
+  paymentUrl: 'http://localhost:8080/api/payments',
 };

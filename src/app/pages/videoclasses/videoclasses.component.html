@@ -1,3 +1,92 @@
+<h1>Videolezioni dove e quando vuoi</h1>
+<p>
+  Qui troverai delle videolezioni registrate, che ti forniranno le basi per
+  poter segnare
+</p>
+<p>
+  Se desideri, invece, prendere lezioni in presenza, clicca
+  <a [routerLink]="['/lessons']">qui</a>
+</p>
+
+<!--INSERISCI IL VIDEO DI PRESENTAZIONE -->
+
+<h3>Ti abbiamo conquistato?</h3>
+<p>Acquista il nostro corso</p>
+<!--Aggiungi bottone acquista e if se preme bottone allora  si apre metodo di pagamento -->
+
+<form [formGroup]="paymentForm" (ngSubmit)="submitPayment()">
+  <div>
+    <label>Nome intestario Carta</label>
+    <input formControlName="cardHolderName" type="text" required />
+    <span
+      *ngIf="paymentForm.controls.[cardHolderName].invalid && paymentForm.controls.cardHolderName.touched"
+    >
+      ⚠️ Il nome è obbligatorio
+    </span>
+  </div>
+
+  <div>
+    <label>Numero Carta</label>
+    <input formControlName="cardNumber" type="text" maxlength="16" required />
+    <span
+      *ngIf="
+        paymentForm.controls.cardNumber.invalid &&
+        paymentForm.controls.cardNumber.touched
+      "
+    >
+      ⚠️ Inserisci un numero di carta valido (16 cifre)
+    </span>
+  </div>
+
+  <div>
+    <label>Scadenza (MM/YY)</label>
+    <input
+      formControlName="expirationDate"
+      type="text"
+      maxlength="5"
+      required
+    />
+    <span
+      *ngIf="
+        paymentForm.controls.expirationDate.invalid &&
+        paymentForm.controls.expirationDate.touched
+      "
+    >
+      ⚠️ Inserisci una data valida (MM/YY)
+    </span>
+  </div>
+
+  <div>
+    <label>CVV</label>
+    <input formControlName="cvv" type="text" maxlength="4" required />
+    <span
+      *ngIf="
+        paymentForm.controls.cvv.invalid && paymentForm.controls.cvv.touched
+      "
+    >
+      ⚠️ Inserisci un CVV valido (3 o 4 cifre)
+    </span>
+  </div>
+
+  <div>
+    <label>Tipo di Carta</label>
+    <select formControlName="type">
+      <option value="CREDIT">Carta di Credito</option>
+      <option value="DEBIT">Carta di Debito</option>
+      <option value="PAYPAL">PayPal</option>
+    </select>
+  </div>
+
+  <button type="submit" [disabled]="paymentForm.invalid">
+    Aggiungi Metodo
+  </button>
+</form>
+
+<!-- Messaggio di successo -->
+<div *ngIf="paymentSuccess">
+  <p style="color: green">✅ Pagamento effettuato con successo!</p>
+</div>
+
 <div class="carousel-container">
   <nz-carousel [nzEffect]="strategy" *ngIf="videoClasses.length > 0">
     @for (index of array; track index) {

@@ -10,12 +10,14 @@ import {
 } from 'ng-zorro-antd/carousel';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzCardModule } from 'ng-zorro-antd/card';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [VideoclassesComponent],
   imports: [
     CommonModule,
     VideoclassesRoutingModule,
+    ReactiveFormsModule,
     NzCarouselModule,
     NzIconModule,
     NzCardModule,
