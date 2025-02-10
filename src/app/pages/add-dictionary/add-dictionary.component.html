@@ -44,12 +44,12 @@
     <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="genereErrorTpl">
       <input
         nz-input
-        formControlName="videoClassUrl"
-        placeholder="videoClassUrl"
+        formControlName="dictionaryUrl"
+        placeholder="dictionaryUrl"
       />
       <ng-template #genereErrorTpl let-control>
         <div *ngIf="control.errors?.['required']">
-          Please input videoClassUrl!
+          Please input dictionaryurl!
         </div>
       </ng-template>
     </nz-form-control>

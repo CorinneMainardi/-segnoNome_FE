@@ -24,7 +24,7 @@ export class AddDictionaryComponent {
     this.validateForm = this.fb.group({
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      videoClassUrl: ['', [Validators.required]],
+      dictionaryUrl: ['', [Validators.required]],
     });
   }
   ngOnInit(): void {
