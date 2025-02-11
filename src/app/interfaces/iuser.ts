@@ -12,4 +12,5 @@ export interface iUser {
   agree?: boolean;
   favoritesD?: iDictionary[];
   imgUrl?: string;
+  hasPaid?: boolean;
 }

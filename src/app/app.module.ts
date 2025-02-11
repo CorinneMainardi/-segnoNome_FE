@@ -19,8 +19,8 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { tokenInterceptor } from './auth/token.interceptor';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { StaticPagesModule } from './static-pages/static-pages.module';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { StaticPagesModule } from './static-pages/static-pages.module';
 
 registerLocaleData(en);
 

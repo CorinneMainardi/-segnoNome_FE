@@ -4,7 +4,7 @@ import { iVideoClass } from '../../interfaces/i-video-class';
 import { iUser } from '../../interfaces/iuser';
 import { VideoclassesService } from '../../services/videoclasses.service';
 import { AuthService } from '../../auth/auth.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { NzButtonSize } from 'ng-zorro-antd/button';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -29,34 +29,47 @@ export class VideoclassesComponent implements OnInit {
   videoClasses: iVideoClass[] = [];
   users: iUser[] = [];
 
-  //Modulo pagamento
-  paymentForm: FormGroup;
+  // Stato pagamento
   paymentSuccess = false;
   showPaymentForm = false;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private videoClassSvc: VideoclassesService,
     private userSvc: UserService,
     private authSvc: AuthService,
-    private fb: FormBuilder,
-    private PaymentSvc: PaymentService
-  ) {
-    this.paymentForm = this.fb.group({
-      cardNumber: [
-        '',
-        [Validators.required, Validators.pattern('^[0-9]{16}$')],
-      ],
-      expirationDate: [
-        '',
-        [Validators.required, Validators.pattern('^(0[1-9]|1[0-2])/[0-9]{2}$')],
-      ], // MM/YY
-      cvv: ['', [Validators.required, Validators.pattern('^[0-9]{3,4}$')]],
-      cardHolderName: ['', Validators.required],
-      type: ['CREDIT', Validators.required],
-    });
-  }
+    private paymentSvc: PaymentService
+  ) {}
+
   ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      if (params['paymentSuccess'] === 'true') {
+        alert(
+          '✅ Pagamento avvenuto con successo! Ora puoi accedere ai video.'
+        );
+
+        // 🔹 Rimuove il parametro paymentSuccess dall'URL per evitare di mostrarlo dopo il refresh
+        this.router.navigate([], {
+          queryParams: { paymentSuccess: null },
+          queryParamsHandling: 'merge',
+        });
+      }
+    });
+    // Controlla se l'utente ha già pagato
+    this.userSvc.getUserHasPaid().subscribe({
+      next: (hasPaid) => {
+        this.paymentSuccess = hasPaid;
+        if (hasPaid) {
+          this.showPaymentForm = false;
+          this.videoPresentation = null;
+        }
+      },
+      error: (err) => {
+        console.error('❌ Errore nel recupero dello stato di pagamento:', err);
+      },
+    });
+
     this.videoClassSvc.getAllVideoClasses().subscribe((videoClasses) => {
       // ✅ Separiamo il video con ID 52 e il resto dei video per il carosello
       this.videoPresentation =
@@ -67,10 +80,9 @@ export class VideoclassesComponent implements OnInit {
     this.videoClassSvc.getAllVideoClasses().subscribe();
     this.userSvc.getAllUser().subscribe((user) => (this.users = user));
 
-    // this.autoLogout();
     this.authSvc.restoreUser();
     this.getThisUser();
-    this.loadLastViewedVideo(); // Recupera l'ultimo video visto all'avvio
+    this.loadLastViewedVideo();
 
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
@@ -79,36 +91,59 @@ export class VideoclassesComponent implements OnInit {
       }
     });
   }
+
   togglePaymentForm() {
-    this.showPaymentForm = !this.showPaymentForm; // ✅ Mostra/nasconde il form
+    this.showPaymentForm = !this.showPaymentForm;
   }
-  submitPayment() {
-    if (this.paymentForm.valid) {
-      this.userSvc.getCurrentUser().subscribe({
-        next: (user) => {
-          if (!user || !user.id) {
-            console.error('Errore: utente non valido o ID mancante.');
-            return;
-          }
 
-          const payment: iPaymentMethod = {
-            userId: user.id,
-            ...this.paymentForm.value,
-          };
+  // 🔹 Carica il pulsante di PayPal dinamicamente
+  startPayPalPayment() {
+    const token = localStorage.getItem('accessData'); // 🔥 Recupera il token JWT
+    console.log('🔍 Token JWT che verrà inviato a PayPal:', token);
 
-          this.PaymentSvc.addPaymentMethod(payment).subscribe({
-            next: (res) => {
-              console.log('Metodo di pagamento aggiunto:', res);
-              this.paymentSuccess = true; // ✅ Segna il pagamento come avvenuto
-              this.showPaymentForm = false; // ✅ Nasconde il form dopo il pagamento
-              this.videoPresentation = null; //nasconde il video di resentazione
-            },
-            error: (err) => console.error('Errore nel pagamento:', err),
-          });
-        },
-        error: (err) => console.error('Errore nel recupero utente:', err),
-      });
+    if (!token) {
+      console.error('❌ Nessun token JWT trovato!');
+      alert('Errore: utente non autenticato.');
+      return;
     }
+
+    this.paymentSvc.createPayment().subscribe({
+      next: (paymentUrl) => {
+        if (paymentUrl) {
+          console.log('🔗 Redirect a PayPal:', paymentUrl);
+          window.location.href = paymentUrl; // 🔥 Reindirizza a PayPal
+        } else {
+          console.error('❌ Errore: URL di pagamento non ricevuto!');
+          alert(
+            'Errore nel pagamento: il server non ha restituito un link valido.'
+          );
+        }
+      },
+      error: (err) => {
+        console.error('❌ Errore nella creazione del pagamento:', err);
+        alert('Errore nel pagamento. Riprova più tardi.');
+      },
+    });
+  }
+
+  // 🔹 Conferma il pagamento e aggiorna lo stato dell'utente
+  confirmPaymentSuccess() {
+    this.paymentSvc.setUserHasPaid().subscribe({
+      next: () => {
+        this.paymentSuccess = true;
+        this.showPaymentForm = false;
+        this.videoPresentation = null;
+
+        // 🔹 Reindirizza alla pagina delle videolezioni con un messaggio di successo
+        this.router.navigate(['/videoclasses'], {
+          queryParams: { paymentSuccess: 'true' },
+        });
+      },
+      error: (err) => {
+        console.error("❌ Errore nell'aggiornamento dello stato:", err);
+        alert('Errore nell’aggiornare lo stato del pagamento.');
+      },
+    });
   }
 
   togglePlay(video: HTMLVideoElement) {
@@ -124,8 +159,7 @@ export class VideoclassesComponent implements OnInit {
   loadVideoClass(id: number) {
     this.videoClassSvc.getVideoClassById(id).subscribe((video) => {
       this.videoClass = video;
-      this.userWithFav();
-      this.saveLastViewedVideo(video); // Salva automaticamente l'ultimo video in LocalStorage
+      this.saveLastViewedVideo(video);
     });
   }
 
@@ -136,12 +170,6 @@ export class VideoclassesComponent implements OnInit {
         this.id = user.id!;
       }
     });
-  }
-
-  userWithFav() {
-    if (this.user.id) {
-      this.favorite = this.videoClass;
-    }
   }
 
   saveLastViewedVideo(video: iVideoClass) {
@@ -157,12 +185,6 @@ export class VideoclassesComponent implements OnInit {
     );
     if (storedVideo) {
       this.lastViewedVideo = JSON.parse(storedVideo);
-    }
-  }
-
-  resumeLastViewedVideo() {
-    if (this.lastViewedVideo) {
-      this.loadVideoClass(this.lastViewedVideo.id!);
     }
   }
 }

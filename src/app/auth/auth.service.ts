@@ -37,11 +37,13 @@ export class AuthService {
   isLoggedIn$ = this.authSubject$.pipe(map((accessData) => !!accessData));
 
   // ottengo il token
+  // getToken(): string | null {
+  //   const accessData = localStorage.getItem('accessData');
+  //   return accessData ? JSON.parse(accessData) : null;
+  // }
   getToken(): string | null {
-    const accessData = localStorage.getItem('accessData');
-    return accessData ? JSON.parse(accessData) : null;
+    return localStorage.getItem('accessData'); // ✅ Restituisce direttamente il token senza fare JSON.parse
   }
-
   getUserRole(): string {
     const token = localStorage.getItem('accessData'); // 🔥 Legge solo il token
     if (!token) {
@@ -63,37 +65,57 @@ export class AuthService {
     return this.http.post<iAccessData>(this.registerUrl, newUser);
   }
 
+  // login(authData: Partial<iLoginRequest>) {
+  //   return this.http.post<{ token: string }>(this.loginUrl, authData).pipe(
+  //     tap((response) => {
+  //       console.log('🔥 Login Success:', response);
+
+  //       // ✅ Salva SOLO il token (senza salvare user separatamente)
+  //       localStorage.setItem('accessData', response.token);
+
+  //       // ✅ Estrai ruolo direttamente dal token
+  //       const decodedToken: JwtPayload = jwtDecode(response.token);
+  //       const userRole = decodedToken.roles?.[0] || '';
+
+  //       console.log('🎭 Ruolo estratto dal token:', userRole);
+
+  //       // ✅ Aggiorna il comportamento reattivo con token e ruolo
+  //       const accessData: iAccessData = {
+  //         token: response.token,
+  //         user: {
+  //           firstName: '',
+  //           lastName: '',
+  //           username: '',
+  //           email: '',
+  //           password: '',
+  //           captcha: '',
+  //           agree: false,
+  //         }, // Puoi rimuoverlo se non serve
+  //       };
+
+  //       this.authSubject$.next(accessData);
+
+  //       // ✅ Calcola la scadenza del token e imposta il logout automatico
+  //       const expDate: Date | null = this.jwtHelper.getTokenExpirationDate(
+  //         response.token
+  //       );
+  //       if (!expDate) return;
+  //       this.autoLogout(expDate);
+  //     })
+  //   );
+  // }
   login(authData: Partial<iLoginRequest>) {
     return this.http.post<{ token: string }>(this.loginUrl, authData).pipe(
       tap((response) => {
         console.log('🔥 Login Success:', response);
 
-        // ✅ Salva SOLO il token (senza salvare user separatamente)
+        // ✅ Salviamo solo il token nel localStorage (senza JSON.stringify)
         localStorage.setItem('accessData', response.token);
 
-        // ✅ Estrai ruolo direttamente dal token
-        const decodedToken: JwtPayload = jwtDecode(response.token);
-        const userRole = decodedToken.roles?.[0] || '';
+        // ✅ Notifica l'autenticazione
+        this.authSubject$.next({ token: response.token, user: {} as iUser });
 
-        console.log('🎭 Ruolo estratto dal token:', userRole);
-
-        // ✅ Aggiorna il comportamento reattivo con token e ruolo
-        const accessData: iAccessData = {
-          token: response.token,
-          user: {
-            firstName: '',
-            lastName: '',
-            username: '',
-            email: '',
-            password: '',
-            captcha: '',
-            agree: false,
-          }, // Puoi rimuoverlo se non serve
-        };
-
-        this.authSubject$.next(accessData);
-
-        // ✅ Calcola la scadenza del token e imposta il logout automatico
+        // ✅ Auto logout basato sulla scadenza del token
         const expDate: Date | null = this.jwtHelper.getTokenExpirationDate(
           response.token
         );
