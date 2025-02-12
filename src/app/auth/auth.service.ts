@@ -44,22 +44,30 @@ export class AuthService {
   getToken(): string | null {
     return localStorage.getItem('accessData'); // ✅ Restituisce direttamente il token senza fare JSON.parse
   }
-  getUserRole(): string {
-    const token = localStorage.getItem('accessData'); // 🔥 Legge solo il token
-    if (!token) {
-      console.warn('⚠️ Nessun token trovato in localStorage');
-      return '';
-    }
+  // getUserRole(): string {
+  //   const token = localStorage.getItem('accessData'); // 🔥 Legge solo il token
+  //   if (!token) {
+  //     console.warn('⚠️ Nessun token trovato in localStorage');
+  //     return '';
+  //   }
 
-    try {
-      const decodedToken: JwtPayload = jwtDecode(token);
-      console.log('📜 Token decodificato:', decodedToken);
-      return decodedToken.roles?.[0] || ''; // Se non ci sono ruoli, restituisce ''
-    } catch (error) {
-      console.error('❌ Errore nella decodifica del token:', error);
-      return '';
-    }
+  //   try {
+  //     const decodedToken: JwtPayload = jwtDecode(token);
+  //     console.log('📜 Token decodificato:', decodedToken);
+  //     return decodedToken.roles?.[0] || ''; // Se non ci sono ruoli, restituisce ''
+  //   } catch (error) {
+  //     console.error('❌ Errore nella decodifica del token:', error);
+  //     return '';
+  //   }
+  // }
+
+  getUserRole(): string {
+    const token = this.getToken();
+    if (!token) return '';
+    const decodedToken: any = jwtDecode(token);
+    return decodedToken.roles ? decodedToken.roles[0] : '';
   }
+
   getUserId(): number | null {
     const userData = localStorage.getItem('user');
     if (userData) {
@@ -111,6 +119,8 @@ export class AuthService {
   //     })
   //   );
   // }
+
+  //LOGIN FUNZIONANTE CON PAYPAL
   login(authData: Partial<iLoginRequest>) {
     return this.http.post<{ token: string }>(this.loginUrl, authData).pipe(
       tap((response) => {
@@ -119,7 +129,7 @@ export class AuthService {
         // ✅ Salviamo solo il token nel localStorage (senza JSON.stringify)
         localStorage.setItem('accessData', response.token);
 
-        // ✅ Notifica l'autenticazione
+        //✅ Notifica l'autenticazione
         this.authSubject$.next({ token: response.token, user: {} as iUser });
 
         // ✅ Auto logout basato sulla scadenza del token
@@ -131,6 +141,33 @@ export class AuthService {
       })
     );
   }
+
+  // login(authData: Partial<iLoginRequest>) {
+  //   return this.http.post<{ token: string }>(this.loginUrl, authData).pipe(
+  //     tap((response) => {
+  //       console.log('🔥 Login Success:', response);
+
+  //       // Salva il token nel localStorage
+  //       localStorage.setItem('accessData', response.token);
+
+  //       // Decodifica il token per ottenere i ruoli dell'utente
+  //       const decodedToken: any = jwtDecode(response.token);
+  //       const userRoles: string[] = decodedToken.roles || [];
+
+  //       console.log('Ruoli utente:', userRoles);
+
+  //       // Notifica l'autenticazione
+  //       this.authSubject$.next({ token: response.token, user: {} as iUser });
+
+  //       // Auto logout basato sulla scadenza del token
+  //       const expDate: Date | null = this.jwtHelper.getTokenExpirationDate(
+  //         response.token
+  //       );
+  //       if (!expDate) return;
+  //       this.autoLogout(expDate);
+  //     })
+  //   );
+  // }
 
   logout() {
     this.authSubject$.next(null);

@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { iUser } from '../../interfaces/iuser';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
+  user: iUser | null = null;
   passwordVisible = false;
   validateForm: FormGroup<{
     username: FormControl<string>;
@@ -44,10 +46,28 @@ export class LoginComponent {
       });
     }
   }
+  // login() {
+  //   if (this.validateForm.value) {
+  //     this.authSvc.login(this.validateForm.value).subscribe((data) => {
+  //       this.router.navigate(['/home']);
+  //     });
+  //   }
+  // }
   login() {
-    if (this.validateForm.value) {
-      this.authSvc.login(this.validateForm.value).subscribe((data) => {
-        this.router.navigate(['/home']);
+    if (this.validateForm.valid) {
+      this.authSvc.login(this.validateForm.value).subscribe(() => {
+        const userRoles = this.authSvc.getUserRole();
+        console.log('Ruoli utente:', userRoles);
+
+        if (userRoles.includes('ROLE_ADMIN')) {
+          this.router.navigate(['/dataAnalysis']);
+        } else if (userRoles.includes('ROLE_CREATOR')) {
+          this.router.navigate(['/requests-management']);
+        } else if (userRoles.includes('ROLE_USER')) {
+          this.router.navigate(['/home']);
+        } else {
+          this.router.navigate(['/unauthorized']);
+        }
       });
     }
   }

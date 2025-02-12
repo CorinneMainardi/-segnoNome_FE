@@ -90,7 +90,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/home/home.module').then((m) => m.HomeModule),
     canActivate: [RoleGuard],
-    data: { roles: ['ROLE_CREATOR'] },
+    data: { roles: ['ROLE_USER'] },
   },
 
   {
