@@ -9,4 +9,6 @@ export const environment = {
   addFavoriteUrl: 'http://localhost:8080/api/auth/add-favorite',
   getFavoritesUrl: 'http://localhost:8080/api/auth/favorites',
   paymentUrl: 'http://localhost:8080/api/payments',
+  eventUrl: 'http://localhost:8080/api/events',
+  reservationUrl: 'http://localhost:8080/api/reservations',
 };

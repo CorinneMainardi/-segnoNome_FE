@@ -1,1 +1,35 @@
-<p>home works!</p>
+<div *ngFor="let month of months">
+  <h2>{{ month }}</h2>
+  <nz-carousel [nzDotPosition]="dotPosition">
+    <div nz-carousel-content *ngFor="let event of eventsByMonth[month]">
+      <h3>{{ event.title }}</h3>
+      <p><strong>Data:</strong> {{ event.eventDate }}</p>
+      <p><strong>Luogo:</strong> {{ event.location }}</p>
+      <p><strong>Posti disponibili:</strong> {{ event.availableSeats }}</p>
+
+      <!-- Input per scegliere quanti posti prenotare -->
+      <label>Numero di posti:</label>
+      <input
+        type="number"
+        [(ngModel)]="selectedSeats[event.id!]"
+        [min]="1"
+        [max]="event.availableSeats"
+        placeholder="Inserisci il numero di posti"
+      />
+
+      <button
+        nz-button
+        nzType="primary"
+        [disabled]="
+          !selectedSeats[event.id!] ||
+          selectedSeats[event.id!] > event.availableSeats
+        "
+        (click)="
+          reserveSeat(event.id!, selectedSeats[event.id!], event.availableSeats)
+        "
+      >
+        Prenota
+      </button>
+    </div>
+  </nz-carousel>
+</div>

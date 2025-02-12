@@ -1,0 +1,103 @@
+<h1>Riempi il form per poter aggiungere un nuovo evento</h1>
+
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired> Titolo </nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="titleErrorTpl">
+      <input
+        nz-input
+        formControlName="title"
+        placeholder="Inserisci il titolo dell'evento"
+      />
+      <ng-template #titleErrorTpl let-control>
+        <div *ngIf="control.errors?.['required']">
+          Il titolo è obbligatorio!
+        </div>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired> Data evento </nz-form-label>
+    <nz-form-control
+      [nzSpan]="12"
+      nzHasFeedback
+      [nzErrorTip]="eventDateErrorTpl"
+    >
+      <input nz-input type="date" formControlName="eventDate" />
+      <ng-template #eventDateErrorTpl let-control>
+        <div *ngIf="control.errors?.['required']">La data è obbligatoria!</div>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired> Location </nz-form-label>
+    <nz-form-control
+      [nzSpan]="12"
+      nzHasFeedback
+      [nzErrorTip]="locationErrorTpl"
+    >
+      <input
+        nz-input
+        formControlName="location"
+        placeholder="Inserisci la location dell'evento"
+      />
+      <ng-template #locationErrorTpl let-control>
+        <div *ngIf="control.errors?.['required']">
+          La location è obbligatoria!
+        </div>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired> Descrizione </nz-form-label>
+    <nz-form-control
+      [nzSpan]="12"
+      nzHasFeedback
+      nzErrorTip="Scrivi una descrizione!"
+    >
+      <nz-textarea-count [nzMaxCharacterCount]="2000">
+        <textarea
+          formControlName="description"
+          nz-input
+          rows="2"
+          placeholder="Descrivi l'evento"
+        ></textarea>
+      </nz-textarea-count>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired> Posti disponibili </nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="seatsErrorTpl">
+      <input nz-input type="number" formControlName="availableSeats" min="1" />
+      <ng-template #seatsErrorTpl let-control>
+        <div *ngIf="control.errors?.['required']">
+          Inserisci il numero di posti!
+        </div>
+        <div *ngIf="control.errors?.['min']">Il minimo è 1 posto.</div>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control [nzOffset]="7" [nzSpan]="12">
+      <div *ngIf="successMessage" class="success-message">
+        {{ successMessage }}
+      </div>
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+      <button
+        nz-button
+        nzType="primary"
+        [disabled]="!validateForm.valid"
+        type="submit"
+      >
+        Submit
+      </button>
+      <button nz-button (click)="resetForm($event)">Reset</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>

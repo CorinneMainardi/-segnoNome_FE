@@ -60,7 +60,14 @@ export class AuthService {
       return '';
     }
   }
-
+  getUserId(): number | null {
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      const user = JSON.parse(userData);
+      return user.id || null;
+    }
+    return null;
+  }
   register(newUser: Partial<iUser>) {
     return this.http.post<iAccessData>(this.registerUrl, newUser);
   }

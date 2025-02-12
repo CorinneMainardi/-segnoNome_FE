@@ -112,6 +112,15 @@ const routes: Routes = [
     data: { roles: ['ROLE_CREATOR'] },
   },
   {
+    path: 'add-event',
+    loadChildren: () =>
+      import('./pages/add-event/add-event.module').then(
+        (m) => m.AddEventModule
+      ),
+    canActivate: [RoleGuard],
+    data: { roles: ['ROLE_CREATOR'] },
+  },
+  {
     path: 'user-detail',
     loadChildren: () =>
       import('./pages/user-detail/user-detail.module').then(
@@ -135,6 +144,13 @@ const routes: Routes = [
       ),
     canActivate: [RoleGuard],
     data: { roles: ['ROLE_CREATOR'] },
+  },
+  {
+    path: 'add-event',
+    loadChildren: () =>
+      import('./pages/add-event/add-event.module').then(
+        (m) => m.AddEventModule
+      ),
   },
 
   {
