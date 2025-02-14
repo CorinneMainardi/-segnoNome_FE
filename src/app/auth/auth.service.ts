@@ -80,46 +80,6 @@ export class AuthService {
     return this.http.post<iAccessData>(this.registerUrl, newUser);
   }
 
-  // login(authData: Partial<iLoginRequest>) {
-  //   return this.http.post<{ token: string }>(this.loginUrl, authData).pipe(
-  //     tap((response) => {
-  //       console.log('🔥 Login Success:', response);
-
-  //       // ✅ Salva SOLO il token (senza salvare user separatamente)
-  //       localStorage.setItem('accessData', response.token);
-
-  //       // ✅ Estrai ruolo direttamente dal token
-  //       const decodedToken: JwtPayload = jwtDecode(response.token);
-  //       const userRole = decodedToken.roles?.[0] || '';
-
-  //       console.log('🎭 Ruolo estratto dal token:', userRole);
-
-  //       // ✅ Aggiorna il comportamento reattivo con token e ruolo
-  //       const accessData: iAccessData = {
-  //         token: response.token,
-  //         user: {
-  //           firstName: '',
-  //           lastName: '',
-  //           username: '',
-  //           email: '',
-  //           password: '',
-  //           captcha: '',
-  //           agree: false,
-  //         }, // Puoi rimuoverlo se non serve
-  //       };
-
-  //       this.authSubject$.next(accessData);
-
-  //       // ✅ Calcola la scadenza del token e imposta il logout automatico
-  //       const expDate: Date | null = this.jwtHelper.getTokenExpirationDate(
-  //         response.token
-  //       );
-  //       if (!expDate) return;
-  //       this.autoLogout(expDate);
-  //     })
-  //   );
-  // }
-
   //LOGIN FUNZIONANTE CON PAYPAL
   login(authData: Partial<iLoginRequest>) {
     return this.http.post<{ token: string }>(this.loginUrl, authData).pipe(
@@ -141,33 +101,6 @@ export class AuthService {
       })
     );
   }
-
-  // login(authData: Partial<iLoginRequest>) {
-  //   return this.http.post<{ token: string }>(this.loginUrl, authData).pipe(
-  //     tap((response) => {
-  //       console.log('🔥 Login Success:', response);
-
-  //       // Salva il token nel localStorage
-  //       localStorage.setItem('accessData', response.token);
-
-  //       // Decodifica il token per ottenere i ruoli dell'utente
-  //       const decodedToken: any = jwtDecode(response.token);
-  //       const userRoles: string[] = decodedToken.roles || [];
-
-  //       console.log('Ruoli utente:', userRoles);
-
-  //       // Notifica l'autenticazione
-  //       this.authSubject$.next({ token: response.token, user: {} as iUser });
-
-  //       // Auto logout basato sulla scadenza del token
-  //       const expDate: Date | null = this.jwtHelper.getTokenExpirationDate(
-  //         response.token
-  //       );
-  //       if (!expDate) return;
-  //       this.autoLogout(expDate);
-  //     })
-  //   );
-  // }
 
   logout() {
     this.authSubject$.next(null);

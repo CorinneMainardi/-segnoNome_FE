@@ -152,6 +152,7 @@ const routes: Routes = [
         (m) => m.AddEventModule
       ),
   },
+  { path: 'event-manage', loadChildren: () => import('./pages/event-manage/event-manage.module').then(m => m.EventManageModule) },
 
   {
     path: '**',
