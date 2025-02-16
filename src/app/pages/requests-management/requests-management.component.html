@@ -180,8 +180,9 @@
 
 <nz-modal
   [(nzVisible)]="confirmPopupVisible"
+  (nzVisibleChange)="onPopupVisibilityChange($event)"
   nzTitle="⚠️ Conferma eliminazione"
-  (nzOnCancel)="confirmPopupVisible = false"
+  (nzOnCancel)="closeConfirmPopup()"
   [nzFooter]="footerTemplate"
 >
   <div class="delete-modal-content">
@@ -192,7 +193,7 @@
 
   <ng-template #footerTemplate>
     <div class="modal-buttons">
-      <button nz-button nzType="default" (click)="confirmPopupVisible = false">
+      <button nz-button nzType="default" (click)="closeConfirmPopup()">
         ❌ Annulla
       </button>
       <button nz-button nzType="primary" (click)="confirmActionExecution()">
@@ -201,3 +202,6 @@
     </div>
   </ng-template>
 </nz-modal>
+<div *ngIf="showRequestPopup" class="popup-message success-message">
+  ✅ Richiesta inviata con successo. Verrai ricontattato a breve!
+</div>

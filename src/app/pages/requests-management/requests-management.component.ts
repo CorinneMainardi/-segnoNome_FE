@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { iLessonInterest } from '../../interfaces/i-lesson-interest';
 import { LessonInterestService } from '../../services/lesson-interest.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-requests-management',
@@ -14,6 +15,8 @@ export class RequestsManagementComponent {
   notificationType: 'success' | 'error' = 'success';
   showNotificationFlag: boolean = false;
   confirmDeleteId: number | null = null;
+  showRequestPopup = false;
+  requestSuccess = false;
 
   //per il popup di conferma
   confirmPopupVisible = false; // Stato per il popup di conferma
@@ -23,7 +26,10 @@ export class RequestsManagementComponent {
   /** ✅ Oggetto per gestire lo stato di modifica */
   editModes: { [key: number]: boolean } = {}; // ID della richiesta → modalità modifica
 
-  constructor(private lessonInterestSvc: LessonInterestService) {}
+  constructor(
+    private lessonInterestSvc: LessonInterestService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.loadRequests();
@@ -130,7 +136,9 @@ export class RequestsManagementComponent {
     this.lessonInterestSvc.deleteRequest(this.confirmDeleteId).subscribe({
       next: () => {
         this.loadRequests();
-        this.showNotification('success', 'Richiesta eliminata con successo');
+        this.showRequestPopup = true;
+        this.showRequestSuccessMessage();
+        this.hideRequestSuccessMessage();
         this.confirmPopupVisible = false;
       },
       error: () =>
@@ -155,11 +163,46 @@ export class RequestsManagementComponent {
   /**
    * Esegue l'azione confermata e chiude il popup
    */
+  // confirmActionExecution() {
+  //   if (this.confirmAction) {
+  //     this.confirmAction(); // Esegue l'azione salvata
+  //   }
+  //   this.confirmPopupVisible = false; // Chiude il popup
+  //   this.confirmAction = null; // Reset
+  // }
   confirmActionExecution() {
     if (this.confirmAction) {
-      this.confirmAction(); // Esegue l'azione salvata
+      this.confirmAction(); // ✅ Esegue l'azione salvata (es. eliminazione)
     }
-    this.confirmPopupVisible = false; // Chiude il popup
-    this.confirmAction = null; // Reset
+    this.closeConfirmPopup(); // ✅ Chiude il popup dopo l'azione
+  }
+
+  showRequestSuccessMessage() {
+    this.requestSuccess = true;
+    setTimeout(() => {
+      if (this.requestSuccess) {
+        this.requestSuccess = false; //  Nasconde il popup solo se è ancora attivo
+      }
+    }, 3000);
+  }
+  hideRequestSuccessMessage() {
+    setTimeout(() => {
+      if (this.showRequestPopup) {
+        this.showRequestPopup = false;
+      }
+    }, 3000);
+  }
+  closeConfirmPopup() {
+    console.log('Chiusura popup conferma');
+
+    setTimeout(() => {
+      this.confirmPopupVisible = false;
+      this.confirmDeleteId = null;
+      this.confirmAction = null;
+      this.cdr.detectChanges(); // ✅ Forza Angular a rilevare la modifica
+    }, 100); // Piccolo ritardo per permettere l'aggiornamento del DOM
+  }
+  onPopupVisibilityChange(visible: boolean) {
+    console.log('NzModal ha cambiato visibilità:', visible);
   }
 }
