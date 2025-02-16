@@ -15,6 +15,11 @@ export class RequestsManagementComponent {
   showNotificationFlag: boolean = false;
   confirmDeleteId: number | null = null;
 
+  //per il popup di conferma
+  confirmPopupVisible = false; // Stato per il popup di conferma
+  confirmAction: (() => void) | null = null; // Funzione da eseguire dopo conferma
+  confirmMessage: string = ''; // Messaggio dinamico da mostrare
+
   /** ✅ Oggetto per gestire lo stato di modifica */
   editModes: { [key: number]: boolean } = {}; // ID della richiesta → modalità modifica
 
@@ -49,11 +54,6 @@ export class RequestsManagementComponent {
     this.notificationMessage = message;
     this.showNotificationFlag = true;
     setTimeout(() => (this.showNotificationFlag = false), 3000);
-  }
-
-  /** ✅ Conferma eliminazione */
-  confirmDeleteRequest(id: number) {
-    this.confirmDeleteId = id;
   }
 
   /** ✅ Alterna la modalità modifica */
@@ -99,13 +99,39 @@ export class RequestsManagementComponent {
   }
 
   /** ✅ Elimina una richiesta */
+  // deleteRequest() {
+  //   if (this.confirmDeleteId === null) return;
+
+  //   this.lessonInterestSvc.deleteRequest(this.confirmDeleteId).subscribe({
+  //     next: () => {
+  //       this.loadRequests();
+  //       this.showNotification('success', 'Richiesta eliminata con successo');
+  //     },
+  //     error: () =>
+  //       this.showNotification(
+  //         'error',
+  //         "Errore durante l'eliminazione della richiesta"
+  //       ),
+  //   });
+
+  //   this.confirmDeleteId = null;
+  // }
+  confirmDeleteRequest(id: number) {
+    this.confirmDeleteId = id; // ✅ Memorizza l'ID correttamente
+    this.showConfirmPopup(
+      '❗ Sei sicuro di voler eliminare questa richiesta?',
+      () => this.deleteRequest() // ✅ Non passa `id`, usa `confirmDeleteId`
+    );
+  }
+
   deleteRequest() {
-    if (this.confirmDeleteId === null) return;
+    if (this.confirmDeleteId === null) return; // ✅ Evita errori se ID non è impostato
 
     this.lessonInterestSvc.deleteRequest(this.confirmDeleteId).subscribe({
       next: () => {
         this.loadRequests();
         this.showNotification('success', 'Richiesta eliminata con successo');
+        this.confirmPopupVisible = false;
       },
       error: () =>
         this.showNotification(
@@ -114,6 +140,26 @@ export class RequestsManagementComponent {
         ),
     });
 
-    this.confirmDeleteId = null;
+    this.confirmDeleteId = null; // ✅ Reset dell'ID dopo eliminazione
+  }
+
+  /**
+   * Mostra il popup di conferma con un messaggio personalizzato
+   */
+  showConfirmPopup(message: string, action: () => void) {
+    this.confirmMessage = message;
+    this.confirmAction = action;
+    this.confirmPopupVisible = true;
+  }
+
+  /**
+   * Esegue l'azione confermata e chiude il popup
+   */
+  confirmActionExecution() {
+    if (this.confirmAction) {
+      this.confirmAction(); // Esegue l'azione salvata
+    }
+    this.confirmPopupVisible = false; // Chiude il popup
+    this.confirmAction = null; // Reset
   }
 }

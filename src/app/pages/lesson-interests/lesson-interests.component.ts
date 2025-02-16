@@ -8,6 +8,9 @@ import { LessonInterestService } from '../../services/lesson-interest.service';
   styleUrl: './lesson-interests.component.scss',
 })
 export class LessonInterestsComponent {
+  //popup
+  showRequestPopup = false;
+  requestSuccess = false;
   request: iLessonInterest = {
     firstName: '',
     lastName: '',
@@ -21,12 +24,12 @@ export class LessonInterestsComponent {
 
   constructor(private lessonService: LessonInterestService) {}
 
-  // ✅ Controlla se la lezione è "IN_PERSON" per mostrare il campo "Città"
+  // Controlla se la lezione è "IN_PERSON" per mostrare il campo "Città"
   isInPerson(): boolean {
     return this.request.lessonType === 'IN_PERSON';
   }
 
-  // ✅ Controlla se il form è valido
+  //  Controlla se il form è valido
   isFormValid(): boolean {
     return !!(
       this.request.firstName &&
@@ -40,7 +43,7 @@ export class LessonInterestsComponent {
     );
   }
 
-  // ✅ Invia la richiesta
+  // Invia la richiesta
   submitRequest() {
     if (!this.isFormValid()) {
       alert('❌ Compila tutti i campi obbligatori!');
@@ -54,7 +57,10 @@ export class LessonInterestsComponent {
 
     this.lessonService.createRequest(this.request).subscribe({
       next: () => {
-        alert('✅ Richiesta inviata con successo!');
+        this.showRequestPopup = true;
+        this.showRequestSuccessMessage();
+        this.hideRequestSuccessMessage();
+
         this.resetForm();
       },
       error: (error) => {
@@ -65,7 +71,21 @@ export class LessonInterestsComponent {
       },
     });
   }
-
+  showRequestSuccessMessage() {
+    this.requestSuccess = true;
+    setTimeout(() => {
+      if (this.requestSuccess) {
+        this.requestSuccess = false; //  Nasconde il popup solo se è ancora attivo
+      }
+    }, 3000);
+  }
+  hideRequestSuccessMessage() {
+    setTimeout(() => {
+      if (this.showRequestPopup) {
+        this.showRequestPopup = false;
+      }
+    }, 3000);
+  }
   // ✅ Reset del form
   resetForm() {
     this.request = {

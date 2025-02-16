@@ -16,6 +16,7 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { FormsModule } from '@angular/forms';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 @NgModule({
   declarations: [RequestsManagementComponent],
@@ -33,6 +34,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     NzDividerModule,
     NzTableModule,
     NzSelectModule,
+    NzModalModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }, provideAnimationsAsync()],
 })

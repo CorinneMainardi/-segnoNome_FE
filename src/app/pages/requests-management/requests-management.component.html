@@ -177,3 +177,27 @@
     </nz-table>
   </nz-card>
 </nz-card>
+
+<nz-modal
+  [(nzVisible)]="confirmPopupVisible"
+  nzTitle="⚠️ Conferma eliminazione"
+  (nzOnCancel)="confirmPopupVisible = false"
+  [nzFooter]="footerTemplate"
+>
+  <div class="delete-modal-content">
+    <p *ngIf="confirmDeleteId">
+      ❗ Sei sicuro di voler rimuovere questa richiesta?
+    </p>
+  </div>
+
+  <ng-template #footerTemplate>
+    <div class="modal-buttons">
+      <button nz-button nzType="default" (click)="confirmPopupVisible = false">
+        ❌ Annulla
+      </button>
+      <button nz-button nzType="primary" (click)="confirmActionExecution()">
+        ✅ Elimina
+      </button>
+    </div>
+  </ng-template>
+</nz-modal>
