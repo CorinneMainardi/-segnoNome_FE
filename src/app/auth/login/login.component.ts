@@ -8,6 +8,7 @@ import {
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { iUser } from '../../interfaces/iuser';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -73,31 +74,43 @@ export class LoginComponent {
   //   }
   // }
 
-  login() {
+  login(): void {
     if (this.validateForm.valid) {
-      this.authSvc.login(this.validateForm.value).subscribe({
-        next: () => {
-          const userRoles = this.authSvc.getUserRole();
-          console.log('Ruoli utente:', userRoles);
+      this.authSvc
+        .login(this.validateForm.value)
+        .pipe(
+          catchError((err) => {
+            console.error('❌ Errore durante il login:', err);
 
-          if (userRoles.includes('ROLE_ADMIN')) {
-            this.router.navigate(['/dataAnalysis']);
-          } else if (userRoles.includes('ROLE_CREATOR')) {
-            this.router.navigate(['/requests-management']);
-          } else if (userRoles.includes('ROLE_USER')) {
-            this.router.navigate(['/home']);
-          } else {
-            this.router.navigate(['/unauthorized']);
+            //gestisco gli errori
+            if (err.status === 401) {
+              this.errorMessage = '❌ Credenziali errate. Riprova.';
+            } else if (err.status === 500) {
+              this.errorMessage =
+                '❌ Errore interno del server. Riprova più tardi.';
+            } else {
+              this.errorMessage =
+                '❌ Errore di connessione. Riprova più tardi.';
+            }
+            return of(null); // 🔹 Blocca l'errore senza interrompere il flusso
+          })
+        )
+        .subscribe((response) => {
+          if (response) {
+            const userRoles = this.authSvc.getUserRole();
+            console.log('Ruoli utente:', userRoles);
+
+            if (userRoles.includes('ROLE_ADMIN')) {
+              this.router.navigate(['/dataAnalysis']);
+            } else if (userRoles.includes('ROLE_CREATOR')) {
+              this.router.navigate(['/requests-management']);
+            } else if (userRoles.includes('ROLE_USER')) {
+              this.router.navigate(['/home']);
+            } else {
+              this.router.navigate(['/unauthorized']);
+            }
           }
-        },
-        error: (err) => {
-          console.error('❌ Errore durante il login:', err);
-          this.errorMessage =
-            err.status === 401
-              ? '❌ Credenziali errate. Riprova.'
-              : '❌ Errore di connessione. Riprova più tardi.';
-        },
-      });
+        });
     }
   }
 }

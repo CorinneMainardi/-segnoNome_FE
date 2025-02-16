@@ -70,3 +70,6 @@
   Or
   <a routerLink="/register">Register now!</a>
 </form>
+<div *ngIf="errorMessage" style="color: red; margin-bottom: 10px">
+  {{ errorMessage }}
+</div>

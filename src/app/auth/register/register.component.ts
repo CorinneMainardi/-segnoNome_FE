@@ -53,9 +53,7 @@ export class RegisterComponent {
     this.generateCaptcha();
   }
 
-  /**
-   * 🔹 Metodo che genera un Captcha casuale
-   */
+  //genero il captcha
   generateCaptcha(): void {
     const characters =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -64,9 +62,7 @@ export class RegisterComponent {
     ).join('');
   }
 
-  /**
-   * 🔹 Metodo chiamato quando l'utente preme "Register"
-   */
+  //submit del form
   submitForm(): void {
     if (this.validateForm.valid) {
       this.register();
@@ -81,9 +77,7 @@ export class RegisterComponent {
     }
   }
 
-  /**
-   * 🔹 Metodo che esegue la registrazione solo se il Captcha è corretto e il regolamento accettato
-   */
+  //register solo se captcha corretto e regolamentio accettato
   register(): void {
     if (!this.validateForm.value.agree) {
       this.errorMessage = '❌ Devi accettare il regolamento per registrarti.';

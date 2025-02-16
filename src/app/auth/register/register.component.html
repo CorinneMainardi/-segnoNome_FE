@@ -1,13 +1,5 @@
 <h1>Registrati per poter imparare la LIS</h1>
 
-<!-- Messaggi di errore/successo -->
-<div *ngIf="successMessage" style="color: green; margin-bottom: 10px">
-  {{ successMessage }}
-</div>
-<div *ngIf="errorMessage" style="color: red; margin-bottom: 10px">
-  {{ errorMessage }}
-</div>
-
 <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
   <nz-form-item>
     <nz-form-label nzFor="firstName" nzRequired>Nome</nz-form-label>
@@ -92,3 +84,10 @@
     </nz-form-control>
   </nz-form-item>
 </form>
+<!-- Messaggi di errore/successo -->
+<div *ngIf="successMessage" style="color: green; margin-bottom: 10px">
+  {{ successMessage }}
+</div>
+<div *ngIf="errorMessage" style="color: red; margin-bottom: 10px">
+  {{ errorMessage }}
+</div>
