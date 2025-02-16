@@ -23,6 +23,8 @@ export class UserDetailComponent {
   getFavoritesUrl: string = environment.getFavoritesUrl;
   successMessages: { [key: number]: string } = {};
   errorMessages: { [key: number]: string } = {};
+  globalMessage: string | null = null;
+  globalMessageType: string = 'success-message';
 
   constructor(
     private authSvc: AuthService,
@@ -53,40 +55,80 @@ export class UserDetailComponent {
       error: (err) => console.error('Errore nel recupero dei preferiti:', err),
     });
   }
+  // removeFavoriteD(id: number) {
+  //   this.http.delete<void>(`${environment.getFavoritesUrl}/${id}`).subscribe({
+  //     next: () => {
+  //       // ✅ Aggiorna la lista locale dei preferiti
+  //       this.favorites = this.favorites.filter((video) => video.id !== id);
+  //       console.log(`✅ Video con ID ${id} rimosso dai preferiti.`);
+
+  //       // ✅ Mostra il messaggio di successo
+  //       this.successMessages[id] = '✅ Video eliminato con successo!';
+  //       setTimeout(() => delete this.successMessages[id], 3000); // Nasconde il messaggio dopo 3 secondi
+  //     },
+  //     error: (err) => {
+  //       console.error('❌ Errore durante la rimozione del preferito:', err);
+  //       this.errorMessages[id] = "❌ Errore durante l'eliminazione del video.";
+  //       setTimeout(() => delete this.errorMessages[id], 3000);
+  //     },
+  //   });
+  // }
   removeFavoriteD(id: number) {
     this.http.delete<void>(`${environment.getFavoritesUrl}/${id}`).subscribe({
       next: () => {
-        // ✅ Aggiorna la lista locale dei preferiti
         this.favorites = this.favorites.filter((video) => video.id !== id);
         console.log(`✅ Video con ID ${id} rimosso dai preferiti.`);
-
-        // ✅ Mostra il messaggio di successo
-        this.successMessages[id] = '✅ Video eliminato con successo!';
-        setTimeout(() => delete this.successMessages[id], 3000); // Nasconde il messaggio dopo 3 secondi
+        this.showPopupMessage(
+          '✅ Video rimosso dai preferiti con successo!',
+          'success-message'
+        );
       },
       error: (err) => {
         console.error('❌ Errore durante la rimozione del preferito:', err);
-        this.errorMessages[id] = "❌ Errore durante l'eliminazione del video.";
-        setTimeout(() => delete this.errorMessages[id], 3000);
+        this.showPopupMessage(
+          '❌ Errore durante la rimozione del video.',
+          'error-message'
+        );
       },
     });
   }
 
+  // confirmRemoveFavorite(video: iDictionary) {
+  //   if (video.id === undefined) {
+  //     console.error('❌ Errore: ID del video non valido.');
+  //     return;
+  //   }
+
+  //   if (
+  //     confirm(
+  //       `❗ Sei sicuro di voler rimuovere il video "${video.title}" dai preferiti?`
+  //     )
+  //   ) {
+  //     this.removeFavoriteD(video.id);
+  //   }
+  // }
   confirmRemoveFavorite(video: iDictionary) {
     if (video.id === undefined) {
       console.error('❌ Errore: ID del video non valido.');
+      this.showPopupMessage('❌ Errore: ID non valido.', 'error-message');
       return;
     }
 
     if (
       confirm(
-        `❗ Sei sicuro di voler rimuovere il video "${video.title}" dai preferiti?`
+        `❗ Sei sicuro di voler rimuovere "${video.title}" dai preferiti?`
       )
     ) {
       this.removeFavoriteD(video.id);
     }
   }
-
+  showPopupMessage(message: string, type: string) {
+    this.globalMessage = message;
+    this.globalMessageType = type;
+    setTimeout(() => {
+      this.globalMessage = null;
+    }, 3000); // Nasconde il messaggio dopo 3 secondi
+  }
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {

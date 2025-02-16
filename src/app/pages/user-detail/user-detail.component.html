@@ -26,6 +26,9 @@
   <h1>Segni dizionario</h1>
   <p>Qui troverai i segni che hai salvato</p>
 </div>
+<div *ngIf="globalMessage" class="popup-message {{ globalMessageType }}">
+  {{ globalMessage }}
+</div>
 @if(favorites.length>0){
 <div class="container">
   <div *ngFor="let fav of favorites">
