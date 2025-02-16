@@ -29,9 +29,39 @@
 <div *ngIf="globalMessage" class="popup-message {{ globalMessageType }}">
   {{ globalMessage }}
 </div>
+
 @if(favorites.length>0){
 <div class="container">
   <div *ngFor="let fav of favorites">
+    <nz-modal
+      [(nzVisible)]="confirmDeleteVisible"
+      nzTitle="⚠️ Conferma eliminazione"
+      (nzOnCancel)="confirmDeleteVisible = false"
+      [nzFooter]="footerTemplate"
+    >
+      <div class="delete-modal-content">
+        <p *ngIf="videoToDelete">
+          ❗ Sei sicuro di voler rimuovere <strong>{{ fav.title }}</strong> dai
+          preferiti?
+        </p>
+      </div>
+
+      <ng-template #footerTemplate>
+        <div class="modal-buttons">
+          <button
+            nz-button
+            nzType="default"
+            (click)="confirmDeleteVisible = false"
+          >
+            ❌ Annulla
+          </button>
+          <button nz-button nzType="primary" (click)="confirmDeleteVideo()">
+            ✅ Elimina
+          </button>
+        </div>
+      </ng-template>
+    </nz-modal>
+
     <div class="video-card">
       <!-- Video -->
       <div class="video-container">

@@ -135,10 +135,11 @@
 
         <nz-form-item>
           <nz-form-control [nzOffset]="7" [nzSpan]="12">
-            <div *ngIf="successMessage" class="success-message">
+            <div *ngIf="successMessage" class="popup-message success">
               {{ successMessage }}
             </div>
-            <div *ngIf="errorMessage" class="error-message">
+
+            <div *ngIf="errorMessage" class="popup-message error">
               {{ errorMessage }}
             </div>
 

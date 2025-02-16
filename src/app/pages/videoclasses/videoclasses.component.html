@@ -27,15 +27,14 @@
     <p>{{ videoPresentation.description }}</p>
   </div>
 </nz-card>
-}
+
 <h3>Ti abbiamo conquistato?</h3>
 <p>Acquista il nostro corso, al costo di 50 euro</p>
 
 <button nz-button nzType="primary" (click)="togglePaymentForm()">
   {{ showPaymentForm ? "Nascondi Pagamento" : "Acquista" }}
 </button>
-
-@if(showPaymentForm) {
+} @if(showPaymentForm) {
 <div id="paypal-button-container">
   <button nz-button nzType="primary" (click)="startPayPalPayment()">
     Paga con PayPal
@@ -43,9 +42,9 @@
 </div>
 }
 
-<!-- Messaggio di successo -->
-<div *ngIf="paymentSuccess">
-  <p style="color: green">✅ Pagamento effettuato con successo!</p>
+<!-- Messaggio di avvenuto pagamento -->
+<div *ngIf="showPaymentPopup" class="popup-message success-message">
+  ✅ Pagamento effettuato con successo!
 </div>
 
 @if(paymentSuccess){

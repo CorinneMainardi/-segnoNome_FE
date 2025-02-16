@@ -26,6 +26,10 @@ export class UserDetailComponent {
   globalMessage: string | null = null;
   globalMessageType: string = 'success-message';
 
+  //queste sono le variabili che mi servono per la conferma dell'eliminazione
+  confirmDeleteVisible = false; //  Controlla se il popup è visibile
+  videoToDelete: iDictionary | null = null; // Salva il video selezionato per l'eliminazione
+
   constructor(
     private authSvc: AuthService,
     private router: Router,
@@ -114,14 +118,17 @@ export class UserDetailComponent {
       return;
     }
 
-    if (
-      confirm(
-        `❗ Sei sicuro di voler rimuovere "${video.title}" dai preferiti?`
-      )
-    ) {
-      this.removeFavoriteD(video.id);
-    }
+    this.videoToDelete = video; //salva il video da eliminare
+    this.confirmDeleteVisible = true; //mostra il popoup
   }
+  confirmDeleteVideo() {
+    if (this.videoToDelete && this.videoToDelete.id !== undefined) {
+      this.removeFavoriteD(this.videoToDelete.id);
+    }
+    this.confirmDeleteVisible = false; // Chiude il popup
+    this.videoToDelete = null; // Resetta il video selezionato
+  }
+
   showPopupMessage(message: string, type: string) {
     this.globalMessage = message;
     this.globalMessageType = type;

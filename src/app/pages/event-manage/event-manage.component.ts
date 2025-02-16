@@ -77,7 +77,7 @@ export class EventManageComponent {
           .updateEvent(this.editingEvent.id, updatedEvent)
           .subscribe({
             next: () => {
-              this.successMessage = '✅ Evento aggiornato con successo!';
+              this.showSuccessMessage('✅ Evento aggiornato con successo!');
               this.errorMessage = null;
               this.editingEvent = null; // Reset dell'evento in modifica
               this.validateForm.reset(); // Reset del form
@@ -88,8 +88,9 @@ export class EventManageComponent {
                 "❌ Errore durante l'aggiornamento dell'evento",
                 err
               );
-              this.errorMessage =
-                "❌ Errore durante l'aggiornamento dell'evento";
+              this.showErrorMessage(
+                "❌ Errore durante l'aggiornamento dell'evento"
+              );
               this.successMessage = null;
             },
           });
@@ -125,5 +126,14 @@ export class EventManageComponent {
     e.preventDefault();
     this.validateForm.reset();
     this.editingEvent = null;
+  }
+  showSuccessMessage(message: string) {
+    this.successMessage = message;
+    setTimeout(() => (this.successMessage = null), 3000); // Nasconde il messaggio dopo 3 sec
+  }
+
+  showErrorMessage(message: string) {
+    this.errorMessage = message;
+    setTimeout(() => (this.errorMessage = null), 3000); // Nasconde il messaggio dopo 3 sec
   }
 }

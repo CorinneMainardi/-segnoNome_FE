@@ -28,7 +28,7 @@ export class VideoclassesComponent implements OnInit {
   size: NzButtonSize = 'small';
   videoClasses: iVideoClass[] = [];
   users: iUser[] = [];
-
+  showPaymentPopup = false; //per il popup
   // Stato pagamento
   paymentSuccess = false;
   showPaymentForm = false;
@@ -132,8 +132,10 @@ export class VideoclassesComponent implements OnInit {
       next: () => {
         this.paymentSuccess = true;
         this.showPaymentForm = false;
+        this.showPaymentPopup = true;
         this.videoPresentation = null;
-
+        this.showPaymentSuccessMessage();
+        this.hidePaymentSuccessMessage();
         // 🔹 Reindirizza alla pagina delle videolezioni con un messaggio di successo
         this.router.navigate(['/videoclasses'], {
           queryParams: { paymentSuccess: 'true' },
@@ -144,6 +146,21 @@ export class VideoclassesComponent implements OnInit {
         alert('Errore nell’aggiornare lo stato del pagamento.');
       },
     });
+  }
+  showPaymentSuccessMessage() {
+    this.paymentSuccess = true;
+    setTimeout(() => {
+      if (this.paymentSuccess) {
+        this.paymentSuccess = false; // ✅ Nasconde il popup solo se è ancora attivo
+      }
+    }, 3000);
+  }
+  hidePaymentSuccessMessage() {
+    setTimeout(() => {
+      if (this.showPaymentPopup) {
+        this.showPaymentPopup = false;
+      }
+    }, 3000);
   }
 
   togglePlay(video: HTMLVideoElement) {

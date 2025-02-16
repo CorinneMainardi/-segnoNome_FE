@@ -75,6 +75,33 @@
     font-size: 16px;
   }
 }
+.popup-message {
+  position: fixed;
+  top: 80px; // Abbassato leggermente per maggiore visibilità
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 15px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+  z-index: 1000;
+  min-width: 250px;
+  max-width: 400px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0.9;
+
+  &.success {
+    background-color: #28a745;
+    color: white;
+  }
+
+  &.error {
+    background-color: #dc3545;
+    color: white;
+  }
+}
+
 video {
   width: 100%; /* Il video occupa tutta la larghezza della card */
   border-radius: 5px;
