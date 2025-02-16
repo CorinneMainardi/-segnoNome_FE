@@ -45,6 +45,15 @@
         <h3><span class="input">Titolo: </span> {{ fav.title }}</h3>
         <p><span class="input">Descrizione: </span> {{ fav.description }}</p>
       </div>
+      <button
+        class="button-danger"
+        nz-button
+        nzType="default"
+        nzShape="round"
+        (click)="confirmRemoveFavorite(fav)"
+      >
+        <span nz-icon nzType="delete" nzTheme="outline"></span> Delete
+      </button>
     </div>
   </div>
 </div>

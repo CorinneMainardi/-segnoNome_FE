@@ -40,17 +40,30 @@
             <p>
               <span class="input">Descrizione: </span> {{ video.description }}
             </p>
-            <a
-              [routerLink]="['/dictionary', video.id]"
+            <button
               nz-button
-              nzType="default"
+              nzType="default'"
               nzSize="'small'"
-              nzShape="round"
-              (click)="addFavoritesD(video)"
+              nzShape="round'"
+              (click)="addFavoritesD(video, $event)"
             >
               <span nz-icon nzType="star" nzTheme="outline"></span> Salva il
               video
-            </a>
+            </button>
+
+            <!-- Messaggi di successo/errore sotto il video -->
+            <p
+              *ngIf="video.id !== undefined && successMessages[video.id]"
+              class="success-message"
+            >
+              {{ successMessages[video.id] }}
+            </p>
+            <p
+              *ngIf="video.id !== undefined && errorMessages[video.id]"
+              class="error-message"
+            >
+              {{ errorMessages[video.id] }}
+            </p>
           </div>
         </div>
       </div>
@@ -84,16 +97,29 @@
           <p>
             <span class="input">Descrizione: </span> {{ video.description }}
           </p>
-          <a
-            [routerLink]="['/dictionary', video.id]"
+          <button
             nz-button
-            nzType="default"
+            nzType="default'"
             nzSize="'small'"
-            nzShape="round"
-            (click)="addFavoritesD(video)"
+            nzShape="round'"
+            (click)="addFavoritesD(video, $event)"
           >
             <span nz-icon nzType="star" nzTheme="outline"></span> Salva il video
-          </a>
+          </button>
+
+          <!-- Messaggi di successo/errore sotto il video -->
+          <p
+            *ngIf="video.id !== undefined && successMessages[video.id]"
+            class="success-message"
+          >
+            {{ successMessages[video.id] }}
+          </p>
+          <p
+            *ngIf="video.id !== undefined && errorMessages[video.id]"
+            class="error-message"
+          >
+            {{ errorMessages[video.id] }}
+          </p>
         </div>
       </div>
     </div>

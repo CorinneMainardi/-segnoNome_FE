@@ -17,16 +17,25 @@
     <p class="title">{{ event.location }}</p>
     <p class="title">{{ event.eventDate }}</p>
     <p class="title">{{ event.availableSeats }}</p>
+    <div class="button-group">
+      <button
+        class="button-edit"
+        nz-button
+        nzType="default"
+        (click)="editEvent(event)"
+      >
+        ✏️ Edit
+      </button>
 
-    <button nz-button (click)="editEvent(event)">Edit</button>
-    <button
-      nz-button
-      nzType="default"
-      nzShape="round"
-      (click)="confirmDelete(event)"
-    >
-      <span nz-icon nzType="delete" nzTheme="outline"></span> Delete
-    </button>
+      <button
+        class="button-danger"
+        nz-button
+        nzType="default"
+        (click)="confirmDelete(event)"
+      >
+        <span nz-icon nzType="delete" nzTheme="outline"></span> Delete
+      </button>
+    </div>
 
     <!-- Il form si apre solo sotto il video che stai modificando -->
     <div *ngIf="editingEvent?.id === event.id">

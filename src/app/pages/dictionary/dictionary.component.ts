@@ -29,7 +29,8 @@ export class DictionaryComponent {
   searchTerm: string = '';
   showSearchResults: boolean = false;
   favorites: iDictionary[] = [];
-
+  successMessages: { [key: number]: string } = {};
+  errorMessages: { [key: number]: string } = {};
   constructor(
     private route: ActivatedRoute,
     private dictionarySvc: DictionaryService,
@@ -107,18 +108,44 @@ export class DictionaryComponent {
       }
     }
   }
-  addFavoritesD(favorite: iDictionary) {
-    if (this.user && this.user.id && favorite && favorite.id) {
-      this.userSvc.addFavoriteD(favorite.id).subscribe({
-        next: (user) => {
-          console.log('Segno aggiunto ai preferiti:', user.favoritesD);
-          this.favorites = user.favoritesD || [];
-        },
-        error: (err) => console.error('Errore:', err),
-      });
-    } else {
-      console.error('Errore: utente o preferito non validi');
+  addFavoritesD(favorite: iDictionary, event: Event) {
+    event.preventDefault(); // 🔹 Blocca la navigazione indesiderata
+
+    if (
+      !this.user ||
+      !this.user.id ||
+      !favorite ||
+      typeof favorite.id !== 'number'
+    ) {
+      console.error('❌ Errore: utente o video non validi.');
+      return;
     }
+
+    const videoId = favorite.id;
+
+    const alreadyFavorite = this.favorites.some((fav) => fav.id === videoId);
+    if (alreadyFavorite) {
+      this.errorMessages[videoId] = '⚠️ Il video è già tra i tuoi preferiti.';
+      setTimeout(() => delete this.errorMessages[videoId], 3000);
+      return;
+    }
+
+    this.userSvc.addFavoriteD(videoId).subscribe({
+      next: (user) => {
+        console.log('✅ Segno aggiunto ai preferiti:', user.favoritesD);
+        this.favorites = user.favoritesD || [];
+
+        this.successMessages[videoId] =
+          '✅ Video aggiunto ai preferiti con successo!';
+        setTimeout(() => delete this.successMessages[videoId], 3000);
+      },
+      error: (err) => {
+        console.error("❌ Errore durante l'aggiunta ai preferiti:", err);
+        this.errorMessages[videoId] =
+          "❌ Errore durante l'aggiunta ai preferiti.";
+        setTimeout(() => delete this.errorMessages[videoId], 3000);
+      },
+    });
   }
 
   saveLastViewedVideo(video: iDictionary) {

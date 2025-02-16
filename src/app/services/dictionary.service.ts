@@ -11,6 +11,7 @@ import { iVideoClass } from '../interfaces/i-video-class';
 })
 export class DictionaryService {
   dictionaryUrl: string = environment.dictionaryUrl;
+
   private dictionarySubject = new BehaviorSubject<iDictionary[]>([]);
   dictionary$ = this.dictionarySubject.asObservable();
   constructor(private http: HttpClient) {}
@@ -64,7 +65,7 @@ export class DictionaryService {
       );
   }
 
-  // Elimina una storia per indice e aggiorna il BehaviorSubject
+  // Elimina una video  per indice e aggiorna il BehaviorSubject
   deleteDictionaryVideo(id: number) {
     return this.http.delete<void>(`${this.dictionaryUrl}/${id}`).pipe(
       tap(() => {

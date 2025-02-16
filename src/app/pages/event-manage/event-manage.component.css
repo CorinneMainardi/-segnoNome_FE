@@ -1,1 +1,93 @@
-/*# sourceMappingURL=event-manage.component.css.map */
+@charset "UTF-8";
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Spaziatura tra le card */
+  justify-content: center; /* Centra le card */
+}
+
+.container > div {
+  width: 30%; /* Ogni card occuperà circa 1/3 della riga */
+  min-width: 250px; /* Per evitare che diventino troppo piccole */
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  background: #fff;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  justify-content: start;
+  margin-top: 10px;
+}
+
+.button-danger {
+  background-color: #d9534f; /* Rosso Bootstrap */
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+.button-danger:hover {
+  background-color: #c9302c; /* Rosso più scuro al passaggio del mouse */
+}
+
+.button-danger:active {
+  transform: scale(0.95); /* Effetto di pressione */
+}
+
+.button-danger:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(217, 83, 79, 0.5);
+}
+
+.button-edit {
+  background-color: #0275d8;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: background 0.3s ease-in-out, transform 0.2s;
+}
+.button-edit:hover {
+  background-color: #025aa5;
+}
+.button-edit:active {
+  transform: scale(0.95);
+}
+.button-edit:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(2, 117, 216, 0.5);
+}
+.button-edit .icon {
+  font-size: 16px;
+}
+
+video {
+  width: 100%; /* Il video occupa tutta la larghezza della card */
+  border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+  .container > div {
+    width: 45%; /* Su schermi piccoli 2 per riga */
+  }
+}
+@media (max-width: 480px) {
+  .container > div {
+    width: 100%; /* Su mobile le card tornano in colonna */
+  }
+}/*# sourceMappingURL=event-manage.component.css.map */

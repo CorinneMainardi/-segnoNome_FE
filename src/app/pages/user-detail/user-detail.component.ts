@@ -7,7 +7,9 @@ import { AuthService } from '../../auth/auth.service';
 import { iDictionary } from '../../interfaces/i-dictionary';
 import { iUser } from '../../interfaces/iuser';
 import { UserService } from '../../services/user.service';
-import { map } from 'rxjs';
+import { map, tap } from 'rxjs';
+import { environment } from '../../../environments/environment.development';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-user-detail',
@@ -18,11 +20,13 @@ export class UserDetailComponent {
   favorites: iDictionary[] = [];
   id!: number;
   user!: iUser;
+  getFavoritesUrl: string = environment.getFavoritesUrl;
 
   constructor(
     private authSvc: AuthService,
     private router: Router,
-    private userSvc: UserService
+    private userSvc: UserService,
+    private http: HttpClient
   ) {}
 
   ngOnInit() {
@@ -34,18 +38,47 @@ export class UserDetailComponent {
     this.userSvc.getCurrentUser().subscribe((response) => {
       this.user = { ...response };
       console.log('Dati utente caricati:', this.user);
-      this.getAllFavorites(); // ✅ Carica i preferiti subito dopo aver ottenuto l'utente
+      this.getAllFavorites();
     });
   }
 
   getAllFavorites() {
     this.userSvc.getAllFavorites().subscribe({
       next: (favorites) => {
-        this.favorites = favorites; // ✅ Assegna correttamente i preferiti
+        this.favorites = favorites;
         console.log('Preferiti caricati:', this.favorites);
       },
       error: (err) => console.error('Errore nel recupero dei preferiti:', err),
     });
+  }
+  removeFavoriteD(id: number) {
+    this.http
+      .delete<void>(`${this.getFavoritesUrl}/${id}`)
+      .pipe(
+        tap(() => {
+          // ✅ Aggiorna solo la lista dei preferiti, NON il dizionario
+          this.favorites = this.favorites.filter((video) => video.id !== id);
+          console.log(`✅ Video con ID ${id} rimosso dai preferiti.`);
+        })
+      )
+      .subscribe({
+        error: (err) =>
+          console.error('❌ Errore durante la rimozione del preferito:', err),
+      });
+  }
+  confirmRemoveFavorite(video: iDictionary) {
+    if (video.id === undefined) {
+      console.error('❌ Errore: ID del video non valido.');
+      return;
+    }
+
+    if (
+      confirm(
+        `❗ Sei sicuro di voler rimuovere il video "${video.title}" dai preferiti?`
+      )
+    ) {
+      this.removeFavoriteD(video.id);
+    }
   }
 
   onFileSelected(event: any) {
