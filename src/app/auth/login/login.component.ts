@@ -17,6 +17,7 @@ import { iUser } from '../../interfaces/iuser';
 export class LoginComponent {
   user: iUser | null = null;
   passwordVisible = false;
+  errorMessage: string | null = null;
   validateForm: FormGroup<{
     username: FormControl<string>;
     password: FormControl<string>;
@@ -53,21 +54,49 @@ export class LoginComponent {
   //     });
   //   }
   // }
+  // login() {
+  //   if (this.validateForm.valid) {
+  //     this.authSvc.login(this.validateForm.value).subscribe(() => {
+  //       const userRoles = this.authSvc.getUserRole();
+  //       console.log('Ruoli utente:', userRoles);
+
+  //       if (userRoles.includes('ROLE_ADMIN')) {
+  //         this.router.navigate(['/dataAnalysis']);
+  //       } else if (userRoles.includes('ROLE_CREATOR')) {
+  //         this.router.navigate(['/requests-management']);
+  //       } else if (userRoles.includes('ROLE_USER')) {
+  //         this.router.navigate(['/home']);
+  //       } else {
+  //         this.router.navigate(['/unauthorized']);
+  //       }
+  //     });
+  //   }
+  // }
+
   login() {
     if (this.validateForm.valid) {
-      this.authSvc.login(this.validateForm.value).subscribe(() => {
-        const userRoles = this.authSvc.getUserRole();
-        console.log('Ruoli utente:', userRoles);
+      this.authSvc.login(this.validateForm.value).subscribe({
+        next: () => {
+          const userRoles = this.authSvc.getUserRole();
+          console.log('Ruoli utente:', userRoles);
 
-        if (userRoles.includes('ROLE_ADMIN')) {
-          this.router.navigate(['/dataAnalysis']);
-        } else if (userRoles.includes('ROLE_CREATOR')) {
-          this.router.navigate(['/requests-management']);
-        } else if (userRoles.includes('ROLE_USER')) {
-          this.router.navigate(['/home']);
-        } else {
-          this.router.navigate(['/unauthorized']);
-        }
+          if (userRoles.includes('ROLE_ADMIN')) {
+            this.router.navigate(['/dataAnalysis']);
+          } else if (userRoles.includes('ROLE_CREATOR')) {
+            this.router.navigate(['/requests-management']);
+          } else if (userRoles.includes('ROLE_USER')) {
+            this.router.navigate(['/home']);
+          } else {
+            this.router.navigate(['/unauthorized']);
+          }
+        },
+        error: (err) => {
+          console.error('❌ Errore durante il login:', err);
+          this.errorMessage =
+            err.status === 401
+              ? '❌ Credenziali errate. Riprova.'
+              : '❌ Errore di connessione. Riprova più tardi.';
+        },
       });
     }
   }

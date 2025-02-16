@@ -36,7 +36,7 @@ nz-carousel {
 
 h3,
 h2 {
-  color: yellow;
+  color: #64bcb4;
   margin-bottom: 0;
   user-select: none;
 }
@@ -45,5 +45,52 @@ img {
 }
 a,
 span {
-  color: yellow;
+  color: #64bcb4;
+}
+input[type="number"] {
+  width: 100px; // Larghezza adeguata
+  height: 40px; // Altezza per migliore leggibilità
+  font-size: 18px; // Testo più leggibile
+  padding: 5px; // Spazio interno
+  text-align: center; // Centra il numero dentro l'input
+  border: 2px solid #007bff; // Bordo visibile con colore blu
+  border-radius: 5px; // Angoli arrotondati
+  background-color: white; // Sfondo bianco per maggiore contrasto
+  color: black; // Colore del testo
+
+  &:focus {
+    border-color: #0056b3; // Cambia colore al focus
+    outline: none; // Rimuove il bordo di default
+  }
+
+  &::placeholder {
+    color: #aaa; // Colore del placeholder
+    font-size: 14px;
+  }
+
+  /* Per Webkit (Chrome, Safari) */
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    opacity: 1; // Assicura che le frecce per aumentare/diminuire siano visibili
+  }
+}
+
+/* Stile per il bottone */
+button[nz-button] {
+  font-size: 16px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  background-color: #28a745; // Verde per il pulsante
+  color: white;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #218838; // Verde più scuro al passaggio del mouse
+  }
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
 }

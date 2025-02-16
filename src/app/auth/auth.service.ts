@@ -68,19 +68,56 @@ export class AuthService {
     return decodedToken.roles ? decodedToken.roles[0] : '';
   }
 
+  // getUserId(): number | null {
+  //   const userData = localStorage.getItem('user');
+  //   if (userData) {
+  //     const user = JSON.parse(userData);
+  //     return user.id || null;
+  //   }
+  //   return null;
+  // }
+
   getUserId(): number | null {
     const userData = localStorage.getItem('user');
     if (userData) {
-      const user = JSON.parse(userData);
-      return user.id || null;
+      try {
+        const user = JSON.parse(userData);
+        return Number(user.id) || null; // 🔹 Convertiamo SEMPRE in numero
+      } catch (error) {
+        console.error('❌ Errore nel parsing di user da localStorage:', error);
+        return null;
+      }
     }
     return null;
   }
+
   register(newUser: Partial<iUser>) {
     return this.http.post<iAccessData>(this.registerUrl, newUser);
   }
 
   //LOGIN FUNZIONANTE CON PAYPAL
+  // login(authData: Partial<iLoginRequest>) {
+  //   return this.http.post<{ token: string }>(this.loginUrl, authData).pipe(
+  //     tap((response) => {
+  //       console.log('🔥 Login Success:', response);
+
+  //       // ✅ Salviamo solo il token nel localStorage (senza JSON.stringify)
+  //       localStorage.setItem('accessData', response.token);
+
+  //       //✅ Notifica l'autenticazione
+  //       this.authSubject$.next({ token: response.token, user: {} as iUser });
+
+  //       // ✅ Auto logout basato sulla scadenza del token
+  //       const expDate: Date | null = this.jwtHelper.getTokenExpirationDate(
+  //         response.token
+  //       );
+  //       if (!expDate) return;
+  //       this.autoLogout(expDate);
+  //     })
+  //   );
+  // }
+
+  //NUOVO LOGIN DAQ PROVARE
   login(authData: Partial<iLoginRequest>) {
     return this.http.post<{ token: string }>(this.loginUrl, authData).pipe(
       tap((response) => {
@@ -89,7 +126,25 @@ export class AuthService {
         // ✅ Salviamo solo il token nel localStorage (senza JSON.stringify)
         localStorage.setItem('accessData', response.token);
 
-        //✅ Notifica l'autenticazione
+        // ✅ Decodifica il token per ottenere l'ID utente (MODIFICA)
+        try {
+          const decodedToken: any = jwtDecode(response.token);
+          console.log('📜 Token decodificato:', decodedToken);
+
+          // ✅ Estrai l'ID utente dal token (MODIFICA)
+          if (decodedToken.sub) {
+            // Assumi che "sub" sia l'ID utente
+            const user = { id: decodedToken.sub };
+            localStorage.setItem('user', JSON.stringify(user));
+            console.log('✅ User ID salvato in localStorage:', user);
+          } else {
+            console.warn('⚠️ Nessun ID utente trovato nel token JWT!');
+          }
+        } catch (error) {
+          console.error('❌ Errore nella decodifica del token JWT:', error);
+        }
+
+        // ✅ Notifica l'autenticazione
         this.authSubject$.next({ token: response.token, user: {} as iUser });
 
         // ✅ Auto logout basato sulla scadenza del token

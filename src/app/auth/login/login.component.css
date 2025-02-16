@@ -1,0 +1,27 @@
+.login-form {
+  max-width: 350px; /* Riduce la larghezza del form */
+  margin: 50px auto; /* Lo centra orizzontalmente e aggiunge spazio sopra */
+  padding: 20px;
+  background: #fff; /* Sfondo bianco per un look pulito */
+  border-radius: 8px; /* Angoli arrotondati */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombra per effetto elevato */
+}
+
+.login-form-margin {
+  margin-bottom: 12px; /* Distanza tra gli elementi del form */
+}
+
+.login-form-button {
+  width: 100%; /* Rende il bottone della larghezza del form */
+  height: 40px; /* Riduce leggermente l'altezza */
+}
+
+.login-form-forgot {
+  font-size: 14px;
+  color: #1890ff;
+  text-decoration: none;
+}
+
+.login-form-forgot:hover {
+  text-decoration: underline;
+}/*# sourceMappingURL=login.component.css.map */

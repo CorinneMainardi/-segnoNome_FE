@@ -14,8 +14,12 @@ export class ReservationService {
     return this.http.get(`${this.reservationUrl}/user/${userId}`);
   }
 
-  reserveSeat(reservation: any): Observable<any> {
-    return this.http.post(`${this.reservationUrl}`, reservation);
+  reserveSeat(reservationData: {
+    eventId: number;
+    userId: number;
+    seatCount: number;
+  }): Observable<any> {
+    return this.http.post(`${this.reservationUrl}`, reservationData);
   }
 
   deleteReservation(userId: number, eventId: number): Observable<any> {

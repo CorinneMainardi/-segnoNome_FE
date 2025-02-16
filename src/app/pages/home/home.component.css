@@ -1,0 +1,86 @@
+h1 {
+  color: #c38e7d;
+  margin-left: 100px;
+  margin-top: 40px;
+  margin-bottom: 30px;
+}
+
+nz-carousel {
+  margin-left: 100px;
+  margin-top: 100px;
+  width: 700px;
+  height: 423px;
+}
+
+[nz-carousel-content] {
+  text-align: center;
+  height: 423px;
+  width: 700px;
+  background-image: linear-gradient(to right top, #caa9cf, #ac9dc8, #8b93bf, #6988b2, #457da1, #327493, #1e6a84, #056175, #04576a, #034e5f, #024554, #013c49);
+  color: #fff;
+  overflow: hidden;
+}
+
+h3,
+h2 {
+  color: #64bcb4;
+  margin-bottom: 0;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+
+img {
+  height: 200px;
+}
+
+a,
+span {
+  color: #64bcb4;
+}
+
+input[type=number] {
+  width: 100px;
+  height: 40px;
+  font-size: 18px;
+  padding: 5px;
+  text-align: center;
+  border: 2px solid #007bff;
+  border-radius: 5px;
+  background-color: white;
+  color: black;
+  /* Per Webkit (Chrome, Safari) */
+}
+input[type=number]:focus {
+  border-color: #0056b3;
+  outline: none;
+}
+input[type=number]::-moz-placeholder {
+  color: #aaa;
+  font-size: 14px;
+}
+input[type=number]::placeholder {
+  color: #aaa;
+  font-size: 14px;
+}
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+  opacity: 1;
+}
+
+/* Stile per il bottone */
+button[nz-button] {
+  font-size: 16px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+button[nz-button]:hover {
+  background-color: #218838;
+}
+button[nz-button]:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}/*# sourceMappingURL=home.component.css.map */
