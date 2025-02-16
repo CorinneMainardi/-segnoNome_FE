@@ -28,7 +28,7 @@
 </div>
 @if(favorites.length>0){
 <div class="container">
-  <div *ngFor="let fav of favorites" [routerLink]="['/dictionary', fav.id]">
+  <div *ngFor="let fav of favorites">
     <div class="video-card">
       <!-- Video -->
       <div class="video-container">
@@ -38,6 +38,7 @@
           width="320"
           height="180"
           controls
+          [routerLink]="['/dictionary', fav.id]"
         ></video>
       </div>
       <!-- Info -->
@@ -54,6 +55,20 @@
       >
         <span nz-icon nzType="delete" nzTheme="outline"></span> Delete
       </button>
+      <p
+        *ngIf="fav.id !== undefined && successMessages[fav.id]"
+        class="success-message"
+      >
+        {{ successMessages[fav.id] }}
+      </p>
+
+      <!-- Messaggio di errore -->
+      <p
+        *ngIf="fav.id !== undefined && errorMessages[fav.id]"
+        class="error-message"
+      >
+        {{ errorMessages[fav.id] }}
+      </p>
     </div>
   </div>
 </div>

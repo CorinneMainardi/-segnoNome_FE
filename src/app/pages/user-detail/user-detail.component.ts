@@ -21,6 +21,8 @@ export class UserDetailComponent {
   id!: number;
   user!: iUser;
   getFavoritesUrl: string = environment.getFavoritesUrl;
+  successMessages: { [key: number]: string } = {};
+  errorMessages: { [key: number]: string } = {};
 
   constructor(
     private authSvc: AuthService,
@@ -52,20 +54,24 @@ export class UserDetailComponent {
     });
   }
   removeFavoriteD(id: number) {
-    this.http
-      .delete<void>(`${this.getFavoritesUrl}/${id}`)
-      .pipe(
-        tap(() => {
-          // ✅ Aggiorna solo la lista dei preferiti, NON il dizionario
-          this.favorites = this.favorites.filter((video) => video.id !== id);
-          console.log(`✅ Video con ID ${id} rimosso dai preferiti.`);
-        })
-      )
-      .subscribe({
-        error: (err) =>
-          console.error('❌ Errore durante la rimozione del preferito:', err),
-      });
+    this.http.delete<void>(`${environment.getFavoritesUrl}/${id}`).subscribe({
+      next: () => {
+        // ✅ Aggiorna la lista locale dei preferiti
+        this.favorites = this.favorites.filter((video) => video.id !== id);
+        console.log(`✅ Video con ID ${id} rimosso dai preferiti.`);
+
+        // ✅ Mostra il messaggio di successo
+        this.successMessages[id] = '✅ Video eliminato con successo!';
+        setTimeout(() => delete this.successMessages[id], 3000); // Nasconde il messaggio dopo 3 secondi
+      },
+      error: (err) => {
+        console.error('❌ Errore durante la rimozione del preferito:', err);
+        this.errorMessages[id] = "❌ Errore durante l'eliminazione del video.";
+        setTimeout(() => delete this.errorMessages[id], 3000);
+      },
+    });
   }
+
   confirmRemoveFavorite(video: iDictionary) {
     if (video.id === undefined) {
       console.error('❌ Errore: ID del video non valido.');
