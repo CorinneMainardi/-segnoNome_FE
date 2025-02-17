@@ -8,7 +8,8 @@ nz-header {
   position: relative;
   height: 64px;
   padding: 0;
-  background: #38707c;
+  background: rgb(81, 212, 197);
+  background: linear-gradient(90deg, rgb(81, 212, 197) 0%, rgb(40, 159, 146) 22%, rgb(47, 118, 111) 100%, rgb(47, 118, 111) 100%);
   box-shadow: 0 1px 4px #013c49;
 }
 
@@ -21,12 +22,12 @@ nz-header {
 }
 
 .trigger:hover {
-  color: #c38e7d;
+  color: black;
 }
 
 .claim {
   font-family: Parisienne, cursive;
   font-weight: 400;
   font-style: normal;
-  color: #c38e7d;
+  color: black;
 }/*# sourceMappingURL=header.component.css.map */

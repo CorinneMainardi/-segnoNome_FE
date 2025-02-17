@@ -23,8 +23,10 @@
 
 nz-footer {
   box-shadow: 0 1px 4px #013c49;
-  color: #fff;
-  background-color: #013c49;
+  color: black;
+  background: rgb(81, 212, 197);
+  background: linear-gradient(90deg, rgb(81, 212, 197) 0%, rgb(40, 159, 146) 22%, rgb(47, 118, 111) 100%, rgb(47, 118, 111) 100%);
+  box-shadow: 0 1px 4px #013c49;
 }
 
 nz-footer {

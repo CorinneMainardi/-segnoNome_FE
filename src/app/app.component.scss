@@ -63,7 +63,14 @@ nz-layout nz-layout {
   padding-left: 24px;
   overflow: hidden;
   line-height: 64px;
-  background-color: #013c49;
+  background: rgb(25, 122, 116);
+  background: linear-gradient(
+    90deg,
+    rgba(25, 122, 116, 1) 0%,
+    rgba(28, 97, 90, 1) 44%,
+    rgba(89, 223, 210, 1) 99%,
+    rgba(39, 157, 156, 1) 100%
+  );
   transition: all 0.3s;
 }
 
@@ -94,7 +101,14 @@ nz-header {
   position: relative;
   height: 64px;
   padding: 0;
-  background: #fff;
+  background: rgb(25, 122, 116);
+  background: linear-gradient(
+    90deg,
+    rgba(25, 122, 116, 1) 0%,
+    rgba(28, 97, 90, 1) 44%,
+    rgba(89, 223, 210, 1) 99%,
+    rgba(39, 157, 156, 1) 100%
+  );
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 }
 
