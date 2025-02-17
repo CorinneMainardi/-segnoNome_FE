@@ -111,9 +111,13 @@ nz-content {
 ::ng-deep .ant-menu-submenu-title {
   color: black !important; // Cambia colore testo del titolo del submenu
 }
-::ng-deep .ant-menu-item {
-  color: black !important; // Cambia il colore del testo delle voci del submenu
+::ng-deep .ant-menu-submenu .ant-menu-item {
+  color: black !important;
 }
 ::ng-deep .ant-menu-item:hover {
   color: #2a6661 !important; // Cambia colore al passaggio del mouse
+}
+::ng-deep .ant-menu-item-selected {
+  color: black !important;
+  background-color: rgba(42, 102, 97, 0.3) !important;
 }

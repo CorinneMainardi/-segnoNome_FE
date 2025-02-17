@@ -106,10 +106,15 @@ nz-content {
   color: black !important;
 }
 
-::ng-deep .ant-menu-item {
+::ng-deep .ant-menu-submenu .ant-menu-item {
   color: black !important;
 }
 
 ::ng-deep .ant-menu-item:hover {
   color: #2a6661 !important;
+}
+
+::ng-deep .ant-menu-item-selected {
+  color: black !important;
+  background-color: rgba(42, 102, 97, 0.3) !important;
 }/*# sourceMappingURL=app.component.css.map */
