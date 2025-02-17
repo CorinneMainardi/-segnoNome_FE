@@ -151,8 +151,27 @@ const routes: Routes = [
       import('./pages/add-event/add-event.module').then(
         (m) => m.AddEventModule
       ),
+    canActivate: [RoleGuard],
+    data: { roles: ['ROLE_CREATOR'] },
   },
-  { path: 'event-manage', loadChildren: () => import('./pages/event-manage/event-manage.module').then(m => m.EventManageModule) },
+  {
+    path: 'event-manage',
+    loadChildren: () =>
+      import('./pages/event-manage/event-manage.module').then(
+        (m) => m.EventManageModule
+      ),
+    canActivate: [RoleGuard],
+    data: { roles: ['ROLE_CREATOR'] },
+  },
+  {
+    path: 'admin-dashboard',
+    loadChildren: () =>
+      import('./pages/admin-dashboard/admin-dashboard.module').then(
+        (m) => m.AdminDashboardModule
+      ),
+    canActivate: [RoleGuard],
+    data: { roles: ['ROLE_ADMIN'] },
+  },
 
   {
     path: '**',

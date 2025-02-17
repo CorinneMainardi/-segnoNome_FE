@@ -1,0 +1,34 @@
+<div class="admin-dashboard">
+  <h2>📊 Dashboard Amministratore</h2>
+  <p>Di seguito le statistiche in merito a diverse aree dell'applicazione</p>
+
+  <div class="chart-container">
+    <h3>Utenti Registrati vs. Utenti che hanno comprato le videolezioni</h3>
+    <highcharts-chart
+      [Highcharts]="Highcharts"
+      [options]="userChartOptions"
+      style="width: 100%; height: 400px; display: block"
+    >
+    </highcharts-chart>
+  </div>
+
+  <div class="chart-container">
+    <h3>Richieste di Contatto</h3>
+    <highcharts-chart
+      [Highcharts]="Highcharts"
+      [options]="requestChartOptions"
+      style="width: 100%; height: 400px; display: block"
+    >
+    </highcharts-chart>
+  </div>
+
+  <div class="chart-container">
+    <h3>Percentuale di Acquisto</h3>
+    <highcharts-chart
+      [Highcharts]="Highcharts"
+      [options]="paymentChartOptions"
+      style="width: 100%; height: 400px; display: block"
+    >
+    </highcharts-chart>
+  </div>
+</div>
