@@ -16,6 +16,28 @@
   box-shadow: 2px 0 6px #013c49;
 }
 
+nz-sider {
+  background: rgb(42, 102, 97);
+  background: linear-gradient(34deg, rgb(42, 102, 97) 0%, rgb(81, 213, 198) 53%, rgb(30, 83, 77) 100%);
+  position: fixed !important;
+}
+nz-sider ul {
+  background: rgb(42, 102, 97);
+  background: linear-gradient(0deg, rgb(42, 102, 97) 0%, rgb(81, 213, 198) 100%);
+}
+nz-sider nz-submenu {
+  color: black !important;
+}
+nz-sider nz-menu-item {
+  color: black !important;
+}
+
+nz-layout nz-layout {
+  width: 83% !important;
+  position: absolute;
+  right: 0;
+}
+
 .header-trigger {
   height: 64px;
   padding: 20px 24px;
@@ -78,4 +100,16 @@ nz-content {
   padding: 24px;
   background: #fff;
   height: 100%;
+}
+
+::ng-deep .ant-menu-submenu-title {
+  color: black !important;
+}
+
+::ng-deep .ant-menu-item {
+  color: black !important;
+}
+
+::ng-deep .ant-menu-item:hover {
+  color: #2a6661 !important;
 }/*# sourceMappingURL=app.component.css.map */

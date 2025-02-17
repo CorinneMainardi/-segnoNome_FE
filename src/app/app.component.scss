@@ -15,6 +15,35 @@
   min-height: 100vh;
   box-shadow: 2px 0 6px #013c49;
 }
+nz-sider {
+  background: rgb(42, 102, 97);
+  background: linear-gradient(
+    34deg,
+    rgba(42, 102, 97, 1) 0%,
+    rgba(81, 213, 198, 1) 53%,
+    rgba(30, 83, 77, 1) 100%
+  );
+  position: fixed !important;
+  ul {
+    background: rgb(42, 102, 97);
+    background: linear-gradient(
+      0deg,
+      rgba(42, 102, 97, 1) 0%,
+      rgba(81, 213, 198, 1) 100%
+    );
+  }
+  nz-submenu {
+    color: black !important;
+  }
+  nz-menu-item {
+    color: black !important;
+  }
+}
+nz-layout nz-layout {
+  width: 83% !important;
+  position: absolute;
+  right: 0;
+}
 
 .header-trigger {
   height: 64px;
@@ -78,4 +107,13 @@ nz-content {
   padding: 24px;
   background: #fff;
   height: 100%;
+}
+::ng-deep .ant-menu-submenu-title {
+  color: black !important; // Cambia colore testo del titolo del submenu
+}
+::ng-deep .ant-menu-item {
+  color: black !important; // Cambia il colore del testo delle voci del submenu
+}
+::ng-deep .ant-menu-item:hover {
+  color: #2a6661 !important; // Cambia colore al passaggio del mouse
 }

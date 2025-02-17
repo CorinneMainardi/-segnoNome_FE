@@ -122,12 +122,6 @@
       </li>
       <li nz-submenu nzOpen nzTitle="Setting" nzIcon="setting">
         <ul>
-          <!-- <li nz-menu-item nzMatchRouter>
-            <a routerLink="/profile"
-              ><span nz-icon nzType="user" nzTheme="outline"></span> Profile</a
-            >
-          </li> -->
-
           <li nz-menu-item nzMatchRouter>
             <a (click)="logout()"
               ><span nz-icon nzType="poweroff" nzTheme="outline"></span>
@@ -145,6 +139,16 @@
               ><span nz-icon nzType="home" nzTheme="outline"></span> Admin
               Dashboard
             </a>
+          </li>
+        </ul>
+      </li>
+      <li nz-submenu nzOpen nzTitle="Setting" nzIcon="setting">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a (click)="logout()"
+              ><span nz-icon nzType="poweroff" nzTheme="outline"></span>
+              Logout</a
+            >
           </li>
         </ul>
       </li>
