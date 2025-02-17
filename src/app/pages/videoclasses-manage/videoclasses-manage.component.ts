@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { iUser } from '../../interfaces/iuser';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../auth/auth.service';
@@ -18,10 +18,18 @@ export class VideoclassesManageComponent {
   editingVideo: iVideoClass | null = null; // Variabile per gestire il video in modifica
   validateForm!: FormGroup;
 
+  //per il popup
+  confirmDeleteVisible = false; //  Controlla se il popup sia visibile
+  videoToDelete: iVideoClass | null = null; // Salva il video selezionato per l'eliminazione
+  confirmPopupVisible = false;
+  confirmMessage: string = ''; // Messaggio nel popup
+  confirmAction: (() => void) | null = null; // Azione da eseguire dopo la conferma
+
   constructor(
     private videoClassesSvc: VideoclassesService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -43,21 +51,21 @@ export class VideoclassesManageComponent {
     });
   }
 
-  deleteVideo(id: number | undefined): void {
-    if (id !== undefined) {
-      this.videoClassesSvc.deleteVideoClass(id).subscribe({
-        next: () => {
-          this.videoClasses = this.videoClasses.filter((vc) => vc.id !== id);
-        },
-        error: (err) => {
-          console.error("❌ Errore durante l'eliminazione del video", err);
-          this.errorMessage = "Errore durante l'eliminazione del video";
-        },
-      });
-    } else {
-      console.error('❌ Video id is undefined!');
-    }
-  }
+  // deleteVideo(id: number | undefined): void {
+  //   if (id !== undefined) {
+  //     this.videoClassesSvc.deleteVideoClass(id).subscribe({
+  //       next: () => {
+  //         this.videoClasses = this.videoClasses.filter((vc) => vc.id !== id);
+  //       },
+  //       error: (err) => {
+  //         console.error("❌ Errore durante l'eliminazione del video", err);
+  //         this.errorMessage = "Errore durante l'eliminazione del video";
+  //       },
+  //     });
+  //   } else {
+  //     console.error('❌ Video id is undefined!');
+  //   }
+  // }
 
   editVideo(video: iVideoClass): void {
     this.editingVideo = video;
@@ -90,15 +98,74 @@ export class VideoclassesManageComponent {
       console.log('❌ Il form non è valido');
     }
   }
-  confirmDelete(video: iVideoClass) {
-    if (confirm(`Sei sicuro di voler eliminare il video "${video.title}"?`)) {
-      this.deleteVideo(video.id);
-    }
-  }
+  // confirmDelete(video: iVideoClass) {
+  //   this.videoToDelete = video; // ✅ Salva il video da eliminare
+  //   this.confirmDeleteVisible = true; // ✅ Mostra il popup
+  // }
+
   // Metodo per resettare il form
   resetForm(e: MouseEvent): void {
     e.preventDefault();
     this.validateForm.reset();
     this.editingVideo = null;
+  }
+  // confirmDeleteVideo() {
+  //   if (this.videoToDelete && this.videoToDelete.id !== undefined) {
+  //     this.deleteVideo(this.videoToDelete.id);
+  //   }
+  //   this.confirmDeleteVisible = false; // Chiude il popup
+  //   this.videoToDelete = null; // Resetta il video selezionato
+  // }
+  showConfirmPopup(message: string, action: () => void) {
+    this.confirmMessage = message;
+    this.confirmAction = action;
+    this.confirmPopupVisible = true;
+    this.cdr.detectChanges(); // Forza l'aggiornamento della UI
+  }
+
+  /** ✅ Esegue l'azione confermata e chiude il popup */
+  confirmActionExecution() {
+    if (this.confirmAction) {
+      this.confirmAction(); // Esegue l'azione salvata (es. eliminazione)
+    }
+    this.closeConfirmPopup(); // Chiude il popup
+  }
+
+  /** ✅ Funzione per chiudere il popup e resettare i dati */
+  closeConfirmPopup() {
+    console.log('Chiusura popup conferma');
+    this.confirmPopupVisible = false;
+    this.confirmMessage = '';
+    this.confirmAction = null;
+    this.cdr.detectChanges();
+  }
+
+  /** ✅ Mostra il popup di conferma per eliminare un video */
+  confirmDelete(video: iVideoClass) {
+    this.showConfirmPopup(
+      `❗ Sei sicuro di voler eliminare "${video.title}"?`,
+      () => this.deleteVideo(video.id)
+    );
+  }
+
+  /** ✅ Elimina un video */
+  deleteVideo(id: number | undefined): void {
+    if (id !== undefined) {
+      this.videoClassesSvc.deleteVideoClass(id).subscribe({
+        next: () => {
+          this.videoClasses = this.videoClasses.filter((vc) => vc.id !== id);
+          console.log(`✅ Video con ID ${id} eliminato con successo.`);
+        },
+        error: (err) => {
+          console.error("❌ Errore durante l'eliminazione del video", err);
+          this.errorMessage = "Errore durante l'eliminazione del video";
+        },
+      });
+    } else {
+      console.error('❌ Video id is undefined!');
+    }
+  }
+  onPopupVisibilityChange(visible: boolean) {
+    console.log('NzModal ha cambiato visibilità:', visible);
   }
 }

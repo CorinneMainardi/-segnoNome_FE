@@ -12,6 +12,28 @@
 @if(dictionary.length > 0) {
 <div class="container">
   <div *ngFor="let video of dictionary">
+    <nz-modal
+      [(nzVisible)]="confirmPopupVisible"
+      (nzVisibleChange)="onPopupVisibilityChange($event)"
+      nzTitle="⚠️ Conferma eliminazione"
+      (nzOnCancel)="closeConfirmPopup()"
+      [nzFooter]="footerTemplate"
+    >
+      <div class="delete-modal-content">
+        <p>❗ {{ confirmMessage }}</p>
+      </div>
+
+      <ng-template #footerTemplate>
+        <div class="modal-buttons">
+          <button nz-button nzType="default" (click)="closeConfirmPopup()">
+            ❌ Annulla
+          </button>
+          <button nz-button nzType="primary" (click)="confirmActionExecution()">
+            ✅ Elimina
+          </button>
+        </div>
+      </ng-template>
+    </nz-modal>
     <video width="320" height="240" controls>
       <source [src]="video.dictionaryUrl" type="video/mp4" />
       Your browser does not support the video tag.

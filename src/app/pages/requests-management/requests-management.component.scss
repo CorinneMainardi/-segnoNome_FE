@@ -4,27 +4,36 @@ nz-card {
   margin-bottom: 20px;
 }
 
-/* Stile per la tabella */
 nz-table {
   width: 100%;
-  overflow-x: auto; /* Scorrimento orizzontale su schermi piccoli */
-  border-collapse: collapse;
+  overflow-x: auto; /* Permette lo scrolling se serve */
+  display: block; /* Previene problemi di ridimensionamento */
+  max-width: 100%;
 }
-
 /* Miglioramenti generali */
+
 thead th {
   text-align: center;
   background: #f5f5f5;
   padding: 10px;
-}
-
-tbody tr {
-  border-bottom: 1px solid #ddd;
+  white-space: nowrap; /* Impedisce la compressione delle intestazioni */
+  font-size: 14px; /* Migliora la leggibilità */
 }
 
 tbody td {
   padding: 10px;
   text-align: center;
+  font-size: 14px;
+  word-break: break-word; /* Previene overflow delle note */
+}
+td.note-column {
+  max-width: 200px; /* Impedisce la compressione */
+  min-width: 150px;
+  word-wrap: break-word;
+}
+
+tbody tr {
+  border-bottom: 1px solid #ddd;
 }
 
 /* Migliora la visibilità della textarea */
@@ -55,6 +64,52 @@ nz-select nz-option:hover {
 button[nz-button] {
   font-size: 14px;
   min-width: 100px;
+}
+@media (min-width: 1024px) {
+  td.note-column {
+    max-width: 300px;
+  }
+}
+
+/* 📌 Responsività per schermi medi */
+@media (max-width: 1024px) {
+  td.note-column {
+    max-width: 200px;
+  }
+}
+
+/* 📌 Responsività per schermi piccoli */
+@media (max-width: 768px) {
+  nz-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  thead {
+    display: none; /* Nasconde le intestazioni della tabella su schermi piccoli */
+  }
+
+  tbody tr {
+    display: block;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    background: #f9f9f9;
+  }
+
+  tbody td {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+    font-size: 14px;
+  }
+
+  td.note-column {
+    max-width: 100%;
+    min-width: auto;
+  }
 }
 
 /* Miglior layout dei pulsanti */

@@ -115,4 +115,51 @@ video {
   .container > div {
     width: 100%; /* Su mobile le card tornano in colonna */
   }
+}
+::ng-deep .ant-modal {
+  border-radius: 10px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+  max-width: 400px;
+}
+
+::ng-deep .ant-modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  text-align: center;
+}
+
+::ng-deep .ant-modal-header {
+  background: #f56c6c;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 10px 10px 0 0;
+}
+
+::ng-deep .modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  padding-top: 10px;
+}
+
+::ng-deep .modal-buttons button {
+  padding: 8px 15px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+::ng-deep .ant-btn-primary {
+  background-color: #f56c6c !important;
+  border: none;
+}
+
+::ng-deep .ant-btn-primary:hover {
+  background-color: #e04b4b !important;
+}
+
+::ng-deep .ant-modal-footer {
+  display: block !important;
 }/*# sourceMappingURL=event-manage.component.css.map */

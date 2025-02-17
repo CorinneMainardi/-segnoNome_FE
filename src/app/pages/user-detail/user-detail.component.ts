@@ -27,7 +27,7 @@ export class UserDetailComponent {
   globalMessageType: string = 'success-message';
 
   //queste sono le variabili che mi servono per la conferma dell'eliminazione
-  confirmDeleteVisible = false; //  Controlla se il popup è visibile
+  confirmDeleteVisible = false; //  Controlla se il popup sia visibile
   videoToDelete: iDictionary | null = null; // Salva il video selezionato per l'eliminazione
 
   constructor(
@@ -59,24 +59,7 @@ export class UserDetailComponent {
       error: (err) => console.error('Errore nel recupero dei preferiti:', err),
     });
   }
-  // removeFavoriteD(id: number) {
-  //   this.http.delete<void>(`${environment.getFavoritesUrl}/${id}`).subscribe({
-  //     next: () => {
-  //       // ✅ Aggiorna la lista locale dei preferiti
-  //       this.favorites = this.favorites.filter((video) => video.id !== id);
-  //       console.log(`✅ Video con ID ${id} rimosso dai preferiti.`);
 
-  //       // ✅ Mostra il messaggio di successo
-  //       this.successMessages[id] = '✅ Video eliminato con successo!';
-  //       setTimeout(() => delete this.successMessages[id], 3000); // Nasconde il messaggio dopo 3 secondi
-  //     },
-  //     error: (err) => {
-  //       console.error('❌ Errore durante la rimozione del preferito:', err);
-  //       this.errorMessages[id] = "❌ Errore durante l'eliminazione del video.";
-  //       setTimeout(() => delete this.errorMessages[id], 3000);
-  //     },
-  //   });
-  // }
   removeFavoriteD(id: number) {
     this.http.delete<void>(`${environment.getFavoritesUrl}/${id}`).subscribe({
       next: () => {
@@ -97,20 +80,6 @@ export class UserDetailComponent {
     });
   }
 
-  // confirmRemoveFavorite(video: iDictionary) {
-  //   if (video.id === undefined) {
-  //     console.error('❌ Errore: ID del video non valido.');
-  //     return;
-  //   }
-
-  //   if (
-  //     confirm(
-  //       `❗ Sei sicuro di voler rimuovere il video "${video.title}" dai preferiti?`
-  //     )
-  //   ) {
-  //     this.removeFavoriteD(video.id);
-  //   }
-  // }
   confirmRemoveFavorite(video: iDictionary) {
     if (video.id === undefined) {
       console.error('❌ Errore: ID del video non valido.');

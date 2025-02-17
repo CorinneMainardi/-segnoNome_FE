@@ -12,6 +12,7 @@ import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 @NgModule({
   declarations: [EventManageComponent],
@@ -25,6 +26,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     NzButtonModule,
     NzCheckboxModule,
     NzSelectModule,
+    NzModalModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }, provideAnimationsAsync()],
 })

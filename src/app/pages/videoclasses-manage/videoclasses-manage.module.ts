@@ -13,6 +13,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 @NgModule({
   declarations: [VideoclassesManageComponent],
@@ -26,6 +27,7 @@ import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
     NzButtonModule,
     NzCheckboxModule,
     NzSelectModule,
+    NzModalModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }, provideAnimationsAsync()],
 })

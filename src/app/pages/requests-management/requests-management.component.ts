@@ -74,7 +74,7 @@ export class RequestsManagementComponent {
         contacted: request.contacted || false, // ✅ Evita valori `undefined`
         interested: request.interested || false,
         toBeRecontacted: request.toBeRecontacted || false,
-        handled: request.handled || false,
+        handled: request.handled, // ✅ Rimuoviamo `|| false` per evitare falsi positivi
         note: request.note ? request.note.trim() : '', // ✅ Assicurati che `note` non sia null
       })
       .subscribe({
@@ -83,7 +83,8 @@ export class RequestsManagementComponent {
 
           this.editModes[request.id!] = false;
 
-          if (updatedRequest.handled) {
+          if (updatedRequest.handled === true) {
+            // ✅ Controlliamo esplicitamente `handled`
             this.pendingRequests = this.pendingRequests.filter(
               (r) => r.id !== request.id
             );
@@ -104,24 +105,6 @@ export class RequestsManagementComponent {
       });
   }
 
-  /** ✅ Elimina una richiesta */
-  // deleteRequest() {
-  //   if (this.confirmDeleteId === null) return;
-
-  //   this.lessonInterestSvc.deleteRequest(this.confirmDeleteId).subscribe({
-  //     next: () => {
-  //       this.loadRequests();
-  //       this.showNotification('success', 'Richiesta eliminata con successo');
-  //     },
-  //     error: () =>
-  //       this.showNotification(
-  //         'error',
-  //         "Errore durante l'eliminazione della richiesta"
-  //       ),
-  //   });
-
-  //   this.confirmDeleteId = null;
-  // }
   confirmDeleteRequest(id: number) {
     this.confirmDeleteId = id; // ✅ Memorizza l'ID correttamente
     this.showConfirmPopup(
@@ -160,16 +143,6 @@ export class RequestsManagementComponent {
     this.confirmPopupVisible = true;
   }
 
-  /**
-   * Esegue l'azione confermata e chiude il popup
-   */
-  // confirmActionExecution() {
-  //   if (this.confirmAction) {
-  //     this.confirmAction(); // Esegue l'azione salvata
-  //   }
-  //   this.confirmPopupVisible = false; // Chiude il popup
-  //   this.confirmAction = null; // Reset
-  // }
   confirmActionExecution() {
     if (this.confirmAction) {
       this.confirmAction(); // ✅ Esegue l'azione salvata (es. eliminazione)

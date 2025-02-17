@@ -12,6 +12,28 @@
 @if(events.length > 0) {
 <div class="container">
   <div *ngFor="let event of events">
+    <nz-modal
+      [(nzVisible)]="confirmPopupVisible"
+      (nzVisibleChange)="onPopupVisibilityChange($event)"
+      nzTitle="⚠️ Conferma eliminazione"
+      (nzOnCancel)="closeConfirmPopup()"
+      [nzFooter]="footerTemplate"
+    >
+      <div class="delete-modal-content">
+        <p>❗ {{ confirmMessage }}</p>
+      </div>
+
+      <ng-template #footerTemplate>
+        <div class="modal-buttons">
+          <button nz-button nzType="default" (click)="closeConfirmPopup()">
+            ❌ Annulla
+          </button>
+          <button nz-button nzType="primary" (click)="confirmActionExecution()">
+            ✅ Elimina
+          </button>
+        </div>
+      </ng-template>
+    </nz-modal>
     <p class="title">{{ event.title }}</p>
     <p class="title">{{ event.description }}</p>
     <p class="title">{{ event.location }}</p>
