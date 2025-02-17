@@ -101,7 +101,7 @@ export class LoginComponent {
             console.log('Ruoli utente:', userRoles);
 
             if (userRoles.includes('ROLE_ADMIN')) {
-              this.router.navigate(['/admin-dashboardng']);
+              this.router.navigate(['/admin-dashboard']);
             } else if (userRoles.includes('ROLE_CREATOR')) {
               this.router.navigate(['/requests-management']);
             } else if (userRoles.includes('ROLE_USER')) {

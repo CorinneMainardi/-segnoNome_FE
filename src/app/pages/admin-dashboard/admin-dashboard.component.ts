@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { PaymentService } from '../../services/payment.service';
 import { LessonInterestService } from '../../services/lesson-interest.service';
@@ -9,7 +9,7 @@ import Highcharts from 'highcharts';
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss',
 })
-export class AdminDashboardComponent {
+export class AdminDashboardComponent implements OnInit {
   Highcharts: typeof Highcharts = Highcharts;
 
   totalUsers: number = 0;
@@ -30,37 +30,93 @@ export class AdminDashboardComponent {
     private lessonsSvc: LessonInterestService
   ) {}
 
+  ngOnInit() {
+    this.loadData();
+  }
   loadData() {
+    let usersLoaded = false;
+    let requestsLoaded = false;
+    let handledLoaded = false;
+    let pendingLoaded = false;
+    let paymentLoaded = false;
     //recupero gli utenti
     this.userSvc.getAllUser().subscribe((users) => {
       this.totalUsers = users.length;
-      this.calculatePaymentPercentage();
-      this.updateCharts();
+      usersLoaded = true;
+      this.tryUpdateCharts(
+        usersLoaded,
+        requestsLoaded,
+        handledLoaded,
+        pendingLoaded,
+        paymentLoaded
+      );
     });
     //richieste ricevute
     this.lessonsSvc.getAllRequests().subscribe((requests) => {
       this.totalRequests = requests.length;
-      this.updateCharts();
+      this.tryUpdateCharts(
+        usersLoaded,
+        requestsLoaded,
+        handledLoaded,
+        pendingLoaded,
+        paymentLoaded
+      );
     });
     // richieste gestite
     this.lessonsSvc.getHandledRequests().subscribe((handled) => {
       this.handledRequests = handled.length;
-      this.updateCharts();
+      this.tryUpdateCharts(
+        usersLoaded,
+        requestsLoaded,
+        handledLoaded,
+        pendingLoaded,
+        paymentLoaded
+      );
     });
     //richieste da gestire
     this.lessonsSvc.getPendingRequests().subscribe((pending) => {
       this.pendingRequests = pending.length;
-      this.updateCharts();
+      this.tryUpdateCharts(
+        usersLoaded,
+        requestsLoaded,
+        handledLoaded,
+        pendingLoaded,
+        paymentLoaded
+      );
     });
     //percentuale di acquisto
 
     this.paymentSvc.getUserHasPaid().subscribe((hasPaid) => {
       this.usersWhoPaid = hasPaid ? this.totalUsers : 0;
       this.calculatePaymentPercentage();
-      this.updateCharts();
+      this.tryUpdateCharts(
+        usersLoaded,
+        requestsLoaded,
+        handledLoaded,
+        pendingLoaded,
+        paymentLoaded
+      );
     });
   }
-
+  //aggiorna i grafici solo quando sono caricati tutti i dati
+  tryUpdateCharts(
+    usersLoaded: boolean,
+    requestsLoaded: boolean,
+    handledLoaded: boolean,
+    pendingLoaded: boolean,
+    paymentLoaded: boolean
+  ) {
+    if (
+      usersLoaded &&
+      requestsLoaded &&
+      handledLoaded &&
+      pendingLoaded &&
+      paymentLoaded
+    ) {
+      this.calculatePaymentPercentage();
+      this.updateCharts();
+    }
+  }
   //calcola la percerntale degli utenti che hanno pagato per le lezioni
   calculatePaymentPercentage() {
     if (this.totalUsers > 0) {
