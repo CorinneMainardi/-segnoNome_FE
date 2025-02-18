@@ -17,13 +17,11 @@
 }
 
 nz-sider {
-  background: rgb(42, 102, 97);
-  background: linear-gradient(34deg, rgb(42, 102, 97) 0%, rgb(81, 213, 198) 53%, rgb(30, 83, 77) 100%);
+  background: #015054;
   position: fixed !important;
 }
 nz-sider ul {
-  background: rgb(42, 102, 97);
-  background: linear-gradient(0deg, rgb(42, 102, 97) 0%, rgb(81, 213, 198) 100%);
+  background: linear-gradient(90deg, #015054 0%, #186f66 100%);
 }
 nz-sider nz-submenu {
   color: black !important;
@@ -56,8 +54,7 @@ nz-layout nz-layout {
   padding-left: 24px;
   overflow: hidden;
   line-height: 64px;
-  background: rgb(25, 122, 116);
-  background: linear-gradient(90deg, rgb(25, 122, 116) 0%, rgb(28, 97, 90) 44%, rgb(89, 223, 210) 99%, rgb(39, 157, 156) 100%);
+  background: #015054;
   transition: all 0.3s;
 }
 

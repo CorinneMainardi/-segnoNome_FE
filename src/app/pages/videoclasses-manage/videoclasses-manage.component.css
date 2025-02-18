@@ -82,9 +82,10 @@ h1 {
 }
 
 .submit {
-  background: rgb(42, 102, 97);
-  background: linear-gradient(34deg, rgb(42, 102, 97) 0%, rgb(81, 213, 198) 53%, rgb(30, 83, 77) 100%);
+  background: rgb(14, 133, 129);
+  background: radial-gradient(circle, rgb(14, 133, 129) 20%, rgb(0, 0, 0) 100%);
   color: black;
+  font-weight: bold;
   border-radius: 3px;
 }
 
