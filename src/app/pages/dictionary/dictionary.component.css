@@ -3,6 +3,13 @@
   text-align: center;
 }
 
+h1 {
+  color: #197872;
+  margin-top: 40px;
+  text-align: center;
+  font-size: 2rem;
+}
+
 .container {
   display: flex;
   flex-wrap: wrap;
@@ -27,13 +34,21 @@
   background: #fff;
 }
 
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
 .search-button {
   background: rgb(42, 102, 97);
   background: linear-gradient(34deg, rgb(42, 102, 97) 0%, rgb(81, 213, 198) 53%, rgb(30, 83, 77) 100%);
   color: black;
 }
 
-button {
+.button {
   background: rgb(42, 102, 97);
   background: linear-gradient(34deg, rgb(42, 102, 97) 0%, rgb(81, 213, 198) 53%, rgb(30, 83, 77) 100%);
   color: black;

@@ -1,97 +1,98 @@
-<h1>Videolezioni dove e quando vuoi</h1>
-<p>
-  Qui troverai delle videolezioni registrate, che ti forniranno le basi per
-  poter segnare.
-</p>
-@if(videoPresentation && !paymentSuccess){
-<p>
-  Se desideri, invece, prendere lezioni in presenza, clicca
-  <a [routerLink]="['/lessons']">qui</a>
-</p>
+<div class="body">
+  <h1>Videolezioni dove e quando vuoi</h1>
+  <p>
+    Qui troverai delle videolezioni registrate, che ti forniranno le basi per
+    poter segnare.
+  </p>
+  @if(videoPresentation && !paymentSuccess){
+  <p>
+    Se desideri, invece, prendere lezioni in presenza, clicca
+    <a [routerLink]="['/lessons']">qui</a>
+  </p>
 
-<nz-card *ngIf="videoPresentation" nzTitle="Introduzione">
-  <div class="video-container">
-    <video
-      #introVideo
-      [src]="videoPresentation.videoClassUrl"
-      width="100%"
-      height="auto"
-      controls
-    >
-      Il tuo browser non supporta il tag video.
-    </video>
-  </div>
+  <nz-card *ngIf="videoPresentation" nzTitle="Introduzione">
+    <div class="video-container">
+      <video
+        #introVideo
+        [src]="videoPresentation.videoClassUrl"
+        width="100%"
+        height="auto"
+        controls
+      >
+        Il tuo browser non supporta il tag video.
+      </video>
+    </div>
 
-  <div class="video-info">
-    <h3>{{ videoPresentation.title }}</h3>
-    <p>{{ videoPresentation.description }}</p>
-  </div>
-</nz-card>
+    <div class="video-info">
+      <h3>{{ videoPresentation.title }}</h3>
+      <p>{{ videoPresentation.description }}</p>
+    </div>
+  </nz-card>
 
-<h3>Ti abbiamo conquistato?</h3>
-<p>Acquista il nostro corso, al costo di 50 euro</p>
+  <h3>Ti abbiamo conquistato?</h3>
+  <p>Acquista il nostro corso, al costo di 50 euro</p>
 
-<button nz-button nzType="primary" (click)="togglePaymentForm()">
-  {{ showPaymentForm ? "Nascondi Pagamento" : "Acquista" }}
-</button>
-} @if(showPaymentForm) {
-<div id="paypal-button-container">
-  <button nz-button nzType="primary" (click)="startPayPalPayment()">
-    Paga con PayPal
+  <button nz-button nzType="primary" (click)="togglePaymentForm()">
+    {{ showPaymentForm ? "Nascondi Pagamento" : "Acquista" }}
   </button>
-</div>
-}
+  } @if(showPaymentForm) {
+  <div id="paypal-button-container">
+    <button nz-button nzType="primary" (click)="startPayPalPayment()">
+      Paga con PayPal
+    </button>
+  </div>
+  }
 
-<!-- Messaggio di avvenuto pagamento -->
-<div *ngIf="showPaymentPopup" class="popup-message success-message">
-  ✅ Pagamento effettuato con successo!
-</div>
+  <!-- Messaggio di avvenuto pagamento -->
+  <div *ngIf="showPaymentPopup" class="popup-message success-message">
+    ✅ Pagamento effettuato con successo!
+  </div>
 
-@if(paymentSuccess){
-<div class="carousel-container">
-  <nz-carousel [nzEffect]="strategy" *ngIf="videoClasses.length > 0">
-    @for (index of array; track index) {
-    <div nz-carousel-content *ngFor="let videoClass of videoClasses">
-      <div class="video-card">
-        <!-- Video con pulsante Play/Pausa -->
-        <div class="video-container">
-          <video
-            #videoPlayer
-            [src]="videoClass.videoClassUrl"
-            width="320"
-            height="180"
-            controls
-          >
-            Il tuo browser non supporta il tag video.
-          </video>
-        </div>
-
-        <!-- Titolo e descrizione -->
-        <div class="video-info">
+  @if(paymentSuccess){
+  <div class="carousel-container">
+    <nz-carousel [nzEffect]="strategy" *ngIf="videoClasses.length > 0">
+      @for (index of array; track index) {
+      <div nz-carousel-content *ngFor="let videoClass of videoClasses">
+        <div class="video-card">
           <h3>
             <span class="input">Titolo: </span>
             <span class="value">{{ videoClass.title }}</span>
           </h3>
-          <p>
-            <span class="input"> Descrizione: </span>
-            <span class="value">{{ videoClass.description }} </span>
-          </p>
-        </div>
+          <!-- Video con pulsante Play/Pausa -->
+          <div class="video-container">
+            <video
+              #videoPlayer
+              [src]="videoClass.videoClassUrl"
+              width="320"
+              height="180"
+              controls
+            >
+              Il tuo browser non supporta il tag video.
+            </video>
+          </div>
 
-        <!-- Pulsanti -->
-        <div class="buttons">
-          <button
-            type="button"
-            (click)="togglePlay(videoPlayer)"
-            class="play-button"
-          >
-            {{ isPlaying ? "⏸️" : "▶️" }}
-          </button>
-          ì
+          <!-- Titolo e descrizione -->
+          <div class="video-info">
+            <p>
+              <span class="input"> Descrizione: </span>
+              <span class="value">{{ videoClass.description }} </span>
+            </p>
+          </div>
+
+          <!-- Pulsanti -->
+          <div class="buttons">
+            <button
+              type="button"
+              (click)="togglePlay(videoPlayer)"
+              class="play-button"
+            >
+              {{ isPlaying ? "⏸️" : "▶️" }}
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-    }
-  </nz-carousel>
+      }
+    </nz-carousel>
+  </div>
+  }
 </div>
-}

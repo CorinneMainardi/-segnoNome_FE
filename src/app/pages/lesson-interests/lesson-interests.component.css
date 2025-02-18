@@ -1,3 +1,26 @@
+h1 {
+  color: #197872;
+  margin-top: 40px;
+  text-align: center;
+  font-size: 2rem;
+}
+
+.body {
+  text-align: center;
+  margin-bottom: 70px;
+}
+.body p {
+  margin-bottom: 50px;
+}
+.body button {
+  background: rgb(42, 102, 97);
+  background: linear-gradient(34deg, rgb(42, 102, 97) 0%, rgb(81, 213, 198) 53%, rgb(30, 83, 77) 100%);
+  color: black;
+  display: block;
+  margin: auto;
+  border-radius: 3px;
+}
+
 @media (max-width: 600px) {
   h1 {
     font-size: 1.5rem;

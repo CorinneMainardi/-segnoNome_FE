@@ -1,144 +1,156 @@
-<div class="text">
-  <h1>Modifica o cancella i video dal dizionario</h1>
-  <p>
-    Questo pannello ti permette di modificare o eliminare i video già presenti.
-  </p>
-  <!-- <p>
+<div class="body">
+  <div class="text">
+    <h1>Modifica o cancella i video dal dizionario</h1>
+    <p>
+      Questo pannello ti permette di modificare o eliminare i video già
+      presenti.
+    </p>
+    <!-- <p>
     Se invece vuoi aggiungere un video puoi cliccare
     <a [routerLink]="['/add-videoclass']">👉🏻 aggiungi video</a>
   </p> -->
-</div>
+  </div>
 
-@if(dictionary.length > 0) {
-<div class="container">
-  <div *ngFor="let video of dictionary">
-    <nz-modal
-      [(nzVisible)]="confirmPopupVisible"
-      (nzVisibleChange)="onPopupVisibilityChange($event)"
-      nzTitle="⚠️ Conferma eliminazione"
-      (nzOnCancel)="closeConfirmPopup()"
-      [nzFooter]="footerTemplate"
-    >
-      <div class="delete-modal-content">
-        <p>❗ {{ confirmMessage }}</p>
-      </div>
-
-      <ng-template #footerTemplate>
-        <div class="modal-buttons">
-          <button nz-button nzType="default" (click)="closeConfirmPopup()">
-            ❌ Annulla
-          </button>
-          <button nz-button nzType="primary" (click)="confirmActionExecution()">
-            ✅ Elimina
-          </button>
+  @if(dictionary.length > 0) {
+  <div class="container">
+    <div *ngFor="let video of dictionary">
+      <nz-modal
+        [(nzVisible)]="confirmPopupVisible"
+        (nzVisibleChange)="onPopupVisibilityChange($event)"
+        nzTitle="⚠️ Conferma eliminazione"
+        (nzOnCancel)="closeConfirmPopup()"
+        [nzFooter]="footerTemplate"
+      >
+        <div class="delete-modal-content">
+          <p>❗ {{ confirmMessage }}</p>
         </div>
-      </ng-template>
-    </nz-modal>
-    <video width="320" height="240" controls>
-      <source [src]="video.dictionaryUrl" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
-    <p class="title">{{ video.title }}</p>
-    <p class="title">{{ video.description }}</p>
-    <div class="button-group">
-      <button
-        class="button-edit"
-        nz-button
-        nzType="default"
-        (click)="editVideo(video)"
-      >
-        ✏️ Edit
-      </button>
 
-      <button
-        class="button-danger"
-        nz-button
-        nzType="default"
-        (click)="confirmDelete(video)"
-      >
-        <span nz-icon nzType="delete" nzTheme="outline"></span> Delete
-      </button>
-    </div>
-
-    <!-- Il form si apre solo sotto il video che stai modificando -->
-    <div *ngIf="editingVideo?.id === video.id">
-      <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
-        <nz-form-item>
-          <nz-form-label [nzSpan]="7" nzRequired>Title of Video</nz-form-label>
-          <nz-form-control
-            [nzSpan]="12"
-            nzHasFeedback
-            [nzErrorTip]="titleErrorTpl"
-          >
-            <input
-              nz-input
-              formControlName="title"
-              placeholder="Inserisci il titolo del video"
-            />
-            <ng-template #titleErrorTpl>
-              <div>Per favore inserisci il titolo!</div>
-            </ng-template>
-          </nz-form-control>
-        </nz-form-item>
-
-        <nz-form-item>
-          <nz-form-label [nzSpan]="7" nzRequired>Description</nz-form-label>
-          <nz-form-control
-            [nzSpan]="12"
-            nzHasFeedback
-            nzErrorTip="Please write video description!"
-          >
-            <nz-textarea-count [nzMaxCharacterCount]="2000">
-              <textarea
-                formControlName="description"
-                nz-input
-                rows="2"
-                placeholder="Scrivi una descrizione per il video"
-              ></textarea>
-            </nz-textarea-count>
-          </nz-form-control>
-        </nz-form-item>
-
-        <nz-form-item>
-          <nz-form-label [nzSpan]="7" nzRequired>dictionaryUrl</nz-form-label>
-          <nz-form-control
-            [nzSpan]="12"
-            nzHasFeedback
-            [nzErrorTip]="genereErrorTpl"
-          >
-            <input
-              nz-input
-              formControlName="dictionaryUrl"
-              placeholder="dictionaryUrl"
-            />
-            <ng-template #genereErrorTpl>
-              <div>Per favore inserisci il dictionaryurl!</div>
-            </ng-template>
-          </nz-form-control>
-        </nz-form-item>
-
-        <nz-form-item>
-          <nz-form-control [nzOffset]="7" [nzSpan]="12">
-            <div *ngIf="successMessage" class="success-message">
-              {{ successMessage }}
-            </div>
-            <div *ngIf="errorMessage" class="error-message">
-              {{ errorMessage }}
-            </div>
-
+        <ng-template #footerTemplate>
+          <div class="modal-buttons">
+            <button nz-button nzType="default" (click)="closeConfirmPopup()">
+              ❌ Annulla
+            </button>
             <button
               nz-button
               nzType="primary"
-              [disabled]="!validateForm.valid"
-              type="submit"
+              (click)="confirmActionExecution()"
             >
-              Submit
+              ✅ Elimina
             </button>
-            <button nz-button (click)="resetForm($event)">Reset</button>
-          </nz-form-control>
-        </nz-form-item>
-      </form>
+          </div>
+        </ng-template>
+      </nz-modal>
+      <video width="320" height="240" controls>
+        <source [src]="video.dictionaryUrl" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <p class="title">{{ video.title }}</p>
+      <p class="title">{{ video.description }}</p>
+      <div class="button-group">
+        <button
+          class="button-edit edit"
+          nz-button
+          nzType="default"
+          (click)="editVideo(video)"
+        >
+          ✏️ Edit
+        </button>
+
+        <button
+          class="button-danger delete"
+          nz-button
+          nzType="default"
+          (click)="confirmDelete(video)"
+        >
+          <span nz-icon nzType="delete" nzTheme="outline"></span> Delete
+        </button>
+      </div>
+
+      <!-- Il form si apre solo sotto il video che stai modificando -->
+      <div *ngIf="editingVideo?.id === video.id">
+        <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="7" nzRequired
+              >Title of Video</nz-form-label
+            >
+            <nz-form-control
+              [nzSpan]="12"
+              nzHasFeedback
+              [nzErrorTip]="titleErrorTpl"
+            >
+              <input
+                nz-input
+                formControlName="title"
+                placeholder="Inserisci il titolo del video"
+              />
+              <ng-template #titleErrorTpl>
+                <div>Per favore inserisci il titolo!</div>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label [nzSpan]="7" nzRequired>Description</nz-form-label>
+            <nz-form-control
+              [nzSpan]="12"
+              nzHasFeedback
+              nzErrorTip="Please write video description!"
+            >
+              <nz-textarea-count [nzMaxCharacterCount]="2000">
+                <textarea
+                  formControlName="description"
+                  nz-input
+                  rows="2"
+                  placeholder="Scrivi una descrizione per il video"
+                ></textarea>
+              </nz-textarea-count>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label [nzSpan]="7" nzRequired>dictionaryUrl</nz-form-label>
+            <nz-form-control
+              [nzSpan]="12"
+              nzHasFeedback
+              [nzErrorTip]="genereErrorTpl"
+            >
+              <input
+                nz-input
+                formControlName="dictionaryUrl"
+                placeholder="dictionaryUrl"
+              />
+              <ng-template #genereErrorTpl>
+                <div>Per favore inserisci il dictionaryurl!</div>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-control [nzOffset]="7" [nzSpan]="12">
+              <div *ngIf="successMessage" class="success-message">
+                {{ successMessage }}
+              </div>
+              <div *ngIf="errorMessage" class="error-message">
+                {{ errorMessage }}
+              </div>
+
+              <button
+                class="submit"
+                nz-button
+                nzType="primary"
+                [disabled]="!validateForm.valid"
+                type="submit"
+              >
+                Submit
+              </button>
+              <button class="delete" nz-button (click)="resetForm($event)">
+                Reset
+              </button>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </div>
     </div>
   </div>
+  }
 </div>
-}

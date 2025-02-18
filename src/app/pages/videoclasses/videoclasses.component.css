@@ -8,6 +8,18 @@
   margin-right: 100px;
 }
 
+.body {
+  text-align: center;
+  margin-bottom: 70px;
+}
+
+h1 {
+  color: #197872;
+  margin-top: 40px;
+  text-align: center;
+  font-size: 2rem;
+}
+
 .text h1 {
   margin-left: 100px;
   color: #c38e7d;
@@ -30,7 +42,8 @@
 }
 
 nz-carousel {
-  margin-left: 100px;
+  display: block;
+  margin: auto;
   margin-top: 100px;
   width: 700px;
   height: 423px;
@@ -40,7 +53,8 @@ nz-carousel {
   text-align: center;
   height: 423px;
   width: 700px;
-  background-image: linear-gradient(to right top, #1e6a84, #056175, #04576a, #034e5f, #024554, #013c49);
+  background: rgb(42, 102, 97);
+  background: linear-gradient(34deg, rgb(42, 102, 97) 0%, rgb(42, 102, 97) 50%, rgb(81, 213, 198) 100%);
   overflow: hidden;
 }
 
@@ -141,4 +155,14 @@ nz-card {
 .success-message {
   background-color: #4caf50;
   color: white;
+}
+
+.video-card h3 {
+  margin-top: 25px;
+}
+.video-card .video-info {
+  margin-top: 25px;
+}
+.video-card button {
+  margin-top: 20px;
 }/*# sourceMappingURL=videoclasses.component.css.map */

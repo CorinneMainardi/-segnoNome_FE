@@ -1,4 +1,18 @@
 @charset "UTF-8";
+.body {
+  text-align: center;
+  margin-bottom: 70px;
+}
+
+h1 {
+  color: #197872;
+  margin-top: 20px;
+}
+
+.text {
+  margin-bottom: 50px;
+}
+
 .container {
   display: flex;
   flex-wrap: wrap;
@@ -23,18 +37,6 @@
   margin-top: 10px;
 }
 
-.button-danger {
-  background-color: #d9534f; /* Rosso Bootstrap */
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  font-size: 14px;
-  font-weight: bold;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s ease-in-out, transform 0.2s;
-}
-
 .button-danger:hover {
   background-color: #c9302c; /* Rosso più scuro al passaggio del mouse */
 }
@@ -48,20 +50,6 @@
   box-shadow: 0 0 5px rgba(217, 83, 79, 0.5);
 }
 
-.button-edit {
-  background-color: #0275d8;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  font-size: 14px;
-  font-weight: bold;
-  border-radius: 5px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  transition: background 0.3s ease-in-out, transform 0.2s;
-}
 .button-edit:hover {
   background-color: #025aa5;
 }
@@ -99,6 +87,30 @@
 .popup-message.error {
   background-color: #dc3545;
   color: white;
+}
+
+.delete {
+  background: rgb(238, 9, 9);
+  background: radial-gradient(circle, rgb(238, 9, 9) 0%, rgb(159, 31, 53) 100%);
+  color: black;
+  border-radius: 3px;
+  margin-bottom: 50px;
+  font-weight: bold;
+}
+
+.edit {
+  background: rgb(9, 198, 238);
+  background: radial-gradient(circle, rgb(9, 198, 238) 0%, rgb(31, 107, 159) 100%);
+  border-radius: 3px;
+  margin-bottom: 50px;
+  font-weight: bold;
+}
+
+.submit {
+  background: rgb(42, 102, 97);
+  background: linear-gradient(34deg, rgb(42, 102, 97) 0%, rgb(81, 213, 198) 53%, rgb(30, 83, 77) 100%);
+  color: black;
+  border-radius: 3px;
 }
 
 video {

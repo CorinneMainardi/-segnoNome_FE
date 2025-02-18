@@ -1,4 +1,9 @@
 @charset "UTF-8";
+.body {
+  text-align: center;
+  margin-bottom: 70px;
+}
+
 .button-danger {
   background-color: #d9534f; /* Rosso Bootstrap */
   color: white;
@@ -13,6 +18,14 @@
 
 .button-danger:hover {
   background-color: #c9302c; /* Rosso più scuro al passaggio del mouse */
+}
+
+.delete {
+  background: rgb(238, 9, 9);
+  background: radial-gradient(circle, rgb(238, 9, 9) 0%, rgb(159, 31, 53) 100%);
+  color: black;
+  border-radius: 3px;
+  margin-bottom: 50px;
 }
 
 .button-danger:active {

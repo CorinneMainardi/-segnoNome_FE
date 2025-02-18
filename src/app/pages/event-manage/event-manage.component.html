@@ -1,183 +1,195 @@
-<div class="text">
-  <h1>Modifica o cancella le videolezioni</h1>
-  <p>
-    Questo pannello ti permette di modificare o eliminare i video già presenti.
-  </p>
-  <!-- <p>
+<div class="body">
+  <div class="text">
+    <h1>Modifica o cancella le videolezioni</h1>
+    <p>
+      Questo pannello ti permette di modificare o eliminare i video già
+      presenti.
+    </p>
+    <!-- <p>
     Se invece vuoi aggiungere un video puoi cliccare
     <a [routerLink]="['/add-videoclass']">👉🏻 aggiungi video</a>
   </p> -->
-</div>
+  </div>
 
-@if(events.length > 0) {
-<div class="container">
-  <div *ngFor="let event of events">
-    <nz-modal
-      [(nzVisible)]="confirmPopupVisible"
-      (nzVisibleChange)="onPopupVisibilityChange($event)"
-      nzTitle="⚠️ Conferma eliminazione"
-      (nzOnCancel)="closeConfirmPopup()"
-      [nzFooter]="footerTemplate"
-    >
-      <div class="delete-modal-content">
-        <p>❗ {{ confirmMessage }}</p>
-      </div>
-
-      <ng-template #footerTemplate>
-        <div class="modal-buttons">
-          <button nz-button nzType="default" (click)="closeConfirmPopup()">
-            ❌ Annulla
-          </button>
-          <button nz-button nzType="primary" (click)="confirmActionExecution()">
-            ✅ Elimina
-          </button>
+  @if(events.length > 0) {
+  <div class="container">
+    <div *ngFor="let event of events">
+      <nz-modal
+        [(nzVisible)]="confirmPopupVisible"
+        (nzVisibleChange)="onPopupVisibilityChange($event)"
+        nzTitle="⚠️ Conferma eliminazione"
+        (nzOnCancel)="closeConfirmPopup()"
+        [nzFooter]="footerTemplate"
+      >
+        <div class="delete-modal-content">
+          <p>❗ {{ confirmMessage }}</p>
         </div>
-      </ng-template>
-    </nz-modal>
-    <p class="title">{{ event.title }}</p>
-    <p class="title">{{ event.description }}</p>
-    <p class="title">{{ event.location }}</p>
-    <p class="title">{{ event.eventDate }}</p>
-    <p class="title">{{ event.availableSeats }}</p>
-    <div class="button-group">
-      <button
-        class="button-edit"
-        nz-button
-        nzType="default"
-        (click)="editEvent(event)"
-      >
-        ✏️ Edit
-      </button>
 
-      <button
-        class="button-danger"
-        nz-button
-        nzType="default"
-        (click)="confirmDelete(event)"
-      >
-        <span nz-icon nzType="delete" nzTheme="outline"></span> Delete
-      </button>
-    </div>
-
-    <!-- Il form si apre solo sotto il video che stai modificando -->
-    <div *ngIf="editingEvent?.id === event.id">
-      <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
-        <nz-form-item>
-          <nz-form-label [nzSpan]="7" nzRequired>Title of Video</nz-form-label>
-          <nz-form-control
-            [nzSpan]="12"
-            nzHasFeedback
-            [nzErrorTip]="titleErrorTpl"
-          >
-            <input
-              nz-input
-              formControlName="title"
-              placeholder="Inserisci il titolo dell'evento"
-            />
-            <ng-template #titleErrorTpl>
-              <div>Per favore inserisci il titolo!</div>
-            </ng-template>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label [nzSpan]="7" nzRequired> Data evento </nz-form-label>
-          <nz-form-control
-            [nzSpan]="12"
-            nzHasFeedback
-            [nzErrorTip]="eventDateErrorTpl"
-          >
-            <input nz-input type="date" formControlName="eventDate" />
-            <ng-template #eventDateErrorTpl let-control>
-              <div *ngIf="control.errors?.['required']">
-                La data è obbligatoria!
-              </div>
-            </ng-template>
-          </nz-form-control>
-        </nz-form-item>
-
-        <nz-form-item>
-          <nz-form-label [nzSpan]="7" nzRequired> Location </nz-form-label>
-          <nz-form-control
-            [nzSpan]="12"
-            nzHasFeedback
-            [nzErrorTip]="locationErrorTpl"
-          >
-            <input
-              nz-input
-              formControlName="location"
-              placeholder="Inserisci la location dell'evento"
-            />
-            <ng-template #locationErrorTpl let-control>
-              <div *ngIf="control.errors?.['required']">
-                La location è obbligatoria!
-              </div>
-            </ng-template>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label [nzSpan]="7" nzRequired>Description</nz-form-label>
-          <nz-form-control
-            [nzSpan]="12"
-            nzHasFeedback
-            nzErrorTip="Please write video description!"
-          >
-            <nz-textarea-count [nzMaxCharacterCount]="2000">
-              <textarea
-                formControlName="description"
-                nz-input
-                rows="2"
-                placeholder="Scrivi una descrizione per il video"
-              ></textarea>
-            </nz-textarea-count>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label [nzSpan]="7" nzRequired>
-            Posti disponibili
-          </nz-form-label>
-          <nz-form-control
-            [nzSpan]="12"
-            nzHasFeedback
-            [nzErrorTip]="seatsErrorTpl"
-          >
-            <input
-              nz-input
-              type="number"
-              formControlName="availableSeats"
-              min="1"
-            />
-            <ng-template #seatsErrorTpl let-control>
-              <div *ngIf="control.errors?.['required']">
-                Inserisci il numero di posti!
-              </div>
-              <div *ngIf="control.errors?.['min']">Il minimo è 1 posto.</div>
-            </ng-template>
-          </nz-form-control>
-        </nz-form-item>
-
-        <nz-form-item>
-          <nz-form-control [nzOffset]="7" [nzSpan]="12">
-            <div *ngIf="successMessage" class="popup-message success">
-              {{ successMessage }}
-            </div>
-
-            <div *ngIf="errorMessage" class="popup-message error">
-              {{ errorMessage }}
-            </div>
-
+        <ng-template #footerTemplate>
+          <div class="modal-buttons">
+            <button nz-button nzType="default" (click)="closeConfirmPopup()">
+              ❌ Annulla
+            </button>
             <button
               nz-button
               nzType="primary"
-              [disabled]="!validateForm.valid"
-              type="submit"
+              (click)="confirmActionExecution()"
             >
-              Submit
+              ✅ Elimina
             </button>
-            <button nz-button (click)="resetForm($event)">Reset</button>
-          </nz-form-control>
-        </nz-form-item>
-      </form>
+          </div>
+        </ng-template>
+      </nz-modal>
+      <p class="title">{{ event.title }}</p>
+      <p class="title">{{ event.description }}</p>
+      <p class="title">{{ event.location }}</p>
+      <p class="title">{{ event.eventDate }}</p>
+      <p class="title">{{ event.availableSeats }}</p>
+      <div class="button-group">
+        <button
+          class="button-edit edit"
+          nz-button
+          nzType="default"
+          (click)="editEvent(event)"
+        >
+          ✏️ Edit
+        </button>
+
+        <button
+          class="button-danger delete"
+          nz-button
+          nzType="default"
+          (click)="confirmDelete(event)"
+        >
+          <span nz-icon nzType="delete" nzTheme="outline"></span> Delete
+        </button>
+      </div>
+
+      <!-- Il form si apre solo sotto il video che stai modificando -->
+      <div *ngIf="editingEvent?.id === event.id">
+        <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="7" nzRequired
+              >Title of Video</nz-form-label
+            >
+            <nz-form-control
+              [nzSpan]="12"
+              nzHasFeedback
+              [nzErrorTip]="titleErrorTpl"
+            >
+              <input
+                nz-input
+                formControlName="title"
+                placeholder="Inserisci il titolo dell'evento"
+              />
+              <ng-template #titleErrorTpl>
+                <div>Per favore inserisci il titolo!</div>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="7" nzRequired> Data evento </nz-form-label>
+            <nz-form-control
+              [nzSpan]="12"
+              nzHasFeedback
+              [nzErrorTip]="eventDateErrorTpl"
+            >
+              <input nz-input type="date" formControlName="eventDate" />
+              <ng-template #eventDateErrorTpl let-control>
+                <div *ngIf="control.errors?.['required']">
+                  La data è obbligatoria!
+                </div>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label [nzSpan]="7" nzRequired> Location </nz-form-label>
+            <nz-form-control
+              [nzSpan]="12"
+              nzHasFeedback
+              [nzErrorTip]="locationErrorTpl"
+            >
+              <input
+                nz-input
+                formControlName="location"
+                placeholder="Inserisci la location dell'evento"
+              />
+              <ng-template #locationErrorTpl let-control>
+                <div *ngIf="control.errors?.['required']">
+                  La location è obbligatoria!
+                </div>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="7" nzRequired>Description</nz-form-label>
+            <nz-form-control
+              [nzSpan]="12"
+              nzHasFeedback
+              nzErrorTip="Please write video description!"
+            >
+              <nz-textarea-count [nzMaxCharacterCount]="2000">
+                <textarea
+                  formControlName="description"
+                  nz-input
+                  rows="2"
+                  placeholder="Scrivi una descrizione per il video"
+                ></textarea>
+              </nz-textarea-count>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label [nzSpan]="7" nzRequired>
+              Posti disponibili
+            </nz-form-label>
+            <nz-form-control
+              [nzSpan]="12"
+              nzHasFeedback
+              [nzErrorTip]="seatsErrorTpl"
+            >
+              <input
+                nz-input
+                type="number"
+                formControlName="availableSeats"
+                min="1"
+              />
+              <ng-template #seatsErrorTpl let-control>
+                <div *ngIf="control.errors?.['required']">
+                  Inserisci il numero di posti!
+                </div>
+                <div *ngIf="control.errors?.['min']">Il minimo è 1 posto.</div>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-control [nzOffset]="7" [nzSpan]="12">
+              <div *ngIf="successMessage" class="popup-message success">
+                {{ successMessage }}
+              </div>
+
+              <div *ngIf="errorMessage" class="popup-message error">
+                {{ errorMessage }}
+              </div>
+
+              <button
+                class="submit"
+                nz-button
+                nzType="primary"
+                [disabled]="!validateForm.valid"
+                type="submit"
+              >
+                Submit
+              </button>
+              <button class="delete" nz-button (click)="resetForm($event)">
+                Reset
+              </button>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+      </div>
     </div>
   </div>
+  }
 </div>
-}
