@@ -5,8 +5,10 @@
   <div class="chart-container">
     <h3>Utenti Registrati vs. Utenti che hanno comprato le videolezioni</h3>
     <highcharts-chart
+      *ngIf="userChartOptions && userChartOptions.series"
       [Highcharts]="Highcharts"
       [options]="userChartOptions"
+      [update]="true"
       style="width: 100%; height: 400px; display: block"
     >
     </highcharts-chart>
@@ -15,8 +17,10 @@
   <div class="chart-container">
     <h3>Richieste di Contatto</h3>
     <highcharts-chart
+      *ngIf="requestChartOptions && requestChartOptions.series"
       [Highcharts]="Highcharts"
       [options]="requestChartOptions"
+      [update]="true"
       style="width: 100%; height: 400px; display: block"
     >
     </highcharts-chart>
@@ -25,8 +29,10 @@
   <div class="chart-container">
     <h3>Percentuale di Acquisto</h3>
     <highcharts-chart
+      *ngIf="paymentChartOptions && paymentChartOptions.series"
       [Highcharts]="Highcharts"
       [options]="paymentChartOptions"
+      [update]="true"
       style="width: 100%; height: 400px; display: block"
     >
     </highcharts-chart>
