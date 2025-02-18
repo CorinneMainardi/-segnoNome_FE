@@ -5,6 +5,9 @@
   <h2>{{ month }}</h2>
   <nz-carousel [nzDotPosition]="'bottom'">
     <div nz-carousel-content *ngFor="let event of eventsByMonth[month]">
+      <img
+        src=" https://res.cloudinary.com/dwfxoytga/image/upload/v1739838712/SEGNONOME_dfiw1w.png"
+      />
       <h3>{{ event.title }}</h3>
       <p><strong>Data:</strong> {{ event.eventDate }}</p>
       <p><strong>Luogo:</strong> {{ event.location }}</p>

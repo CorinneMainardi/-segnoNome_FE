@@ -16,4 +16,9 @@ form {
   background: #fff; /* Sfondo bianco per un look pulito */
   border-radius: 8px; /* Angoli arrotondati */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+button {
+  background: rgb(42, 102, 97);
+  background: linear-gradient(34deg, rgb(42, 102, 97) 0%, rgb(81, 213, 198) 53%, rgb(30, 83, 77) 100%);
 }/*# sourceMappingURL=register.component.css.map */

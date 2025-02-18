@@ -1,15 +1,49 @@
 h1 {
+  margin-top: 50px;
+  margin-bottom: 50px;
   font-size: 3rem;
-  color: #c38e7d;
+  color: #51d5c6;
+  text-align: center;
 }
-
+.body {
+  margin-left: 150px;
+  margin-right: 150px;
+}
+h3 {
+  font-size: 1.5rem;
+  text-align: center;
+}
+.h3 {
+  color: #51d5c6;
+  margin-bottom: 50px;
+}
+.authC {
+  border: 1px solid #349389;
+  margin-bottom: 70px;
+}
+h5 {
+  font-weight: bolder;
+  font-size: 1.5rem;
+  text-align: center;
+}
+.auth {
+  text-align: center;
+  font-size: 1.5rem;
+}
+.btn {
+  border-radius: 5px;
+  border-color: #349389;
+}
 .regolamento h3 {
   color: rgb(128, 9, 9);
-  font-size: 2rem;
+  font-size: 2.5rem;
+}
+.regolamento {
+  margin-bottom: 70px;
 }
 [nz-button] {
   margin-right: 8px;
-  margin-bottom: 12px;
+  margin-bottom: 7px;
 }
 .container {
   margin-top: 100px;
@@ -20,8 +54,8 @@ h1 {
   color: rgb(89, 0, 255);
 }
 img {
-  height: 320px;
-  width: 320px;
+  height: 100px;
+  width: 100px;
 }
 .descrizione {
   font-size: 16px;

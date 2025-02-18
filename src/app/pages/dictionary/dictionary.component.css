@@ -1,4 +1,8 @@
 @charset "UTF-8";
+.body {
+  text-align: center;
+}
+
 .container {
   display: flex;
   flex-wrap: wrap;
@@ -21,6 +25,21 @@
   border-radius: 8px;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
   background: #fff;
+}
+
+.search-button {
+  background: rgb(42, 102, 97);
+  background: linear-gradient(34deg, rgb(42, 102, 97) 0%, rgb(81, 213, 198) 53%, rgb(30, 83, 77) 100%);
+  color: black;
+}
+
+button {
+  background: rgb(42, 102, 97);
+  background: linear-gradient(34deg, rgb(42, 102, 97) 0%, rgb(81, 213, 198) 53%, rgb(30, 83, 77) 100%);
+  color: black;
+  display: block;
+  margin: auto;
+  border-radius: 3px;
 }
 
 video {

@@ -1,12 +1,25 @@
 h1 {
-  color: #c38e7d;
-  margin-left: 100px;
+  color: #197872;
+  // margin-left: 100px;
   margin-top: 40px;
+
+  text-align: center;
+  font-size: 2rem;
+}
+h2 {
+  text-align: center;
+  font-size: 2rem;
+}
+p {
+  text-align: center;
+  font-size: 1.2rem;
   margin-bottom: 30px;
 }
 nz-carousel {
-  margin-left: 100px;
-  margin-top: 100px;
+  display: block;
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 70px;
   width: 700px;
   height: 423px;
 }
@@ -15,20 +28,12 @@ nz-carousel {
   height: 423px;
   width: 700px;
 
-  background-image: linear-gradient(
-    to right top,
-    #caa9cf,
-    #ac9dc8,
-    #8b93bf,
-    #6988b2,
-    #457da1,
-    #327493,
-    #1e6a84,
-    #056175,
-    #04576a,
-    #034e5f,
-    #024554,
-    #013c49
+  background: rgb(42, 102, 97);
+  background: linear-gradient(
+    34deg,
+    rgba(42, 102, 97, 1) 0%,
+    rgba(42, 102, 97, 1) 50%,
+    rgba(81, 213, 198, 1) 100%
   );
   color: #fff;
   overflow: hidden;
@@ -41,7 +46,11 @@ h2 {
   user-select: none;
 }
 img {
-  height: 200px;
+  width: 250px;
+  display: block;
+  margin: auto;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 a,
 span {

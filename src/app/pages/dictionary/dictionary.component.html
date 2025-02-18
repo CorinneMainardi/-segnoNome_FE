@@ -1,30 +1,90 @@
-<h1>Ciao ecco il nostro "segnario", il dizionario in LIS</h1>
-<p>
-  Qui potrai trovare dei video-segni che ti consentiranno di segnare al meglio!
-</p>
+<div class="body">
+  <h1>Ciao ecco il nostro "segnario", il dizionario in LIS</h1>
+  <p>
+    Qui potrai trovare dei video-segni che ti consentiranno di segnare al
+    meglio!
+  </p>
 
-<div class="search-container">
-  <input
-    type="text"
-    [(ngModel)]="searchTerm"
-    placeholder="Cerca un video..."
-    class="search-input"
-  />
-  <button (click)="searchVideos()" class="search-button">Cerca</button>
-</div>
+  <div class="search-container">
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      placeholder="Cerca un video..."
+      class="search-input"
+    />
+    <button (click)="searchVideos()" class="search-button">Cerca</button>
+  </div>
 
-<p>
-  Ti ricordiamo che cliccando su "salva il video" potrai salvare il video-segno
-  nella tua pagina profilo
-</p>
+  <p>
+    Ti ricordiamo che cliccando su "salva il video" potrai salvare il
+    video-segno nella tua pagina profilo
+  </p>
 
-<!-- Se la ricerca è attiva, mostriamo solo i risultati filtrati -->
-<div *ngIf="showSearchResults">
-  <div *ngIf="filteredVideos.length > 0; else noResults">
+  <!-- Se la ricerca è attiva, mostriamo solo i risultati filtrati -->
+  <div *ngIf="showSearchResults">
+    <div *ngIf="filteredVideos.length > 0; else noResults">
+      <div class="container">
+        <div *ngFor="let video of filteredVideos">
+          <div class="video-card">
+            <!-- Video -->
+            <div class="video-container">
+              <video
+                #videoPlayer
+                [src]="video.dictionaryUrl"
+                width="320"
+                height="180"
+                controls
+              ></video>
+            </div>
+            <!-- Info -->
+            <div class="video-info">
+              <h3><span class="input">Titolo: </span> {{ video.title }}</h3>
+              <p>
+                <span class="input">Descrizione: </span> {{ video.description }}
+              </p>
+              <button
+                nz-button
+                nzType="default'"
+                nzSize="'small'"
+                nzShape="round'"
+                (click)="addFavoritesD(video, $event)"
+              >
+                <span nz-icon nzType="star" nzTheme="outline"></span> Salva il
+                video
+              </button>
+
+              <!-- Messaggi di successo/errore sotto il video -->
+              <p
+                *ngIf="video.id !== undefined && successMessages[video.id]"
+                class="success-message"
+              >
+                {{ successMessages[video.id] }}
+              </p>
+              <p
+                *ngIf="video.id !== undefined && errorMessages[video.id]"
+                class="error-message"
+              >
+                {{ errorMessages[video.id] }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Template per nessun risultato trovato -->
+    <ng-template #noResults>
+      <p class="error-message">
+        ⚠️ Nessun video trovato. Riprova con un altro termine.
+      </p>
+    </ng-template>
+  </div>
+
+  <!-- Se la ricerca non è attiva, mostriamo tutti i video -->
+  <div *ngIf="!showSearchResults">
     <div class="container">
-      <div *ngFor="let video of filteredVideos">
+      <div *ngFor="let video of dictionaryVideos">
         <div class="video-card">
-          <!-- Video -->
           <div class="video-container">
             <video
               #videoPlayer
@@ -34,7 +94,6 @@
               controls
             ></video>
           </div>
-          <!-- Info -->
           <div class="video-info">
             <h3><span class="input">Titolo: </span> {{ video.title }}</h3>
             <p>
@@ -65,61 +124,6 @@
               {{ errorMessages[video.id] }}
             </p>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Template per nessun risultato trovato -->
-  <ng-template #noResults>
-    <p class="error-message">
-      ⚠️ Nessun video trovato. Riprova con un altro termine.
-    </p>
-  </ng-template>
-</div>
-
-<!-- Se la ricerca non è attiva, mostriamo tutti i video -->
-<div *ngIf="!showSearchResults">
-  <div class="container">
-    <div *ngFor="let video of dictionaryVideos">
-      <div class="video-card">
-        <div class="video-container">
-          <video
-            #videoPlayer
-            [src]="video.dictionaryUrl"
-            width="320"
-            height="180"
-            controls
-          ></video>
-        </div>
-        <div class="video-info">
-          <h3><span class="input">Titolo: </span> {{ video.title }}</h3>
-          <p>
-            <span class="input">Descrizione: </span> {{ video.description }}
-          </p>
-          <button
-            nz-button
-            nzType="default'"
-            nzSize="'small'"
-            nzShape="round'"
-            (click)="addFavoritesD(video, $event)"
-          >
-            <span nz-icon nzType="star" nzTheme="outline"></span> Salva il video
-          </button>
-
-          <!-- Messaggi di successo/errore sotto il video -->
-          <p
-            *ngIf="video.id !== undefined && successMessages[video.id]"
-            class="success-message"
-          >
-            {{ successMessages[video.id] }}
-          </p>
-          <p
-            *ngIf="video.id !== undefined && errorMessages[video.id]"
-            class="error-message"
-          >
-            {{ errorMessages[video.id] }}
-          </p>
         </div>
       </div>
     </div>

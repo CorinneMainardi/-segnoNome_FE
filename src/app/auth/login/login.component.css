@@ -14,6 +14,8 @@
 .login-form-button {
   width: 100%; /* Rende il bottone della larghezza del form */
   height: 40px; /* Riduce leggermente l'altezza */
+  background: rgb(42, 102, 97);
+  background: linear-gradient(34deg, rgb(42, 102, 97) 0%, rgb(81, 213, 198) 53%, rgb(30, 83, 77) 100%);
 }
 
 .login-form-forgot {
