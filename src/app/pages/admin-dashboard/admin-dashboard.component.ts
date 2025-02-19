@@ -45,6 +45,20 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
   loadData() {
     this.userSvc.getAllUser().subscribe((users) => {
       this.totalUsers = users.length;
+      //  Filtriamo gli utenti che hanno pagato
+      this.usersWhoPaid = users.filter((user) => user.hasPaid).length;
+
+      //  Calcoliamo quanti NON hanno pagato
+      const usersWhoDidNotPay = this.totalUsers - this.usersWhoPaid;
+
+      console.log(`✅ Utenti totali: ${this.totalUsers}`);
+      console.log(`💰 Utenti che hanno pagato: ${this.usersWhoPaid}`);
+      console.log(`❌ Utenti che NON hanno pagato: ${usersWhoDidNotPay}`);
+
+      this.updateCharts();
+    });
+    this.userSvc.getAllUser().subscribe((users) => {
+      this.totalUsers = users.length;
       this.updateCharts();
     });
 
