@@ -10,6 +10,7 @@ import { iEvent } from '../../interfaces/i-event';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
+  telefono: number = +393807137674;
   [x: string]: any;
   eventsByMonth: { [key: string]: iEvent[] } = {};
   userId: number | null = null;
@@ -31,7 +32,7 @@ export class HomeComponent {
       events.forEach((event: any) => {
         // ✅ Cast manuale per evitare l'errore
         if (event.id !== undefined) {
-          this.selectedSeats[event.id] = 1; // ✅ Inizializza per ogni evento
+          this.selectedSeats[event.id] = 1; //  Inizializza per ogni evento
         }
       });
     });

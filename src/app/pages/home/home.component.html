@@ -1,29 +1,57 @@
 <h1>Ciao, benvenut* nel mondo LIS.</h1>
 <p>Qui troverai tanti eventi che ti permetteranno di esercitarti in LIS</p>
-
+<p>
+  Per prenotare il tuo posto all'evento, scrivici su WhatsApp, indicando
+  l'evento al quale vuoi presenziare e il numero di persone
+</p>
 <div *ngFor="let month of months">
   <h2>{{ month }}</h2>
   <nz-carousel [nzDotPosition]="'bottom'">
-    <div nz-carousel-content *ngFor="let event of eventsByMonth[month]">
+    <div
+      class="event-info"
+      nz-carousel-content
+      *ngFor="let event of eventsByMonth[month]"
+    >
       <img
         src=" https://res.cloudinary.com/dwfxoytga/image/upload/v1739838712/SEGNONOME_dfiw1w.png"
       />
       <h3>{{ event.title }}</h3>
       <p><strong>Data:</strong> {{ event.eventDate }}</p>
       <p><strong>Luogo:</strong> {{ event.location }}</p>
-      <p><strong>Posti disponibili:</strong> {{ event.availableSeats }}</p>
+      <a
+        class="whatsapp-button"
+        nz-button
+        nzType="primary"
+        [href]="
+          'https://wa.me/' +
+          telefono +
+          '?text=Ciao%20sono%20interessato%20a%20partecipare%20a%20' +
+          event.title +
+          '!'
+        "
+        target="_blank"
+      >
+        <img
+          class="whatsapp-icon"
+          src="/whatsapp.svg"
+          width="20"
+          height="20"
+          alt="WhatsApp"
+        />
+        WhatsApp
+      </a>
 
       <!-- Input per scegliere quanti posti prenotare -->
-      <label>Numero di posti:</label>
+      <!-- <label>Numero di posti:</label>
       <input
         type="number"
         [(ngModel)]="selectedSeats[event.id!]"
         [min]="1"
         [max]="event.availableSeats"
         placeholder="Inserisci il numero di posti"
-      />
+      /> -->
 
-      <button
+      <!-- <button
         nz-button
         nzType="primary"
         [disabled]="
@@ -35,7 +63,7 @@
         "
       >
         Prenota
-      </button>
+      </button> -->
     </div>
   </nz-carousel>
 </div>
